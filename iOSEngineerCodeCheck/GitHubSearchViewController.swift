@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UITableViewController, UISearchBarDelegate {
+class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet weak var SchBr: UISearchBar!
     var repo: [[String: Any]] = []
     var task: URLSessionTask?
@@ -41,8 +41,8 @@ class ViewController: UITableViewController, UISearchBarDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let dtl = segue.destination as! ViewController2
-            dtl.vc1 = self
+            let dtl = segue.destination as! GitHubDetailViewController
+            dtl.gitHubSearchVC = self
         }
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

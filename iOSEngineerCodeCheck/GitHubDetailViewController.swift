@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController2: UIViewController {
+class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
@@ -9,10 +9,10 @@ class ViewController2: UIViewController {
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
 
-    var vc1: ViewController!
+    var gitHubSearchVC: GitHubSearchViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let repo = vc1.repo[vc1.idx]
+        let repo = gitHubSearchVC.repo[gitHubSearchVC.idx]
         languageLabel.text = "Written in \(repo["language"] as? String ?? "")"
         starsLabel.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
         wathcersLabel.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
@@ -22,7 +22,7 @@ class ViewController2: UIViewController {
     }
 
     func getImage() {
-        let repo = vc1.repo[vc1.idx]
+        let repo = gitHubSearchVC.repo[gitHubSearchVC.idx]
         titleLabel.text = repo["full_name"] as? String
         if let owner = repo["owner"] as? [String: Any] {
             if let imageURL = owner["avatar_url"] as? String {
