@@ -12,7 +12,7 @@ class GitHubDetailViewController: UIViewController {
     var gitHubSearchVC: GitHubSearchViewController!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let repo = gitHubSearchVC.repository[gitHubSearchVC.idx]
+        let repo = gitHubSearchVC.repository[gitHubSearchVC.tappedRow ?? 0]
         languageLabel.text = "Written in \(repo["language"] as? String ?? "")"
         starsLabel.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
         wathcersLabel.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
@@ -22,7 +22,7 @@ class GitHubDetailViewController: UIViewController {
     }
 
     func getImage() {
-        let repo = gitHubSearchVC.repository[gitHubSearchVC.idx]
+        let repo = gitHubSearchVC.repository[gitHubSearchVC.tappedRow ?? 0]
         titleLabel.text = repo["full_name"] as? String
         if let owner = repo["owner"] as? [String: Any] {
             if let imageURL = owner["avatar_url"] as? String {

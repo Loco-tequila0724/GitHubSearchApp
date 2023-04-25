@@ -4,9 +4,7 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
     var repository: [[String: Any]] = []
     var task: URLSessionTask?
-    var word: String!
-    var url: String!
-    var tappedRow: Int!
+    var tappedRow: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -14,7 +12,7 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
         searchBar.delegate = self
     }
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せるf
+        // ↓こうすれば初期のテキストを消せる
         searchBar.text = ""
         return true
     }
@@ -22,27 +20,27 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
         task?.cancel()
     }
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        word = searchBar.text!
-        if word.count != 0 {
-            url = "https://api.github.com/search/repositories?q=\(word!)"
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, _, _) in
-                if let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
-                    if let items = obj["items"] as? [[String: Any]] {
-                        self.repository = items
-                        DispatchQueue.main.async {
-                            self.tableView.reloadData()
-                        }
+        guard let text = searchBar.text, !text.isEmpty else { return }
+        guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)") else { return }
+
+        task = URLSession.shared.dataTask(with: url) { (data, _, _) in
+            guard let data else { return }
+            if let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                if let items = obj["items"] as? [[String: Any]] {
+                    self.repository = items
+                    DispatchQueue.main.async {
+                        self.tableView.reloadData()
                     }
                 }
             }
-            // これ呼ばなきゃリストが更新されません
-            task?.resume()
         }
+        task?.resume()
     }
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let gitHubDetailVC = segue.destination as! GitHubDetailViewController
-            gitHubDetailVC.gitHubSearchVC = self
+            let gitHubDetailVC = segue.destination as? GitHubDetailViewController
+            gitHubDetailVC?.gitHubSearchVC = self
         }
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
