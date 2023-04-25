@@ -1,5 +1,39 @@
 import UIKit
 
+struct GitHub {
+    var items: [User]
+}
+
+struct User {
+    let language: String
+    let stargazersCount: String
+    let wachersCount: String
+    let forks_count: String
+    let openIssuesCount: String
+    let full_name: String
+
+    let owner: [Owner]
+
+    enum CodingKeys: String, CodingKey {
+        case language = "language"
+        case stargazersCount = "stargazers_count"
+        case wachersCount = "wachers_count"
+        case forksCount = "forks_count"
+        case openIssuesCount = "open_issues_count"
+        case fullName = "full_name"
+        case owner = "owner"
+
+    }
+
+    struct Owner {
+        let avatar_url: String
+
+        enum CodingKeys: String, CodingKey {
+            case avatarUrl = "avatar_url"
+        }
+    }
+}
+
 class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
     var repository: [[String: Any]] = []
@@ -28,6 +62,7 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
             if let obj = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
                 if let items = obj["items"] as? [[String: Any]] {
                     self.repository = items
+
                     DispatchQueue.main.async {
                         self.tableView.reloadData()
                     }
