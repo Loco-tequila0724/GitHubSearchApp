@@ -1,20 +1,20 @@
 import UIKit
 
 class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
-    @IBOutlet weak var SchBr: UISearchBar!
-    var repo: [[String: Any]] = []
+    @IBOutlet private weak var searchBar: UISearchBar!
+    var repository: [[String: Any]] = []
     var task: URLSessionTask?
     var word: String!
     var url: String!
-    var idx: Int!
+    var tappedRow: Int!
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        SchBr.text = "GitHubのリポジトリを検索できるよー"
-        SchBr.delegate = self
+        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.delegate = self
     }
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
+        // ↓こうすれば初期のテキストを消せるf
         searchBar.text = ""
         return true
     }
@@ -25,10 +25,10 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
         word = searchBar.text!
         if word.count != 0 {
             url = "https://api.github.com/search/repositories?q=\(word!)"
-            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, res, err) in
+            task = URLSession.shared.dataTask(with: URL(string: url)!) { (data, _, _) in
                 if let obj = try! JSONSerialization.jsonObject(with: data!) as? [String: Any] {
                     if let items = obj["items"] as? [[String: Any]] {
-                        self.repo = items
+                        self.repository = items
                         DispatchQueue.main.async {
                             self.tableView.reloadData()
                         }
@@ -41,24 +41,24 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
-            let dtl = segue.destination as! GitHubDetailViewController
-            dtl.gitHubSearchVC = self
+            let gitHubDetailVC = segue.destination as! GitHubDetailViewController
+            gitHubDetailVC.gitHubSearchVC = self
         }
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repo.count
+        return repository.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let rp = repo[indexPath.row]
-        cell.textLabel?.text = rp["full_name"] as? String ?? ""
-        cell.detailTextLabel?.text = rp["language"] as? String ?? ""
+        let repository = repository[indexPath.row]
+        cell.textLabel?.text = repository["full_name"] as? String ?? ""
+        cell.detailTextLabel?.text = repository["language"] as? String ?? ""
         cell.tag = indexPath.row
         return cell
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 画面遷移時に呼ばれる
-        idx = indexPath.row
+        tappedRow = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
 }
