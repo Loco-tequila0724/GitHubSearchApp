@@ -4,7 +4,7 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchViewController?
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
-    var gitHubRepository: [GitHubSearchEntity] = []
+    var gitHubList: [GitHubSearchEntity] = []
 
     init(
         view: GitHubSearchViewController? = nil,
@@ -20,7 +20,10 @@ extension GitHubSearchPresenter: GitHubPresentation {
     func viewDidLoad() {
     }
 
-    func searchButtonDidPush() {
+    func searchButtonDidPush(text: String) {
+        Task {
+            await interactor.fetchGitHubData(text: text)
+        }
     }
 
     func cancelButtonDidPush() {
@@ -31,6 +34,13 @@ extension GitHubSearchPresenter: GitHubPresentation {
 }
 
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    func didFetchGitHubResult(result: Result<[GitHubSearchEntity], ApiError>) {
+    func didFetchGitHubResult(result: Result<[GitHubSearchEntity?], ApiError>) {
+        switch result {
+        case .success(let gitHubList):
+            self.gitHubList = gitHubList.compactMap { $0 }
+            view?.tableViewReload()
+        case .failure(let error):
+            print(error)
+        }
     }
 }
