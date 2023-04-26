@@ -1,16 +1,19 @@
 import UIKit
 
-final class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
+final class GitHubSearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
     private(set) var repository: GitHubSearchEntity?
     private(set) var tappedRow: Int?
     private var task: URLSessionTask?
     private let decoder = JSONDecoder()
+    @IBOutlet weak var tableView: UITableView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.placeholder = "GitHubのリポジトリを検索"
         searchBar.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
@@ -52,22 +55,30 @@ final class GitHubSearchViewController: UITableViewController, UISearchBarDelega
             gitHubDetailVC?.gitHubSearchVC = self
         }
     }
+}
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+extension GitHubSearchViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return repository?.items?.count ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // swiftlint:disable line_length
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() }
+        // swiftlint:enable line_length
         let repository = repository?.items?[indexPath.row]
-        cell.textLabel?.text = repository?.fullName
-        cell.detailTextLabel?.text = repository?.language
-        cell.tag = indexPath.row
+
+        cell.configure(
+            fullName: repository?.fullName ?? "",
+            language: repository?.language ?? ""
+        )
+
         return cell
     }
+}
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // 画面遷移時に呼ばれる
+extension GitHubSearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tappedRow = indexPath.row
         performSegue(withIdentifier: "Detail", sender: self)
     }
