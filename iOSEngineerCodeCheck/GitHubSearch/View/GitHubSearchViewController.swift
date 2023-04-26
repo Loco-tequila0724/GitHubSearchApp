@@ -6,7 +6,7 @@ final class GitHubSearchViewController: UIViewController {
 //    private(set) var tappedRow: Int?
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
-    var presenter: GitHubPresentation!
+    var presenter: GitHubSearchPresentation!
 
     static func instantiate() -> GitHubSearchViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)

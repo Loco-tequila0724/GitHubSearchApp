@@ -16,7 +16,7 @@ final class GitHubSearchPresenter {
     }
 }
 
-extension GitHubSearchPresenter: GitHubPresentation {
+extension GitHubSearchPresenter: GitHubSearchPresentation {
     func viewDidLoad() {
         view?.configure()
     }

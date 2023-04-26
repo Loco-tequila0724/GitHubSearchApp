@@ -1,14 +1,14 @@
 import UIKit
 // View
 protocol GitHubSearchView: AnyObject {
-    var presenter: GitHubPresentation! { get }
+    var presenter: GitHubSearchPresentation! { get }
     func configure()
     func startLoading()
     func stopLoading()
     func tableViewReload()
 }
 // Presentergi
-protocol GitHubPresentation: AnyObject {
+protocol GitHubSearchPresentation: AnyObject {
     var view: GitHubSearchViewController? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
