@@ -30,7 +30,8 @@ extension GitHubSearchPresenter: GitHubPresentation {
     func cancelButtonDidPush() {
     }
 
-    func didSelectRow() {
+    func didSelectRow(gitHub: User) {
+        router.showGitHubDetailVC(gitHub: gitHub)
     }
 }
 

@@ -3,7 +3,7 @@ import UIKit
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
-    private(set) var tappedRow: Int?
+//    private(set) var tappedRow: Int?
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
     var presenter: GitHubPresentation!
@@ -17,13 +17,6 @@ final class GitHubSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
-    }
-
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let gitHubDetailVC = segue.destination as? GitHubDetailViewController
-            gitHubDetailVC?.gitHubSearchVC = self
-        }
     }
 }
 
@@ -84,7 +77,8 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tappedRow = indexPath.row
-        performSegue(withIdentifier: "Detail", sender: self)
+//        tappedRow = indexPath.row
+        let gitHub = presenter.gitHubList[indexPath.row]
+        presenter.didSelectRow(gitHub: gitHub)
     }
 }

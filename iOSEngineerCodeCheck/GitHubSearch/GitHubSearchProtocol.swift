@@ -7,7 +7,7 @@ protocol GitHubSearchView: AnyObject {
     func stopLoading()
     func tableViewReload()
 }
-// Presenter
+// Presentergi
 protocol GitHubPresentation: AnyObject {
     var view: GitHubSearchViewController? { get }
     var interactor: GitHubSearchInputUsecase { get }
@@ -19,7 +19,7 @@ protocol GitHubPresentation: AnyObject {
     /// キャンセルボタンのタップ通知
     func cancelButtonDidPush()
     /// セルタップを通知
-    func didSelectRow()
+    func didSelectRow(gitHub: User)
 }
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
@@ -34,5 +34,5 @@ protocol GitHubSearchOutputUsecase: AnyObject {
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
     static func assembleModules() -> UIViewController
-    func showGitHubDetailVC()
+    func showGitHubDetailVC(gitHub: User)
 }

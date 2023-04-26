@@ -23,6 +23,7 @@ extension GitHubSearchRouter {
         return view
     }
 
-    func showGitHubDetailVC() {
+    func showGitHubDetailVC(gitHub: User) {
+        
     }
 }
