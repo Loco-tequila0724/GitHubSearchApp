@@ -7,7 +7,7 @@ final class GitHubSearchPresenter {
     var gitHubList: [User] = []
 
     init(
-        view: GitHubSearchViewController? = nil,
+        view: GitHubSearchView? = nil,
         interactor: GitHubSearchInputUsecase,
         router: GitHubSearchWireFrame) {
         self.view = view

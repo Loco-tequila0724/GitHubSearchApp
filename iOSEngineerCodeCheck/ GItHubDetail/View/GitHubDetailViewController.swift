@@ -17,6 +17,7 @@ final class GitHubDetailViewController: UIViewController {
     static let storyboardName = "GitHubDetail"
 
     var gitHubSearchVC: GitHubSearchViewController!
+    var presenter: GitHubDetailPresenter!
 
     static func instantiate() -> GitHubDetailViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
@@ -60,4 +61,8 @@ final class GitHubDetailViewController: UIViewController {
 //            print(error)
 //        }
     }
+}
+
+extension GitHubDetailViewController: GitHubDetailView {
+
 }

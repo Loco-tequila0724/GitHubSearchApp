@@ -1,12 +1,13 @@
 import UIKit
 // View
 protocol GitHubDetailView: AnyObject {
-    var presenter: GitHubDetailPresenter { get }
+    var presenter: GitHubDetailPresenter! { get }
 }
 // Presentation
 protocol GitHubDetailPresentation: AnyObject {
     var view: GitHubDetailView? { get }
     var router: GitHubDetailRouter? { get }
+    var gitHub: User? { get }
 }
 // Router
 protocol GitHubDetailWireFrame: AnyObject {

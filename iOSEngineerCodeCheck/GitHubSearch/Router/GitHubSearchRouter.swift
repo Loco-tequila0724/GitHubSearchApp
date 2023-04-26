@@ -24,6 +24,5 @@ extension GitHubSearchRouter {
     }
 
     func showGitHubDetailVC(gitHub: User) {
-        
     }
 }
