@@ -12,7 +12,7 @@ protocol GitHubPresentation: AnyObject {
     var view: GitHubSearchViewController? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
-//    var gitHubRepository: [] { get }
+    var gitHubRepository: [GitHubSearchEntity] { get }
     func viewDidLoad()
     /// サーチボタンのタップ通知
     func searchButtonDidPush()
@@ -29,7 +29,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
-//    func didFetchGitHubResult(result: Result<[], erorr>)
+//    func didFetchGitHubResult(result: Result<[GitHubSearchEntity], erorr>)
 }
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
