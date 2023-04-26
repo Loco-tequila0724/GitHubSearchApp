@@ -10,29 +10,36 @@ class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var issuesLabel: UILabel!
 
     var gitHubSearchVC: GitHubSearchViewController!
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let repo = gitHubSearchVC.repository[gitHubSearchVC.tappedRow ?? 0]
-        languageLabel.text = "Written in \(repo["language"] as? String ?? "")"
-        starsLabel.text = "\(repo["stargazers_count"] as? Int ?? 0) stars"
-        wathcersLabel.text = "\(repo["wachers_count"] as? Int ?? 0) watchers"
-        forksLabel.text = "\(repo["forks_count"] as? Int ?? 0) forks"
-        issuesLabel.text = "\(repo["open_issues_count"] as? Int ?? 0) open issues"
-        getImage()
+        let repository = gitHubSearchVC.repository?.items?[gitHubSearchVC.tappedRow ?? 0]
+        languageLabel.text = repository?.language
+        wathcersLabel.text = String(repository?.watchersCount ?? 0)
+        forksLabel.text = String(repository?.forksCount ?? 0)
+        issuesLabel.text = String(repository?.openIssuesCount ?? 0)
+        Task {
+            await getImage()
+        }
     }
 
-    func getImage() {
-        let repo = gitHubSearchVC.repository[gitHubSearchVC.tappedRow ?? 0]
-        titleLabel.text = repo["full_name"] as? String
-        if let owner = repo["owner"] as? [String: Any] {
-            if let imageURL = owner["avatar_url"] as? String {
-                URLSession.shared.dataTask(with: URL(string: imageURL)!) { (data, _, _) in
-                    let image = UIImage(data: data!)!
-                    DispatchQueue.main.async {
-                        self.imageView.image = image
-                    }
-                }.resume()
+    func getImage() async {
+        let repo = gitHubSearchVC.repository?.items?[gitHubSearchVC.tappedRow ?? 0]
+        titleLabel.text = repo?.fullName
+        let imageURL = repo?.owner.avatarUrl
+        guard let imageURL else { return }
+        var request = URLRequest(url: imageURL)
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else { return }
+            let image = UIImage(data: data)
+            await MainActor.run {
+                self.imageView.image = image
             }
+        } catch {
+            print(error)
         }
     }
 }
