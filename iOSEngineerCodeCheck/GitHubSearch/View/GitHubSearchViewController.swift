@@ -1,12 +1,14 @@
 import UIKit
 
-final class GitHubSearchViewController: UIViewController, UISearchBarDelegate {
+final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     private(set) var repository: GitHubSearchEntity?
     private(set) var tappedRow: Int?
     private var task: URLSessionTask?
     private let decoder = JSONDecoder()
     @IBOutlet weak var tableView: UITableView!
+
+    var presenter: GitHubPresentation!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,24 +18,30 @@ final class GitHubSearchViewController: UIViewController, UISearchBarDelegate {
         tableView.delegate = self
     }
 
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.placeholder = ""
-        return true
-    }
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
-    }
-
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        Task {
-            await fetchGitHubData()
-            await MainActor.run {
-                self.tableView.reloadData()
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "Detail" {
+            let gitHubDetailVC = segue.destination as? GitHubDetailViewController
+            gitHubDetailVC?.gitHubSearchVC = self
         }
     }
+}
 
-    private func fetchGitHubData() async {
+extension GitHubSearchViewController: GitHubSearchView {
+    func configure() {
+    }
+
+    func startLoading() {
+    }
+
+    func stopLoading() {
+    }
+
+    func tableViewReload() {
+    }
+}
+
+private extension GitHubSearchViewController {
+    func fetchGitHubData() async {
         guard let text = searchBar.text, !text.isEmpty else { return }
         guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)") else { return }
         var request = URLRequest(url: url)
@@ -48,11 +56,23 @@ final class GitHubSearchViewController: UIViewController, UISearchBarDelegate {
             print(error)
         }
     }
+}
 
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "Detail" {
-            let gitHubDetailVC = segue.destination as? GitHubDetailViewController
-            gitHubDetailVC?.gitHubSearchVC = self
+extension GitHubSearchViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.placeholder = ""
+        return true
+    }
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        task?.cancel()
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        Task {
+            await fetchGitHubData()
+            await MainActor.run {
+                self.tableView.reloadData()
+            }
         }
     }
 }

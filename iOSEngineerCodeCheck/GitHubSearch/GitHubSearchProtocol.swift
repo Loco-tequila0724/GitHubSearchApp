@@ -1,7 +1,7 @@
 import Foundation
 // View
 protocol GitHubSearchView: AnyObject {
-    var presenter: GitHubPresentation { get }
+    var presenter: GitHubPresentation! { get }
     func configure()
     func startLoading()
     func stopLoading()
