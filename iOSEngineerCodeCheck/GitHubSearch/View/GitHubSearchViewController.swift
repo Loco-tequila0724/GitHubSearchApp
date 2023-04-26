@@ -2,12 +2,11 @@ import UIKit
 
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
+    @IBOutlet private weak var tableView: UITableView!
     private(set) var tappedRow: Int?
-    @IBOutlet weak var tableView: UITableView!
-
-    var presenter: GitHubPresentation!
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
+    var presenter: GitHubPresentation!
 
     static func instantiate() -> GitHubSearchViewController {
         let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
@@ -17,10 +16,7 @@ final class GitHubSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.placeholder = "GitHubのリポジトリを検索"
-        searchBar.delegate = self
-        tableView.dataSource = self
-        tableView.delegate = self
+        configure()
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -33,6 +29,10 @@ final class GitHubSearchViewController: UIViewController {
 
 extension GitHubSearchViewController: GitHubSearchView {
     func configure() {
+        searchBar.placeholder = "GitHubのリポジトリを検索"
+        searchBar.delegate = self
+        tableView.dataSource = self
+        tableView.delegate = self
     }
 
     func startLoading() {
@@ -78,7 +78,6 @@ extension GitHubSearchViewController: UITableViewDataSource {
             fullName: gitHub.fullName,
             language: gitHub.language ?? ""
         )
-
         return cell
     }
 }
