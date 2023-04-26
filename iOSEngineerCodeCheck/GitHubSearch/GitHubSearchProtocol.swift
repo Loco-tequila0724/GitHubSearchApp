@@ -29,7 +29,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
-//    func didFetchGitHubResult(result: Result<[GitHubSearchEntity], erorr>)
+    func didFetchGitHubResult(result: Result<[GitHubSearchEntity], ApiError>)
 }
 // Router
 protocol GitHubSearchWireFrame: AnyObject {

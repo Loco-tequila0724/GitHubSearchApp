@@ -29,3 +29,8 @@ extension GitHubSearchPresenter: GitHubPresentation {
     func didSelectRow() {
     }
 }
+
+extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
+    func didFetchGitHubResult(result: Result<[GitHubSearchEntity], ApiError>) {
+    }
+}
