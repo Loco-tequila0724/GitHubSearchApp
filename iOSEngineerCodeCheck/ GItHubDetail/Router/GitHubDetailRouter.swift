@@ -1,9 +1,25 @@
-//
-//  GitHubDetailRouter.swift
-//  iOSEngineerCodeCheck
-//
-//  Created by 日高隼人 on 2023/04/26.
-//  Copyright © 2023 YUMEMI Inc. All rights reserved.
-//
+import UIKit
 
-import Foundation
+final class GitHubDetailRouter {
+    var viewController: UIViewController?
+
+    init(viewController: UIViewController? = nil) {
+        self.viewController = viewController
+    }
+}
+
+extension GitHubDetailRouter: GitHubDetailWireFrame {
+    static func assembleModules(gitHub: User) -> UIViewController {
+        let view = GitHubDetailViewController.instantiate()
+        let router = GitHubDetailRouter(viewController: view)
+        let presenter = GitHubDetailPresenter(
+            view: view,
+            router: router
+        )
+
+        view.presenter = presenter
+        presenter.gitHub = gitHub
+
+        return view
+    }
+}
