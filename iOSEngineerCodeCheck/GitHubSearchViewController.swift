@@ -44,6 +44,7 @@ final class GitHubSearchViewController: UITableViewController, UISearchBarDelega
         searchBar.placeholder = "GitHubのリポジトリを検索"
         searchBar.delegate = self
     }
+
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
         searchBar.placeholder = ""
         return true
@@ -72,7 +73,6 @@ final class GitHubSearchViewController: UITableViewController, UISearchBarDelega
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else { return }
             repository = try decoder.decode(GitHubRepository.self, from: data)
-
         } catch let error {
             print(error)
         }
