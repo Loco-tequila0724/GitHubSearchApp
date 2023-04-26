@@ -13,8 +13,16 @@ final class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var wathcersLabel: UILabel!
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
+    static let storyboardID = "GitHubDetailID"
+    static let storyboardName = "GitHubDetail"
 
     var gitHubSearchVC: GitHubSearchViewController!
+
+    static func instantiate() -> GitHubDetailViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
+        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubDetailViewController
+        return view ?? GitHubDetailViewController()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
