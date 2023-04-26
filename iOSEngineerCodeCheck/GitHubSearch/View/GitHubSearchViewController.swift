@@ -1,40 +1,8 @@
 import UIKit
 
-struct GitHubRepository: Decodable {
-    var items: [User]?
-}
-
-struct User: Decodable {
-    let fullName: String
-    let language: String?
-    let stargazersCount: Int
-    let watchersCount: Int
-    let forksCount: Int
-    let openIssuesCount: Int
-    let owner: Owner
-
-    enum CodingKeys: String, CodingKey {
-        case language = "language"
-        case stargazersCount = "stargazers_count"
-        case watchersCount = "watchers_count"
-        case forksCount = "forks_count"
-        case openIssuesCount = "open_issues_count"
-        case fullName = "full_name"
-        case owner
-    }
-
-    struct Owner: Decodable {
-        let avatarUrl: URL
-
-        enum CodingKeys: String, CodingKey {
-            case avatarUrl = "avatar_url"
-        }
-    }
-}
-
 final class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
-    private(set) var repository: GitHubRepository?
+    private(set) var repository: GitHubSearchEntity?
     private(set) var tappedRow: Int?
     private var task: URLSessionTask?
     private let decoder = JSONDecoder()
@@ -72,7 +40,7 @@ final class GitHubSearchViewController: UITableViewController, UISearchBarDelega
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else { return }
-            repository = try decoder.decode(GitHubRepository.self, from: data)
+            repository = try decoder.decode(GitHubSearchEntity.self, from: data)
         } catch let error {
             print(error)
         }
