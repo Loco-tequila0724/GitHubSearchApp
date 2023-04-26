@@ -1,6 +1,6 @@
 import Foundation
 // View
-protocol GitHubSearchView {
+protocol GitHubSearchView: AnyObject {
     var presenter: GitHubPresentation { get }
     func configure()
     func startLoading()
@@ -8,7 +8,7 @@ protocol GitHubSearchView {
     func tableViewReload()
 }
 // Presenter
-protocol GitHubPresentation {
+protocol GitHubPresentation: AnyObject {
     var view: GitHubSearchViewController? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
@@ -22,17 +22,17 @@ protocol GitHubPresentation {
     func didSelectRow()
 }
 // Interactor インプット
-protocol GitHubSearchInputUsecase {
+protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
     /// API通信を行い、GitHubのデータを取得
     func fetchGitHubData(text: String)
 }
 // Interactor アウトプット
-protocol GitHubSearchOutputUsecase {
+protocol GitHubSearchOutputUsecase: AnyObject {
 //    func didFetchGitHubResult(result: Result<[], erorr>)
 }
 // Router
-protocol GitHubSearchWireFrame {
+protocol GitHubSearchWireFrame: AnyObject {
     static func assembleModules()
     func showGitHubDetailVC()
 }
