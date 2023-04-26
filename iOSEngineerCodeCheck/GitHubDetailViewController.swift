@@ -2,7 +2,12 @@ import UIKit
 
 final class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
-    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel! {
+        didSet {
+            titleLabel.adjustsFontSizeToFitWidth = true
+            titleLabel.minimumScaleFactor = 0.5
+        }
+    }
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
     @IBOutlet private weak var wathcersLabel: UILabel!
@@ -21,6 +26,11 @@ final class GitHubDetailViewController: UIViewController {
         Task {
             await getImage()
         }
+    }
+
+    deinit {
+        let fileName = NSString(#file).lastPathComponent as NSString
+        print(#function, " 🌀メモリが開放された", fileName)
     }
 
     private func getImage() async {
