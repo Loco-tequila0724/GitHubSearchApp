@@ -1,6 +1,6 @@
 import UIKit
 
-class GitHubDetailViewController: UIViewController {
+final class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
@@ -23,7 +23,7 @@ class GitHubDetailViewController: UIViewController {
         }
     }
 
-    func getImage() async {
+    private func getImage() async {
         let repo = gitHubSearchVC.repository?.items?[gitHubSearchVC.tappedRow ?? 0]
         titleLabel.text = repo?.fullName
         let imageURL = repo?.owner.avatarUrl

@@ -32,22 +32,20 @@ struct User: Decodable {
     }
 }
 
-class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
+final class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
     @IBOutlet private weak var searchBar: UISearchBar!
-//    var repository: [[String: Any]] = []
-    var repository: GitHubRepository?
-    var task: URLSessionTask?
-    var tappedRow: Int?
+    private(set) var repository: GitHubRepository?
+    private(set) var tappedRow: Int?
+    private var task: URLSessionTask?
     private let decoder = JSONDecoder()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.text = "GitHubのリポジトリを検索できるよー"
+        searchBar.placeholder = "GitHubのリポジトリを検索"
         searchBar.delegate = self
     }
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        // ↓こうすれば初期のテキストを消せる
-        searchBar.text = ""
+        searchBar.placeholder = ""
         return true
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -63,7 +61,7 @@ class GitHubSearchViewController: UITableViewController, UISearchBarDelegate {
         }
     }
 
-    func fetchGitHubData() async {
+    private func fetchGitHubData() async {
         guard let text = searchBar.text, !text.isEmpty else { return }
         guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)") else { return }
         var request = URLRequest(url: url)
