@@ -5,7 +5,6 @@ final class GitHubDetailPresenter {
     var router: GitHubDetailRouter?
     var gitHub: User?
 
-
     init(
         view: GitHubDetailView? = nil,
         router: GitHubDetailRouter? = nil) {
@@ -15,6 +14,4 @@ final class GitHubDetailPresenter {
 }
 
 extension GitHubDetailPresenter: GitHubDetailPresentation {
-
-
 }
