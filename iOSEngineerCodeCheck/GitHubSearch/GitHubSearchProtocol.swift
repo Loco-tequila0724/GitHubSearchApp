@@ -25,7 +25,7 @@ protocol GitHubPresentation: AnyObject {
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
     /// API通信を行い、GitHubのデータを取得
-    func fetchGitHubData(text: String)
+    func fetchGitHubData(text: String) async
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
