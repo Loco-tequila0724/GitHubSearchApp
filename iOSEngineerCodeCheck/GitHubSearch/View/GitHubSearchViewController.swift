@@ -26,8 +26,6 @@ final class GitHubSearchViewController: UIViewController {
         tableView.delegate = self
     }
 
-
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
             let gitHubDetailVC = segue.destination as? GitHubDetailViewController
@@ -63,7 +61,7 @@ private extension GitHubSearchViewController {
                 httpResponse.statusCode == 200 else { return }
             repository = try decoder.decode(GitHubSearchEntity.self, from: data)
         } catch let error {
-            print(error)
+            Debug.log(errorDescription: error.localizedDescription)
         }
     }
 }
