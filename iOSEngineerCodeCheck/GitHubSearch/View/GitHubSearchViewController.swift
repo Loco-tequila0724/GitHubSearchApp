@@ -9,6 +9,14 @@ final class GitHubSearchViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
 
     var presenter: GitHubPresentation!
+    private static let storyboardID = "GitHubSearchID"
+    private static let storyboardName = "Main"
+
+    static func instantiate() -> GitHubSearchViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
+        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubSearchViewController
+        return view ?? GitHubSearchViewController()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -17,6 +25,8 @@ final class GitHubSearchViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
     }
+
+
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Detail" {
