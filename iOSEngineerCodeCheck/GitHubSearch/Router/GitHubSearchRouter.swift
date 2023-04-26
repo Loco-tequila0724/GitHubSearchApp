@@ -24,5 +24,7 @@ extension GitHubSearchRouter {
     }
 
     func showGitHubDetailVC(gitHub: User) {
+        let gitHubDetailRouterVC = GitHubDetailRouter.assembleModules(gitHub: gitHub)
+        viewController?.navigationController?.pushViewController(gitHubDetailRouterVC, animated: true)
     }
 }
