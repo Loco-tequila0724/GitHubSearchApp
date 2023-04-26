@@ -1,4 +1,4 @@
-import Foundation
+import UIKit
 // View
 protocol GitHubSearchView: AnyObject {
     var presenter: GitHubPresentation! { get }
@@ -33,6 +33,6 @@ protocol GitHubSearchOutputUsecase: AnyObject {
 }
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
-    static func assembleModules()
+    static func assembleModules() -> UIViewController
     func showGitHubDetailVC()
 }

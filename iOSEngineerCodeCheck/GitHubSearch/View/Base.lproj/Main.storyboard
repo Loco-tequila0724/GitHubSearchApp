@@ -12,7 +12,7 @@
         <!--Git Hub Search View Controller-->
         <scene sceneID="bnp-OC-hXZ">
             <objects>
-                <viewController storyboardIdentifier=" GitHubSearchID" id="mWg-7I-heg" customClass="GitHubSearchViewController" customModule="iOSEngineerCodeCheck" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GitHubSearchID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="mWg-7I-heg" customClass="GitHubSearchViewController" customModule="iOSEngineerCodeCheck" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1J3-FJ-FfJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
