@@ -1,7 +1,7 @@
 import Foundation
 
 final class GitHubSearchPresenter {
-    weak var view: GitHubSearchViewController?
+    weak var view: GitHubSearchView?
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
     var gitHubList: [User] = []

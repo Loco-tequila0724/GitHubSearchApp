@@ -9,7 +9,7 @@ protocol GitHubSearchView: AnyObject {
 }
 // Presentergi
 protocol GitHubSearchPresentation: AnyObject {
-    var view: GitHubSearchViewController? { get }
+    var view: GitHubSearchView? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
     var gitHubList: [User] { get }
