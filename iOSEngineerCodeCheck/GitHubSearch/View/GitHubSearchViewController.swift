@@ -2,10 +2,7 @@ import UIKit
 
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
-    private(set) var repository: GitHubSearchEntity?
     private(set) var tappedRow: Int?
-    private var task: URLSessionTask?
-    private let decoder = JSONDecoder()
     @IBOutlet weak var tableView: UITableView!
 
     var presenter: GitHubPresentation!
@@ -45,23 +42,8 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     func tableViewReload() {
-    }
-}
-
-private extension GitHubSearchViewController {
-    func fetchGitHubData() async {
-        guard let text = searchBar.text, !text.isEmpty else { return }
-        guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)") else { return }
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-
-        do {
-            let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200 else { return }
-            repository = try decoder.decode(GitHubSearchEntity.self, from: data)
-        } catch let error {
-            Debug.log(errorDescription: error.localizedDescription)
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
         }
     }
 }
@@ -72,33 +54,29 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         return true
     }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        task?.cancel()
+//      task?.cancel()
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        Task {
-            await fetchGitHubData()
-            await MainActor.run {
-                self.tableView.reloadData()
-            }
-        }
+        guard let text = searchBar.text, !text.isEmpty else { return }
+        presenter.searchButtonDidPush(text: text)
     }
 }
 
 extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return repository?.items?.count ?? 0
+        return presenter.gitHubList.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // swiftlint:disable line_length
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() }
         // swiftlint:enable line_length
-        let repository = repository?.items?[indexPath.row]
+        let gitHub = presenter.gitHubList[indexPath.row]
 
         cell.configure(
-            fullName: repository?.fullName ?? "",
-            language: repository?.language ?? ""
+            fullName: gitHub.fullName,
+            language: gitHub.language ?? ""
         )
 
         return cell
