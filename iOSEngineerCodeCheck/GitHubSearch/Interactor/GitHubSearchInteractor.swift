@@ -29,10 +29,9 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
             gitHubRepository = .success(gitHubList)
             presenter?.didFetchGitHubResult(result: gitHubRepository)
         } catch let error {
-            gitHubRepository = .failure(.serverError)
+            gitHubRepository = .failure(.invalidData)
             presenter?.didFetchGitHubResult(result: gitHubRepository)
             Debug.log(errorDescription: error.localizedDescription)
         }
     }
 }
-
