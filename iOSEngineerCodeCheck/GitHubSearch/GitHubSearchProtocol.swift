@@ -6,6 +6,7 @@ protocol GitHubSearchView: AnyObject {
     func startLoading()
     func stopLoading()
     func tableViewReload()
+    func resetGitList()
     func appearErrorAlert(message: String)
     func appearNotFound(text: String)
 }

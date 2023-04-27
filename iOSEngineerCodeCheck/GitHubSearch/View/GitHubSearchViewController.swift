@@ -33,8 +33,13 @@ extension GitHubSearchViewController: GitHubSearchView {
         frontView.isHidden = true
     }
 
-    func appearErrorAlert(message: String) {
-        self.errorAlert(message: message)
+    func resetGitList() {
+        DispatchQueue.main.async {
+            self.frontView.isHidden = true
+            self.indicatorView.isHidden = true
+            self.notFoundLabel.isHidden = true
+            self.tableView.reloadData()
+        }
     }
 
     func startLoading() {
@@ -53,8 +58,11 @@ extension GitHubSearchViewController: GitHubSearchView {
         }
     }
 
+    func appearErrorAlert(message: String) {
+        self.errorAlert(message: message)
+    }
+
     func appearNotFound(text: String) {
-        print(text)
         DispatchQueue.main.async {
             self.indicatorView.stopAnimating()
             self.frontView.isHidden = false

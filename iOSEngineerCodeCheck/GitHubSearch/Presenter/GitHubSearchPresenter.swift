@@ -22,8 +22,9 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func searchButtonDidPush(text: String) {
+        gitHubList = []
+        view?.resetGitList()
         view?.startLoading()
-        view?.tableViewReload()
         Task {
             await interactor.fetchGitHubData(text: text)
         }
