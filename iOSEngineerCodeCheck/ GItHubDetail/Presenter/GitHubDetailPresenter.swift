@@ -14,4 +14,7 @@ final class GitHubDetailPresenter {
 }
 
 extension GitHubDetailPresenter: GitHubDetailPresentation {
+    func viewDidLoad() {
+        view?.configure()
+    }
 }
