@@ -42,7 +42,8 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             self.gitHubList = gitHubList.items ?? []
             view?.tableViewReload()
         case .failure(let error):
-            print(error)
+            view?.appearErrorAlert(message: error.localizedDescription)
+            Debug.log(errorDescription: error.localizedDescription)
         }
     }
 }

@@ -6,6 +6,7 @@ protocol GitHubSearchView: AnyObject {
     func startLoading()
     func stopLoading()
     func tableViewReload()
+    func appearErrorAlert(message: String)
 }
 // Presentergi
 protocol GitHubSearchPresentation: AnyObject {

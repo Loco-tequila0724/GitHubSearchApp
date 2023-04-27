@@ -15,7 +15,7 @@ final class GitHubSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
+        presenter.viewDidLoad()
     }
 }
 
@@ -25,6 +25,10 @@ extension GitHubSearchViewController: GitHubSearchView {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+    }
+
+    func appearErrorAlert(message: String) {
+        self.errorAlert(message: message)
     }
 
     func startLoading() {
