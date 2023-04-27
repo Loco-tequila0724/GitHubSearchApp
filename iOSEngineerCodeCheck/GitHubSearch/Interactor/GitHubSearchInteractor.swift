@@ -16,8 +16,8 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
         }
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
-        do {
 
+        do {
             let (data, response) = try await URLSession.shared.data(for: request)
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {
@@ -25,16 +25,18 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
                 return
             }
             let gitHubList = try decoder.decode(GitHubSearchEntity.self, from: data)
-            
+
             let isEmpty = (gitHubList.items?.compactMap { $0 }.isEmpty)!
+
             if isEmpty {
                 gitHubRepository = .failure(.notFound)
+                // gitHubのデータが空だった場合は、NotFoundエラーを渡す。
                 presenter?.didFetchGitHubResult(result: gitHubRepository)
             } else {
                 gitHubRepository = .success(gitHubList)
+                //  GitHubのデータを返す。
                 presenter?.didFetchGitHubResult(result: gitHubRepository)
             }
-
         } catch let error {
             gitHubRepository = .failure(.invalidData)
             presenter?.didFetchGitHubResult(result: gitHubRepository)

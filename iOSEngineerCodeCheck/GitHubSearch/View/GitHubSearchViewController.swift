@@ -9,13 +9,8 @@ final class GitHubSearchViewController: UIViewController {
 
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
-    var presenter: GitHubSearchPresentation!
 
-    static func instantiate() -> GitHubSearchViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
-        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubSearchViewController
-        return view ?? GitHubSearchViewController()
-    }
+    var presenter: GitHubSearchPresentation!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +18,14 @@ final class GitHubSearchViewController: UIViewController {
     }
 }
 
+extension GitHubSearchViewController {
+    static func instantiate() -> GitHubSearchViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
+        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubSearchViewController
+        return view ?? GitHubSearchViewController()
+    }
+}
+// MARK: - GitHubSearchViewプロトコルに関する -
 extension GitHubSearchViewController: GitHubSearchView {
     func configure() {
         searchBar.placeholder = "GitHubのリポジトリを検索"
@@ -32,7 +35,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         notFoundLabel.text = nil
         frontView.isHidden = true
     }
-
+    /// 画面の状態をリセットする
     func resetGitList() {
         DispatchQueue.main.async {
             self.frontView.isHidden = true
@@ -41,7 +44,7 @@ extension GitHubSearchViewController: GitHubSearchView {
             self.tableView.reloadData()
         }
     }
-
+    /// ローディング中を表示
     func startLoading() {
         DispatchQueue.main.async {
             self.indicatorView.startAnimating()
@@ -49,7 +52,7 @@ extension GitHubSearchViewController: GitHubSearchView {
             self.indicatorView.isHidden = false
         }
     }
-
+    /// ローディング画面を停止
     func stopLoading() {
         DispatchQueue.main.async {
             self.indicatorView.stopAnimating()
@@ -57,11 +60,11 @@ extension GitHubSearchViewController: GitHubSearchView {
             self.indicatorView.isHidden = true
         }
     }
-
+    /// エラーの表示
     func appearErrorAlert(message: String) {
         self.errorAlert(message: message)
     }
-
+    /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(text: String) {
         DispatchQueue.main.async {
             self.frontView.isHidden = false
@@ -79,6 +82,7 @@ extension GitHubSearchViewController: GitHubSearchView {
 
 extension GitHubSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // テキストが空になったらテーブルビューをクリア。
         guard let isEmptyText = searchBar.text?.isEmpty else { return }
         if isEmptyText {
             presenter.searchTextDidChange()
@@ -90,12 +94,13 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else { return }
-
+        // 検索を通知。 GitHubデータを取得の指示
         presenter.searchButtonDidPush(text: text)
         searchBar.resignFirstResponder()
     }
 
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        // 画面の状態をリセットする
         presenter.searchBarCancelButtonClicked()
     }
 }
@@ -120,6 +125,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let gitHub = presenter.gitHubList[indexPath.row]
+        // セルタップを通知。githubデータを返す。
         presenter.didSelectRow(gitHub: gitHub)
     }
 }

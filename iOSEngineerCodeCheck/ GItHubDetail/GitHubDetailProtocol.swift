@@ -8,10 +8,10 @@ protocol GitHubDetailView: AnyObject {
 protocol GitHubDetailPresentation: AnyObject {
     var view: GitHubDetailView? { get }
     var router: GitHubDetailRouter? { get }
-    var gitHub: User? { get }
+    var gitHubItem: GitHubItem? { get }
     func viewDidLoad()
 }
 // Router
 protocol GitHubDetailWireFrame: AnyObject {
-    static func assembleModules(gitHub: User) -> UIViewController
+    static func assembleModules(gitHubItem: GitHubItem) -> UIViewController
 }

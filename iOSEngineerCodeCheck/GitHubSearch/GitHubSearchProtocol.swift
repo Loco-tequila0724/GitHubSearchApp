@@ -10,12 +10,12 @@ protocol GitHubSearchView: AnyObject {
     func appearErrorAlert(message: String)
     func appearNotFound(text: String)
 }
-// Presentergi
+// Presenter
 protocol GitHubSearchPresentation: AnyObject {
     var view: GitHubSearchView? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
-    var gitHubList: [User] { get }
+    var gitHubList: [GitHubItem] { get }
     func viewDidLoad()
     /// サーチボタンのタップ通知
     func searchButtonDidPush(text: String)
@@ -24,20 +24,21 @@ protocol GitHubSearchPresentation: AnyObject {
     /// キャンセルボタンのタップ通知
     func searchBarCancelButtonClicked()
     /// セルタップを通知
-    func didSelectRow(gitHub: User)
+    func didSelectRow(gitHub: GitHubItem)
 }
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
-    /// API通信を行い、GitHubのデータを取得
+    /// API通信を行い、GitHubのデータをデータベースから取得
     func fetchGitHubData(text: String) async
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
+    /// 取得したデータの結果を加工する
     func didFetchGitHubResult(result: Result<GitHubSearchEntity, ApiError>)
 }
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
     static func assembleModules() -> UIViewController
-    func showGitHubDetailVC(gitHub: User)
+    func showGitHubDetailVC(gitHub: GitHubItem)
 }

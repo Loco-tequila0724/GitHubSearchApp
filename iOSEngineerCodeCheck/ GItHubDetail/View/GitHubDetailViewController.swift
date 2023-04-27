@@ -13,16 +13,11 @@ final class GitHubDetailViewController: UIViewController {
     @IBOutlet private weak var wathcersLabel: UILabel!
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
-    static let storyboardID = "GitHubDetailID"
-    static let storyboardName = "GitHubDetail"
+
+    private static let storyboardID = "GitHubDetailID"
+    private static let storyboardName = "GitHubDetail"
 
     var presenter: GitHubDetailPresenter!
-
-    static func instantiate() -> GitHubDetailViewController {
-        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
-        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubDetailViewController
-        return view ?? GitHubDetailViewController()
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,16 +30,24 @@ final class GitHubDetailViewController: UIViewController {
     }
 }
 
+extension GitHubDetailViewController {
+    static func instantiate() -> GitHubDetailViewController {
+        let storyboard = UIStoryboard(name: storyboardName, bundle: Bundle.main)
+        let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubDetailViewController
+        return view ?? GitHubDetailViewController()
+    }
+}
+
 extension GitHubDetailViewController: GitHubDetailView {
     func configure() {
-        guard let gitHub = presenter.gitHub else { return }
-        let imageURL = gitHub.owner.avatarUrl
+        guard let gitHubItem = presenter.gitHubItem else { return }
+        let imageURL = gitHubItem.owner.avatarUrl
         imageView.loadImageAsynchronous(url: imageURL)
-        titleLabel.text = gitHub.fullName
-        languageLabel.text = "Written in \(gitHub.language ?? "")"
-        starsLabel.text = "\(String(gitHub.stargazersCount)) stars"
-        wathcersLabel.text = "\(String(gitHub.watchersCount)) watchers"
-        forksLabel.text = "\(String(gitHub.forksCount)) forks"
-        issuesLabel.text = "\(String(gitHub.openIssuesCount)) open issues"
+        titleLabel.text = gitHubItem.fullName
+        languageLabel.text = "Written in \(gitHubItem.language ?? "")"
+        starsLabel.text = "\(String(gitHubItem.stargazersCount)) stars"
+        wathcersLabel.text = "\(String(gitHubItem.watchersCount)) watchers"
+        forksLabel.text = "\(String(gitHubItem.forksCount)) forks"
+        issuesLabel.text = "\(String(gitHubItem.openIssuesCount)) open issues"
     }
 }

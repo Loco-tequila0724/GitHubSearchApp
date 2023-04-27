@@ -9,7 +9,7 @@ final class GitHubDetailRouter {
 }
 
 extension GitHubDetailRouter: GitHubDetailWireFrame {
-    static func assembleModules(gitHub: User) -> UIViewController {
+    static func assembleModules(gitHubItem: GitHubItem) -> UIViewController {
         let view = GitHubDetailViewController.instantiate()
         let router = GitHubDetailRouter(viewController: view)
         let presenter = GitHubDetailPresenter(
@@ -18,7 +18,7 @@ extension GitHubDetailRouter: GitHubDetailWireFrame {
         )
 
         view.presenter = presenter
-        presenter.gitHub = gitHub
+        presenter.gitHubItem = gitHubItem
 
         return view
     }

@@ -1,14 +1,13 @@
 import UIKit
 
-final class GitHubSearchRouter: GitHubSearchWireFrame {
+final class GitHubSearchRouter {
     private weak var viewController: UIViewController?
-
     private init(viewController: UIViewController? = nil) {
         self.viewController = viewController
     }
 }
 
-extension GitHubSearchRouter {
+extension GitHubSearchRouter: GitHubSearchWireFrame {
     static func assembleModules() -> UIViewController {
         let view = GitHubSearchViewController.instantiate()
         let interactor = GitHubSearchInteractor()
@@ -23,8 +22,8 @@ extension GitHubSearchRouter {
         return view
     }
 
-    func showGitHubDetailVC(gitHub: User) {
-        let gitHubDetailRouterVC = GitHubDetailRouter.assembleModules(gitHub: gitHub)
+    func showGitHubDetailVC(gitHub: GitHubItem) {
+        let gitHubDetailRouterVC = GitHubDetailRouter.assembleModules(gitHubItem: gitHub)
         viewController?.navigationController?.pushViewController(gitHubDetailRouterVC, animated: true)
     }
 }
