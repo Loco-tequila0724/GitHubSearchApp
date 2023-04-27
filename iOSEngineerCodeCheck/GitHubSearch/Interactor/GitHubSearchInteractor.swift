@@ -19,13 +19,21 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
-            guard let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200 else {
-                gitHubRepository = .failure(.serverError)
+            let httpResponse = response as? HTTPURLResponse
+
+            if httpResponse?.statusCode == 403 {
+                gitHubRepository = .failure(.forbidden)
+                presenter?.didFetchGitHubResult(result: gitHubRepository)
                 return
             }
-            let gitHubList = try decoder.decode(GitHubSearchEntity.self, from: data)
+            // リクエスト成功しなかったらエラーを返す
+            guard httpResponse?.statusCode == 200 else {
+                gitHubRepository = .failure(.serverError)
+                presenter?.didFetchGitHubResult(result: gitHubRepository)
+                return
+            }
 
+            let gitHubList = try decoder.decode(GitHubSearchEntity.self, from: data)
             let isEmpty = (gitHubList.items?.compactMap { $0 }.isEmpty)!
 
             if isEmpty {
