@@ -19,6 +19,8 @@ protocol GitHubSearchPresentation: AnyObject {
     func viewDidLoad()
     /// サーチボタンのタップ通知
     func searchButtonDidPush(text: String)
+    /// 検索テキストの変更を通知
+    func searchTextDidChange()
     /// キャンセルボタンのタップ通知
     func cancelButtonDidPush()
     /// セルタップを通知

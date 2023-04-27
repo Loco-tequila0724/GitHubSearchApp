@@ -80,12 +80,14 @@ extension GitHubSearchViewController: GitHubSearchView {
 }
 
 extension GitHubSearchViewController: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        searchBar.placeholder = ""
-        return true
-    }
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//      task?.cancel()
+        guard let isEmptyText = searchBar.text?.isEmpty else { return }
+        if isEmptyText {
+            presenter.searchTextDidChange()
+            searchBar.placeholder = "GitHub リポジトリを検索"
+        } else {
+            searchBar.placeholder = ""
+        }
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

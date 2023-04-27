@@ -33,6 +33,11 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     func cancelButtonDidPush() {
     }
 
+    func searchTextDidChange() {
+        gitHubList = []
+        view?.resetGitList()
+    }
+
     func didSelectRow(gitHub: User) {
         router.showGitHubDetailVC(gitHub: gitHub)
     }
