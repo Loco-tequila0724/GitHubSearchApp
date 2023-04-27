@@ -50,7 +50,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         view?.stopLoading()
         switch result {
         case .success(let gitHubList):
-            self.gitHubList = gitHubList.items ?? []
+            self.gitHubList = gitHubList.items!
             view?.tableViewReload()
         case .failure(let error):
             if error == .notFound {

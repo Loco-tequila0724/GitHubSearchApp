@@ -37,7 +37,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         DispatchQueue.main.async {
             self.frontView.isHidden = true
             self.indicatorView.isHidden = true
-            self.notFoundLabel.isHidden = true
+            self.notFoundLabel.text = nil
             self.tableView.reloadData()
         }
     }
@@ -64,10 +64,8 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     func appearNotFound(text: String) {
         DispatchQueue.main.async {
-            self.indicatorView.stopAnimating()
             self.frontView.isHidden = false
             self.indicatorView.isHidden = true
-            self.notFoundLabel.isHidden = false
             self.notFoundLabel.text = text
         }
     }
