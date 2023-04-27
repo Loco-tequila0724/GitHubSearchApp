@@ -96,6 +96,10 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         presenter.searchButtonDidPush(text: text)
         searchBar.resignFirstResponder()
     }
+
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        presenter.searchBarCancelButtonClicked()
+    }
 }
 
 extension GitHubSearchViewController: UITableViewDataSource {

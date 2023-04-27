@@ -30,10 +30,12 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         }
     }
 
-    func cancelButtonDidPush() {
+    func searchTextDidChange() {
+        gitHubList = []
+        view?.resetGitList()
     }
 
-    func searchTextDidChange() {
+    func searchBarCancelButtonClicked() {
         gitHubList = []
         view?.resetGitList()
     }

@@ -22,7 +22,7 @@ protocol GitHubSearchPresentation: AnyObject {
     /// 検索テキストの変更を通知
     func searchTextDidChange()
     /// キャンセルボタンのタップ通知
-    func cancelButtonDidPush()
+    func searchBarCancelButtonClicked()
     /// セルタップを通知
     func didSelectRow(gitHub: User)
 }
