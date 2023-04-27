@@ -22,6 +22,8 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func searchButtonDidPush(text: String) {
+        view?.startLoading()
+        view?.tableViewReload()
         Task {
             await interactor.fetchGitHubData(text: text)
         }
@@ -37,13 +39,18 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     func didFetchGitHubResult(result: Result<GitHubSearchEntity, ApiError>) {
+        view?.stopLoading()
         switch result {
         case .success(let gitHubList):
             self.gitHubList = gitHubList.items ?? []
             view?.tableViewReload()
         case .failure(let error):
-            view?.appearErrorAlert(message: error.localizedDescription)
-            Debug.log(errorDescription: error.localizedDescription)
+            if error == .notFound {
+                view?.appearNotFound(text: error.errorDescription!)
+            } else {
+                view?.appearErrorAlert(message: error.errorDescription!)
+                Debug.log(errorDescription: error.errorDescription!)
+            }
         }
     }
 }

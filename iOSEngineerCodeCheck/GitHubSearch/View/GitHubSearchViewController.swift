@@ -3,6 +3,10 @@ import UIKit
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var notFoundLabel: UILabel!
+    @IBOutlet private weak var frontView: UIView!
+    @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
     var presenter: GitHubSearchPresentation!
@@ -25,6 +29,8 @@ extension GitHubSearchViewController: GitHubSearchView {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
+        notFoundLabel.text = nil
+        frontView.isHidden = true
     }
 
     func appearErrorAlert(message: String) {
@@ -32,9 +38,30 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     func startLoading() {
+        DispatchQueue.main.async {
+            self.indicatorView.startAnimating()
+            self.frontView.isHidden = false
+            self.indicatorView.isHidden = false
+        }
     }
 
     func stopLoading() {
+        DispatchQueue.main.async {
+            self.indicatorView.stopAnimating()
+            self.frontView.isHidden = true
+            self.indicatorView.isHidden = true
+        }
+    }
+
+    func appearNotFound(text: String) {
+        print(text)
+        DispatchQueue.main.async {
+            self.indicatorView.stopAnimating()
+            self.frontView.isHidden = false
+            self.indicatorView.isHidden = true
+            self.notFoundLabel.isHidden = false
+            self.notFoundLabel.text = text
+        }
     }
 
     func tableViewReload() {
@@ -55,7 +82,9 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let text = searchBar.text, !text.isEmpty else { return }
+
         presenter.searchButtonDidPush(text: text)
+        searchBar.resignFirstResponder()
     }
 }
 
