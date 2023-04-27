@@ -58,21 +58,59 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
+                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果がみつかりませんでした。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14X-ZN-avM">
+                                        <rect key="frame" x="20" y="345" width="374" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="24" id="6vl-Xw-dfl"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
+                                        <rect key="frame" x="188.5" y="338.5" width="37" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="37" id="YKQ-dH-hbP"/>
+                                            <constraint firstAttribute="height" constant="37" id="rQQ-Vh-kgZ"/>
+                                        </constraints>
+                                        <color key="color" systemColor="labelColor"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="0Is-bs-A6k"/>
+                                    <constraint firstAttribute="trailing" secondItem="14X-ZN-avM" secondAttribute="trailing" constant="20" id="9MB-ow-W72"/>
+                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" id="S8x-kc-iOR"/>
+                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" id="inW-Sz-oRi"/>
+                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="r1u-lW-wAK"/>
+                                    <constraint firstItem="14X-ZN-avM" firstAttribute="leading" secondItem="zS5-Kj-DSu" secondAttribute="leading" constant="20" id="rfX-CX-odX"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o1j-4d-bjU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Nhh-bC-RlQ" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="6uG-dU-nVV"/>
+                            <constraint firstItem="o1j-4d-bjU" firstAttribute="bottom" secondItem="zS5-Kj-DSu" secondAttribute="bottom" id="I53-3F-Rul"/>
                             <constraint firstItem="liG-7t-Vgz" firstAttribute="top" secondItem="Nhh-bC-RlQ" secondAttribute="bottom" id="TTD-u0-6e0"/>
+                            <constraint firstItem="o1j-4d-bjU" firstAttribute="trailing" secondItem="zS5-Kj-DSu" secondAttribute="trailing" id="UvD-tM-F6X"/>
                             <constraint firstItem="o1j-4d-bjU" firstAttribute="bottom" secondItem="liG-7t-Vgz" secondAttribute="bottom" id="VpC-Y0-CYu"/>
                             <constraint firstItem="o1j-4d-bjU" firstAttribute="trailing" secondItem="liG-7t-Vgz" secondAttribute="trailing" id="dHa-2R-fNa"/>
                             <constraint firstItem="Nhh-bC-RlQ" firstAttribute="trailing" secondItem="o1j-4d-bjU" secondAttribute="trailing" id="fAW-li-Bof"/>
                             <constraint firstItem="liG-7t-Vgz" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="fpt-g4-sYS"/>
+                            <constraint firstItem="zS5-Kj-DSu" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="nO3-wr-JMc"/>
+                            <constraint firstItem="zS5-Kj-DSu" firstAttribute="top" secondItem="Nhh-bC-RlQ" secondAttribute="bottom" id="qnl-kh-M29"/>
                             <constraint firstItem="Nhh-bC-RlQ" firstAttribute="top" secondItem="o1j-4d-bjU" secondAttribute="top" id="rZj-22-Ai0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="33R-Tc-5jc"/>
                     <connections>
+                        <outlet property="frontView" destination="zS5-Kj-DSu" id="yYA-Ty-Oef"/>
+                        <outlet property="indicatorView" destination="51X-Gw-He7" id="Wxu-BB-IN5"/>
+                        <outlet property="notFoundLabel" destination="14X-ZN-avM" id="D0V-Ox-bGZ"/>
                         <outlet property="searchBar" destination="Nhh-bC-RlQ" id="Yf2-Ic-9fK"/>
                         <outlet property="tableView" destination="liG-7t-Vgz" id="use-vi-cFH"/>
                     </connections>
@@ -101,6 +139,9 @@
         </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
