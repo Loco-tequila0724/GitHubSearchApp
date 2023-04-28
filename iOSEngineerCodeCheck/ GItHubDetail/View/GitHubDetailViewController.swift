@@ -40,6 +40,7 @@ extension GitHubDetailViewController {
 
 extension GitHubDetailViewController: GitHubDetailView {
     func configure() {
+        setupNavigationBar(title: "詳細")
         guard let gitHubItem = presenter.gitHubItem else { return }
         let imageURL = gitHubItem.owner.avatarUrl
         imageView.loadImageAsynchronous(url: imageURL)
