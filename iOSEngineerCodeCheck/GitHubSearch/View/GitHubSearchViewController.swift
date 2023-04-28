@@ -16,6 +16,7 @@ final class GitHubSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+
     }
 }
 
@@ -35,6 +36,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         tableView.delegate = self
         notFoundLabel.text = nil
         frontView.isHidden = true
+        setupNavigationBar(title: "リポジトリを検索")
     }
     /// 画面の状態をリセットする
     func resetGitList() {
@@ -113,6 +115,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
         let gitHub = presenter.gitHubList[indexPath.row]
+        cell.selectionStyle = .none
 
         cell.configure(
             fullName: gitHub.fullName,

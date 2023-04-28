@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Nhh-bC-RlQ">
-                                <rect key="frame" x="0.0" y="92" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="177" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="mWg-7I-heg" id="f3E-NW-Esu"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="liG-7t-Vgz">
-                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
+                                <rect key="frame" x="0.0" y="233" width="414" height="663"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GitHubSearchCell" rowHeight="85" id="cPw-yt-da1" customClass="GitHubSearchTableViewCell" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
@@ -48,7 +48,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MS1-kr-SfU">
                                                     <rect key="frame" x="115" y="48" width="236" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -63,10 +63,10 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
-                                <rect key="frame" x="0.0" y="148" width="414" height="714"/>
+                                <rect key="frame" x="0.0" y="233" width="414" height="629"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果がみつかりませんでした。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14X-ZN-avM">
-                                        <rect key="frame" x="20" y="345" width="374" height="24"/>
+                                        <rect key="frame" x="20" y="357.5" width="374" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="6vl-Xw-dfl"/>
                                         </constraints>
@@ -75,7 +75,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
-                                        <rect key="frame" x="188.5" y="338.5" width="37" height="37"/>
+                                        <rect key="frame" x="188.5" y="351" width="37" height="37"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="37" id="YKQ-dH-hbP"/>
                                             <constraint firstAttribute="height" constant="37" id="rQQ-Vh-kgZ"/>
@@ -87,27 +87,35 @@
                                 <constraints>
                                     <constraint firstItem="51X-Gw-He7" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="0Is-bs-A6k"/>
                                     <constraint firstAttribute="trailing" secondItem="14X-ZN-avM" secondAttribute="trailing" constant="20" id="9MB-ow-W72"/>
-                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" id="S8x-kc-iOR"/>
-                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" id="inW-Sz-oRi"/>
+                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" constant="55" id="S8x-kc-iOR"/>
+                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" constant="55" id="inW-Sz-oRi"/>
                                     <constraint firstItem="14X-ZN-avM" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="r1u-lW-wAK"/>
-                                    <constraint firstItem="14X-ZN-avM" firstAttribute="leading" secondItem="zS5-Kj-DSu" secondAttribute="leading" constant="20" id="rfX-CX-odX"/>
                                 </constraints>
                             </view>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="スクリーンショット 2023-04-28 20.37.48" translatesAutoresizingMaskIntoConstraints="NO" id="mCI-xK-GLQ">
+                                <rect key="frame" x="100" y="107" width="214" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="34I-oy-Oku"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o1j-4d-bjU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Nhh-bC-RlQ" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="6uG-dU-nVV"/>
+                            <constraint firstItem="mCI-xK-GLQ" firstAttribute="top" secondItem="o1j-4d-bjU" secondAttribute="top" constant="15" id="9Xk-wH-bFJ"/>
                             <constraint firstItem="o1j-4d-bjU" firstAttribute="bottom" secondItem="zS5-Kj-DSu" secondAttribute="bottom" id="I53-3F-Rul"/>
                             <constraint firstItem="liG-7t-Vgz" firstAttribute="top" secondItem="Nhh-bC-RlQ" secondAttribute="bottom" id="TTD-u0-6e0"/>
                             <constraint firstItem="o1j-4d-bjU" firstAttribute="trailing" secondItem="zS5-Kj-DSu" secondAttribute="trailing" id="UvD-tM-F6X"/>
-                            <constraint firstItem="o1j-4d-bjU" firstAttribute="bottom" secondItem="liG-7t-Vgz" secondAttribute="bottom" id="VpC-Y0-CYu"/>
+                            <constraint firstItem="o1j-4d-bjU" firstAttribute="bottom" secondItem="liG-7t-Vgz" secondAttribute="bottom" constant="-34" id="VpC-Y0-CYu"/>
                             <constraint firstItem="o1j-4d-bjU" firstAttribute="trailing" secondItem="liG-7t-Vgz" secondAttribute="trailing" id="dHa-2R-fNa"/>
+                            <constraint firstItem="mCI-xK-GLQ" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" constant="100" id="e32-Gz-Wu0"/>
+                            <constraint firstItem="Nhh-bC-RlQ" firstAttribute="top" secondItem="mCI-xK-GLQ" secondAttribute="bottom" constant="20" id="eDg-Ku-2in"/>
                             <constraint firstItem="Nhh-bC-RlQ" firstAttribute="trailing" secondItem="o1j-4d-bjU" secondAttribute="trailing" id="fAW-li-Bof"/>
                             <constraint firstItem="liG-7t-Vgz" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="fpt-g4-sYS"/>
                             <constraint firstItem="zS5-Kj-DSu" firstAttribute="leading" secondItem="o1j-4d-bjU" secondAttribute="leading" id="nO3-wr-JMc"/>
                             <constraint firstItem="zS5-Kj-DSu" firstAttribute="top" secondItem="Nhh-bC-RlQ" secondAttribute="bottom" id="qnl-kh-M29"/>
-                            <constraint firstItem="Nhh-bC-RlQ" firstAttribute="top" secondItem="o1j-4d-bjU" secondAttribute="top" id="rZj-22-Ai0"/>
+                            <constraint firstItem="o1j-4d-bjU" firstAttribute="trailing" secondItem="mCI-xK-GLQ" secondAttribute="trailing" constant="100" id="uRn-YE-pRp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="33R-Tc-5jc"/>
@@ -143,6 +151,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="スクリーンショット 2023-04-28 20.37.48" width="1188" height="286"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
