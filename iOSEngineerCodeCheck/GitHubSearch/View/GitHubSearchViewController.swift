@@ -99,14 +99,9 @@ extension GitHubSearchViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // テキストが空、もしくはローディング中はタップ無効。
         guard let text = searchBar.text, !text.isEmpty, !isLoading else { return }
-        // 検索を通知。 GitHubデータを取得の指示
+        // 検索を通知。 GitHubデータを取得の指示。
         presenter.searchButtonDidPush(text: text)
         searchBar.resignFirstResponder()
-    }
-
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        // 画面の状態をリセットする
-        presenter.searchBarCancelButtonClicked()
     }
 }
 
