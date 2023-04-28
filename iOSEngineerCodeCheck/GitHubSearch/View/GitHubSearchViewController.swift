@@ -116,8 +116,11 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
         cell.configure(
             fullName: gitHub.fullName,
-            language: gitHub.language ?? ""
+            language: "言語 \(gitHub.language ?? "")"
         )
+
+        let url = gitHub.owner.avatarUrl
+        cell.gitHubImage.loadImageAsynchronous(url: url)
         return cell
     }
 }
@@ -127,5 +130,9 @@ extension GitHubSearchViewController: UITableViewDelegate {
         let gitHub = presenter.gitHubList[indexPath.row]
         // セルタップを通知。githubデータを返す。
         presenter.didSelectRow(gitHub: gitHub)
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 85
     }
 }
