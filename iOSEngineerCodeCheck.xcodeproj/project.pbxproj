@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		386069A029FC0CC400BCF6AE /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView.swift */; };
 		38F34E5D29F801E900120671 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 38F34E5C29F801E900120671 /* swiftlint.yml */; };
 		38F34E6629F91F3000120671 /* GitHubSearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */; };
 		38F34E6829F91F5400120671 /* GitHubSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3860699F29FC0CC400BCF6AE /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		38F34E5C29F801E900120671 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchInteractor.swift; sourceTree = "<group>"; };
 		38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchPresenter.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				38F34E8829FA43FF00120671 /* UIImage+Extension.swift */,
+				3860699F29FC0CC400BCF6AE /* UIImageView.swift */,
 				38F34E8A29FA61BE00120671 /* UIViewController+Extension.swift */,
 			);
 			path = Extentions;
@@ -443,6 +446,7 @@
 				BF0A658D244F2A3B00280FA6 /* GitHubDetailViewController.swift in Sources */,
 				38F34E6E29F91FDB00120671 /* GitHubSearchProtocol.swift in Sources */,
 				38F34E6829F91F5400120671 /* GitHubSearchPresenter.swift in Sources */,
+				386069A029FC0CC400BCF6AE /* UIImageView.swift in Sources */,
 				38F34E6C29F91F8C00120671 /* GitHubSearchRouter.swift in Sources */,
 				38F34E8929FA43FF00120671 /* UIImage+Extension.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
