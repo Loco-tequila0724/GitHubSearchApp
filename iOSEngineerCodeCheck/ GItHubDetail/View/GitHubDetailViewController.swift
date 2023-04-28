@@ -1,7 +1,11 @@
 import UIKit
 
 final class GitHubDetailViewController: UIViewController {
-    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var imageView: UIImageView! {
+        didSet {
+            imageView.layer.cornerRadius = 7
+        }
+    }
     @IBOutlet private weak var titleLabel: UILabel! {
         didSet {
             titleLabel.adjustsFontSizeToFitWidth = true
@@ -45,10 +49,10 @@ extension GitHubDetailViewController: GitHubDetailView {
         let imageURL = gitHubItem.owner.avatarUrl
         imageView.loadImageAsynchronous(url: imageURL)
         titleLabel.text = gitHubItem.fullName
-        languageLabel.text = "Written in \(gitHubItem.language ?? "")"
-        starsLabel.text = "\(String(gitHubItem.stargazersCount)) stars"
-        wathcersLabel.text = "\(String(gitHubItem.watchersCount)) watchers"
-        forksLabel.text = "\(String(gitHubItem.forksCount)) forks"
-        issuesLabel.text = "\(String(gitHubItem.openIssuesCount)) open issues"
+        languageLabel.text = "言語 \(gitHubItem.language ?? "")"
+        starsLabel.text = "\(String(gitHubItem.stargazersCount)) Stars"
+        wathcersLabel.text = "\(String(gitHubItem.watchersCount)) Watchers"
+        forksLabel.text = "\(String(gitHubItem.forksCount)) Forks"
+        issuesLabel.text = "\(String(gitHubItem.openIssuesCount)) Open Issues"
     }
 }

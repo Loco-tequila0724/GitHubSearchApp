@@ -12,16 +12,4 @@ extension UIImageView {
             }
         }
     }
-    /// 画像の読み込みを非同期で行い、画像をサイズ。
-    func loadResizeImageAsynchronous(url: URL?) {
-        guard let url else { return }
-        Task.detached {
-            let imageData: Data? = try Data(contentsOf: url)
-            guard let imageData else { return }
-            await MainActor.run {
-                let image = UIImage(data: imageData)
-                self.image = image?.resize()
-            }
-        }
-    }
 }

@@ -16,4 +16,3 @@ extension UIImage {
         print("🐕", Double(imageData) / 1000.0, "KB")
     }
 }
-
