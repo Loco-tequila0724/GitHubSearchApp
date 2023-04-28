@@ -28,7 +28,7 @@ extension GitHubApiManager {
 private extension GitHubApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
     func urlRequest(text: String) throws -> URLRequest {
-        guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)") else {
+        guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)&per_page=50") else {
             throw ApiError.notFound
         }
         var request = URLRequest(url: url)
