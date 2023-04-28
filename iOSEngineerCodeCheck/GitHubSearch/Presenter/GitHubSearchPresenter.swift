@@ -25,19 +25,13 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         gitHubList = []
         view?.resetGitList()
         view?.startLoading()
-        Task {
-            await interactor.fetchGitHubData(text: text)
-        }
+        interactor.fetchGitHubData(text: text)
     }
-    /// テキスト変更を検知。GitHubデータと画面の状態をリセット
+    /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
         gitHubList = []
         view?.resetGitList()
-    }
-    /// キャンセルボタンを検知。GitHubデータと画面の状態をリセット
-    func searchBarCancelButtonClicked() {
-        gitHubList = []
-        view?.resetGitList()
+        interactor.tast?.cancel()
     }
     /// セルタップの検知。DetailVCへ画面遷移通知。
     func didSelectRow(gitHub: GitHubItem) {

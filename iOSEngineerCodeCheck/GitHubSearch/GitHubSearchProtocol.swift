@@ -21,16 +21,15 @@ protocol GitHubSearchPresentation: AnyObject {
     func searchButtonDidPush(text: String)
     /// 検索テキストの変更を通知
     func searchTextDidChange()
-    /// キャンセルボタンのタップ通知
-    func searchBarCancelButtonClicked()
     /// セルタップを通知
     func didSelectRow(gitHub: GitHubItem)
 }
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
+    var tast: Task<(), Never>? { get }
     /// API通信を行い、GitHubのデータをデータベースから取得
-    func fetchGitHubData(text: String) async
+    func fetchGitHubData(text: String)
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
