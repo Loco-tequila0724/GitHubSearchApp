@@ -25,13 +25,13 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         gitHubList = []
         view?.resetGitList()
         view?.startLoading()
-        interactor.fetchGitHubData(text: text)
+        interactor.fetchGitHubResult(text: text)
     }
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
         gitHubList = []
         view?.resetGitList()
-        interactor.tast?.cancel()
+        interactor.gitHubApi.task?.cancel()
     }
     /// セルタップの検知。DetailVCへ画面遷移通知。
     func didSelectRow(gitHub: GitHubItem) {
@@ -44,8 +44,8 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     func didFetchGitHubResult(result: Result<GitHubSearchEntity, ApiError>) {
         view?.stopLoading()
         switch result {
-        case .success(let gitHubList):
-            self.gitHubList = gitHubList.items!
+        case .success(let gitHubData):
+            self.gitHubList = gitHubData.items!
             view?.tableViewReload()
         case .failure(let error):
             if error == .notFound {
@@ -54,7 +54,6 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             } else {
                 // エラー内容を通知。
                 view?.appearErrorAlert(message: error.errorDescription!)
-                Debug.log(errorDescription: error.errorDescription!)
             }
         }
     }

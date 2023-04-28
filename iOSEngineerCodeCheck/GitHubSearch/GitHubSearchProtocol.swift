@@ -23,13 +23,15 @@ protocol GitHubSearchPresentation: AnyObject {
     func searchTextDidChange()
     /// セルタップを通知
     func didSelectRow(gitHub: GitHubItem)
+
 }
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
-    var tast: Task<(), Never>? { get }
+    /// gitHubApiにアクセスする
+    var gitHubApi: GitHubApiManager { get }
     /// API通信を行い、GitHubのデータをデータベースから取得
-    func fetchGitHubData(text: String)
+    func fetchGitHubResult(text: String)
 }
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
