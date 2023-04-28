@@ -114,17 +114,22 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
-        cell.gitHubImage.image = nil
-        let gitHub = presenter.gitHubList[indexPath.row]
         cell.selectionStyle = .none
+        // 写真表示をリセット
+        cell.gitHubImage.image = nil
 
+        let gitHub = presenter.gitHubList[indexPath.row]
         cell.configure(
             fullName: gitHub.fullName,
             language: "言語 \(gitHub.language ?? "")"
         )
 
-        let url = gitHub.owner.avatarUrl
-        cell.gitHubImage.loadResizeImageAsynchronous(url: url)
+        Task {
+            // 画像をキャッシュで持たせて表示。スクロール時、写真のチラつきを防止。
+            let url = gitHub.owner.avatarUrl
+            let image = await ImageProvider.shared.createPhotoImage(url: url)
+            cell.gitHubImage(image: image ?? UIImage())
+        }
         return cell
     }
 }
