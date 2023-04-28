@@ -121,7 +121,8 @@ extension GitHubSearchViewController: UITableViewDataSource {
         let gitHub = presenter.gitHubList[indexPath.row]
         cell.configure(
             fullName: gitHub.fullName,
-            language: "言語 \(gitHub.language ?? "")"
+            language: "言語 \(gitHub.language ?? "")",
+            stars: "☆ \(gitHub.stargazersCount)"
         )
 
         Task {

@@ -24,9 +24,8 @@
                                     <outlet property="delegate" destination="mWg-7I-heg" id="f3E-NW-Esu"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="liG-7t-Vgz">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="liG-7t-Vgz">
                                 <rect key="frame" x="0.0" y="233" width="414" height="663"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GitHubSearchCell" rowHeight="85" id="cPw-yt-da1" customClass="GitHubSearchTableViewCell" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="85"/>
@@ -51,31 +50,44 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MS1-kr-SfU">
-                                                    <rect key="frame" x="115" y="48" width="236.5" height="21"/>
+                                                    <rect key="frame" x="115" y="51" width="172" height="21"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="bX2-gb-qQb"/>
+                                                        <constraint firstAttribute="height" constant="21" id="vH7-fW-szh"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="☆ 10000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgh-Ro-zjZ">
+                                                    <rect key="frame" x="302" y="51" width="68.5" height="21"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="21" id="GW0-mM-sWQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="MS1-kr-SfU" firstAttribute="top" secondItem="RlK-vK-39u" secondAttribute="bottom" constant="12" id="CS2-wi-mVI"/>
                                                 <constraint firstItem="SUq-hS-P6u" firstAttribute="top" secondItem="zVs-Nm-y99" secondAttribute="top" constant="10" id="IZd-hX-UI0"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Vgh-Ro-zjZ" secondAttribute="trailing" constant="5" id="MH2-57-1UB"/>
                                                 <constraint firstItem="SUq-hS-P6u" firstAttribute="leading" secondItem="zVs-Nm-y99" secondAttribute="leading" constant="26" id="Mak-dH-0XP"/>
                                                 <constraint firstAttribute="bottom" secondItem="SUq-hS-P6u" secondAttribute="bottom" constant="10" id="OvL-VV-ARO"/>
-                                                <constraint firstItem="MS1-kr-SfU" firstAttribute="leading" secondItem="SUq-hS-P6u" secondAttribute="trailing" constant="24" id="STY-wh-SKd"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="MS1-kr-SfU" secondAttribute="trailing" constant="24" id="aWq-XP-EFz"/>
+                                                <constraint firstItem="Vgh-Ro-zjZ" firstAttribute="top" secondItem="RlK-vK-39u" secondAttribute="bottom" constant="15" id="XlN-fA-YLP"/>
+                                                <constraint firstItem="MS1-kr-SfU" firstAttribute="top" secondItem="RlK-vK-39u" secondAttribute="bottom" constant="15" id="ZYV-VP-Mea"/>
                                                 <constraint firstItem="RlK-vK-39u" firstAttribute="leading" secondItem="SUq-hS-P6u" secondAttribute="trailing" constant="24" id="iqx-wC-QZn"/>
+                                                <constraint firstItem="MS1-kr-SfU" firstAttribute="leading" secondItem="SUq-hS-P6u" secondAttribute="trailing" constant="24" id="pO5-a4-jpz"/>
                                                 <constraint firstItem="RlK-vK-39u" firstAttribute="top" secondItem="zVs-Nm-y99" secondAttribute="topMargin" constant="4" id="tYn-J0-wac"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="MS1-kr-SfU" secondAttribute="trailing" constant="88.5" id="twv-J1-Ymq"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="RlK-vK-39u" secondAttribute="trailing" constant="24" id="wAV-TJ-GGo"/>
+                                                <constraint firstItem="Vgh-Ro-zjZ" firstAttribute="leading" secondItem="MS1-kr-SfU" secondAttribute="trailing" constant="15" id="yUc-JI-GgO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="fullNameLabel" destination="RlK-vK-39u" id="MDX-5l-Dr9"/>
                                             <outlet property="gitHubImageView" destination="SUq-hS-P6u" id="hKB-f5-z6l"/>
                                             <outlet property="languageLabel" destination="MS1-kr-SfU" id="PIn-ac-D4r"/>
+                                            <outlet property="starsLabel" destination="Vgh-Ro-zjZ" id="KhI-l7-etp"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
