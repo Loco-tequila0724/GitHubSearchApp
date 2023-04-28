@@ -50,9 +50,9 @@ extension GitHubDetailViewController: GitHubDetailView {
         imageView.loadImageAsynchronous(url: imageURL)
         titleLabel.text = gitHubItem.fullName
         languageLabel.text = "言語 \(gitHubItem.language ?? "")"
-        starsLabel.text = "\(String(gitHubItem.stargazersCount)) Stars"
-        wathcersLabel.text = "\(String(gitHubItem.watchersCount)) Watchers"
-        forksLabel.text = "\(String(gitHubItem.forksCount)) Forks"
-        issuesLabel.text = "\(String(gitHubItem.openIssuesCount)) Open Issues"
+        starsLabel.text    = "\(String(gitHubItem.stargazersCount))"
+        wathcersLabel.text = "\(String(gitHubItem.watchersCount))"
+        forksLabel.text    = "\(String(gitHubItem.forksCount))"
+        issuesLabel.text   = "\(String(gitHubItem.openIssuesCount))"
     }
 }
