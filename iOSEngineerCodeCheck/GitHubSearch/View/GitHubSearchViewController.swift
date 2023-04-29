@@ -6,6 +6,18 @@ final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var notFoundLabel: UILabel!
     @IBOutlet private weak var frontView: UIView!
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
+    @IBOutlet private weak var starOderButton: UIButton! {
+        didSet {
+            starOderButton.layer.cornerRadius = 8
+            starOderButton.clipsToBounds = true
+            starOderButton.setTitle("☆ Star数 ", for: .normal)
+            starOderButton.titleLabel?.font = .systemFont(
+                ofSize: 18,
+                weight: .semibold
+            )
+            starOderButton.backgroundColor = .lightGray
+        }
+    }
 
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
@@ -16,7 +28,6 @@ final class GitHubSearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-
     }
 }
 
@@ -27,6 +38,13 @@ extension GitHubSearchViewController {
         return view ?? GitHubSearchViewController()
     }
 }
+
+private extension GitHubSearchViewController {
+    @IBAction func starOrderButton(_ sender: Any) {
+        presenter.starOderButtonDidPush()
+    }
+}
+
 // MARK: - GitHubSearchViewプロトコルに関する -
 extension GitHubSearchViewController: GitHubSearchView {
     func configure() {
@@ -83,6 +101,15 @@ extension GitHubSearchViewController: GitHubSearchView {
         DispatchQueue.main.async {
             self.tableView.reloadData()
         }
+    }
+
+    func didChangeStarOrder(starOrder: StarOrder) {
+        starOderButton.setTitle(starOrder.buttonText, for: .normal)
+        starOderButton.backgroundColor = starOrder.color
+        starOderButton.titleLabel?.font = .systemFont(
+            ofSize: 18,
+            weight: .semibold
+        )
     }
 }
 

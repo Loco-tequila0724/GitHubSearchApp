@@ -9,6 +9,7 @@ protocol GitHubSearchView: AnyObject {
     func resetGitList()
     func appearErrorAlert(message: String)
     func appearNotFound(text: String)
+    func didChangeStarOrder(starOrder: StarOrder)
 }
 // Presenter
 protocol GitHubSearchPresentation: AnyObject {
@@ -23,7 +24,8 @@ protocol GitHubSearchPresentation: AnyObject {
     func searchTextDidChange()
     /// セルタップを通知
     func didSelectRow(gitHub: GitHubItem)
-
+    /// お気に入り順のボタンタップを通知
+    func starOderButtonDidPush()
 }
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {

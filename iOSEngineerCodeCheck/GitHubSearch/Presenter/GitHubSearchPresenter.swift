@@ -5,6 +5,8 @@ final class GitHubSearchPresenter {
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
     var gitHubList: [GitHubItem] = []
+    var gitHubListDefault: [GitHubItem] = []
+    var starOrder: StarOrder = .`default`
 
     init(
         view: GitHubSearchView? = nil,
@@ -17,6 +19,36 @@ final class GitHubSearchPresenter {
 }
 // MARK: - GitHubSearchPresentationプロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchPresentation {
+    func starOderButtonDidPush() {
+        switch starOrder {
+        case .`default`:
+            starOrder = .desc
+            view?.didChangeStarOrder(starOrder: starOrder)
+            guard !gitHubList.isEmpty else { return }
+            gitHubList = gitHubList.sorted { $0.stargazersCount > $01.stargazersCount }
+            view?.tableViewReload()
+        case .desc:
+            starOrder = .ask
+            view?.didChangeStarOrder(starOrder: starOrder)
+            guard !gitHubList.isEmpty else { return }
+            gitHubList = gitHubList.sorted { $0.stargazersCount < $01.stargazersCount }
+            view?.tableViewReload()
+        case .ask:
+            starOrder = .`default`
+            view?.didChangeStarOrder(starOrder: starOrder)
+            guard !gitHubList.isEmpty else { return }
+            gitHubList = gitHubListDefault
+            view?.tableViewReload()
+        }
+    }
+    // 使うかも
+    func ssss(starOrder: StarOrder) {
+        self.starOrder = starOrder
+        view?.didChangeStarOrder(starOrder: starOrder)
+        guard !gitHubList.isEmpty else { return }
+        view?.tableViewReload()
+    }
+
     func viewDidLoad() {
         view?.configure()
     }
@@ -40,13 +72,12 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 }
 
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    /// GitHubデータを加工しViewへ通知。
+    /// GitHubデータをGitHubListへ加工しViewへ渡す。
     func didFetchGitHubResult(result: Result<GitHubSearchEntity, ApiError>) {
         view?.stopLoading()
         switch result {
         case .success(let gitHubData):
-            self.gitHubList = gitHubData.items!
-            view?.tableViewReload()
+            self.gitHubListDefault = gitHubData.items!
         case .failure(let error):
             if error == .notFound {
                 // GitHubの結果が無いことを通知
@@ -55,6 +86,17 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
                 // エラー内容を通知。
                 view?.appearErrorAlert(message: error.errorDescription!)
             }
+        }
+        switch starOrder {
+        case .desc:
+            gitHubList = gitHubListDefault.sorted { $0.stargazersCount > $1.stargazersCount }
+            view?.tableViewReload()
+        case .ask:
+            gitHubList = gitHubListDefault.sorted { $0.stargazersCount < $1.stargazersCount }
+            view?.tableViewReload()
+        case .`default`:
+            gitHubList = gitHubListDefault
+            view?.tableViewReload()
         }
     }
 }
