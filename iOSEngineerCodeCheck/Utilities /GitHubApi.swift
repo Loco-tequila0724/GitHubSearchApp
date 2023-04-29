@@ -1,11 +1,13 @@
 import Foundation
 
+// MARK: - GitHub API通信で使用する -
 class GitHubApiManager {
     var decoder: JSONDecoder = JSONDecoder()
     var gitHubResult: (Result<GitHubSearchEntity, ApiError>)?
     var task: Task<(), Never>?
 }
-// MARK: - Iteraterから実際に呼び出すやつ -
+
+// MARK: - 他ファイルから使用するる類 -
 extension GitHubApiManager {
     /// GitHubデータベースから取得した結果を返す。
     func fetch(text: String, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
@@ -24,6 +26,7 @@ extension GitHubApiManager {
         }
     }
 }
+
 // MARK: - API通信を行なうための部品類 -
 private extension GitHubApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
@@ -35,11 +38,12 @@ private extension GitHubApiManager {
         request.httpMethod = "GET"
         return request
     }
+
     /// API通信。デコード。GitHubデータへ変換。
     func convertGitHub(request: URLRequest) async throws -> GitHubSearchEntity {
         let (data, response) = try await URLSession.shared.data(for: request)
         let httpResponse = response as? HTTPURLResponse
-
+        ///  短時間で検索されすぎるとこのエラーが返る
         if httpResponse?.statusCode == 403 {
             throw ApiError.forbidden
         }
@@ -47,7 +51,7 @@ private extension GitHubApiManager {
         guard httpResponse?.statusCode == 200 else {
             throw ApiError.serverError
         }
-        //
+
         let gitHubData = try decoder.decode(GitHubSearchEntity.self, from: data)
 
         // GitHubのItemsの中身が空だったらエラーを返す。

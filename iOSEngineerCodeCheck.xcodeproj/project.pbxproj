@@ -146,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				38F34E6929F91F7100120671 /* GitHubSearchEntity.swift */,
+				386069A329FD164300BCF6AE /* StarOrder.swift */,
 			);
 			path = Entity;
 			sourceTree = "<group>";
@@ -211,7 +212,6 @@
 			isa = PBXGroup;
 			children = (
 				38F34E8C29FBA01900120671 /* GitHubApi.swift */,
-				386069A329FD164300BCF6AE /* StarOrder.swift */,
 				386069A129FC283F00BCF6AE /* CacheImage.swift */,
 				38F34E7D29F952B800120671 /* ApiError.swift */,
 				38F34E8129F97C5B00120671 /* Debug.swift */,
@@ -252,13 +252,13 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
-				38F34E5C29F801E900120671 /* swiftlint.yml */,
 				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
 				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
 				38F34E6429F91EE500120671 /* GitHubSearch */,
 				38F34E6F29F9200E00120671 /*  GItHubDetail */,
 				38F34E8729FA432100120671 /* Extentions */,
 				38F34E7C29F9526900120671 /* Utilities  */,
+				38F34E5C29F801E900120671 /* swiftlint.yml */,
 				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
 				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,

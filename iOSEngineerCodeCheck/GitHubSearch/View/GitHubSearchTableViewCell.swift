@@ -24,11 +24,13 @@ final class GitHubSearchTableViewCell: UITableViewCell {
             starsLabel.minimumScaleFactor = 0.7
         }
     }
-
     // テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
     var gitHubImage: UIImageView { gitHubImageView }
+}
 
+extension GitHubSearchTableViewCell {
+    /// 初期画面の構成
     func configure(fullName: String, language: String, stars: String) {
         fullNameLabel.text = fullName
         languageLabel.text = language

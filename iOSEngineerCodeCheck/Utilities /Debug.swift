@@ -1,5 +1,7 @@
 import Foundation
 // swiftlint:disable all
+
+// MARK: - デバックで使用 -
 struct Debug {
     static func log(_ obj: Any? = nil, file: String = #file, function: String = #function, line: Int = #line, errorDescription: String) {
         var filename: NSString = file as NSString

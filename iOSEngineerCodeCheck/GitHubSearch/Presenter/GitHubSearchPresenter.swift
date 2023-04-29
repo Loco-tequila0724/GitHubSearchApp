@@ -4,8 +4,11 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
+    //  実際に表示に使用するGitHubリスト
     var gitHubList: [GitHubItem] = []
+    //  一番最初に取得したデータを保管
     var gitHubListDefault: [GitHubItem] = []
+    //  Star数のボタンの状態を保管。(降順,昇順,デフォルト)
     var starOrder: StarOrder = .default
 
     init(
@@ -19,7 +22,32 @@ final class GitHubSearchPresenter {
 }
 // MARK: - GitHubSearchPresentationプロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchPresentation {
-    /// スター数順の変更ボタン。タップを検知。(スター数で降順・昇順を切り替え)
+    func viewDidLoad() {
+        view?.configure()
+    }
+
+    /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
+    func searchButtonDidPush(text: String) {
+        gitHubList = []
+        gitHubListDefault = []
+        view?.resetDisplay()
+        view?.startLoading()
+        interactor.fetchGitHubResult(text: text)
+    }
+
+    /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
+    func searchTextDidChange() {
+        gitHubList = []
+        view?.resetDisplay()
+        interactor.gitHubApi.task?.cancel()
+    }
+
+    /// セルタップの検知。DetailVCへ画面遷移通知。
+    func didSelectRow(gitHub: GitHubItem) {
+        router.showGitHubDetailVC(gitHub: gitHub)
+    }
+
+    /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
     func starOderButtonDidPush() {
         switch starOrder {
         case .`default`:
@@ -42,31 +70,6 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
             )
         }
     }
-
-    func viewDidLoad() {
-        view?.configure()
-    }
-
-/// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(text: String) {
-        gitHubList = []
-        gitHubListDefault = []
-        view?.resetGitList()
-        view?.startLoading()
-        interactor.fetchGitHubResult(text: text)
-    }
-
-/// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
-    func searchTextDidChange() {
-        gitHubList = []
-        view?.resetGitList()
-        interactor.gitHubApi.task?.cancel()
-    }
-
-/// セルタップの検知。DetailVCへ画面遷移通知。
-    func didSelectRow(gitHub: GitHubItem) {
-        router.showGitHubDetailVC(gitHub: gitHub)
-    }
 }
 
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
@@ -76,7 +79,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         view?.stopLoading()
         switch result {
         case .success(let gitHubData):
-            ///  データの取得が成功した場合は、 GitHubリストのデフォルトに保管。
+            //  データの取得が成功した場合は、 GitHubリストのデフォルトに保管。
             self.gitHubListDefault = gitHubData.items!
         case .failure(let error):
             if error == .notFound {

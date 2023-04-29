@@ -1,19 +1,12 @@
 import UIKit
 
+// MARK: - Star数ボタンに関する -
 enum StarOrder {
     case desc
     case ask
     case `default`
 
-    var urlText: String {
-        switch self {
-        case .desc: return "&sort=stars&order=desc" // スターの数が多い順
-        case .ask: return "&sort=stars&order=ask" // スターの数が少ない順
-        case .`default`: return ""
-        }
-    }
-
-    var buttonText: String {
+    var text: String {
         switch self {
         case .desc: return "☆ Star数 ⍋"
         case .ask: return "☆ Star数 ⍒"

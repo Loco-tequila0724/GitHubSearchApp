@@ -1,5 +1,6 @@
 import Foundation
 
+// MARK: - API通信のエラー類 -
 enum ApiError: Error, LocalizedError {
     case notFound // リクエストされたリソースが見つからなかった場合に返される。
     case invalidData // サーバーから受信したデータが正しく解析できない場合に返される。
@@ -9,16 +10,11 @@ enum ApiError: Error, LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .notFound:
-            return "結果が見つかりませんでした"
-        case .invalidData:
-            return "データが正しく解析できませんでした。"
-        case .serverError:
-            return "サーバー側で何らかの問題が発生しました。"
-        case .forbidden:
-            return "検索上限に掛かりました時間をおいて再開してください。"
-        case .unknown:
-            return "原因不明のエラーが発生しました。"
+        case .notFound: return "結果が見つかりませんでした"
+        case .invalidData: return "データが正しく解析できませんでした。"
+        case .serverError: return "サーバー側で何らかの問題が発生しました。"
+        case .forbidden: return "検索上限に掛かりました時間をおいて再開してください。"
+        case .unknown: return "原因不明のエラーが発生しました。"
         }
     }
 }

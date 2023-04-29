@@ -1,10 +1,12 @@
 import UIKit
 
+// MARK: - 画像のキャッシュ生成で使用する -
 final class ImageProvider {
     static let shared = ImageProvider()
     private let cache = NSCache<NSString, UIImage>()
     private init () { }
 
+    ///  画像のキャッシュ生成を行い返す。
     func createPhotoImage(url: URL?) async -> UIImage? {
         //  すでにキャッシュした画像があればキャッシュ画像を返す
         if let photoURL = url?.absoluteString, let cacheImage = cache.object(forKey: photoURL as NSString) {

@@ -43,6 +43,7 @@ extension GitHubDetailViewController {
 }
 
 extension GitHubDetailViewController: GitHubDetailView {
+    /// 初期画面の構成
     func configure() {
         setupNavigationBar(title: "リポジトリ")
         guard let gitHubItem = presenter.gitHubItem else { return }

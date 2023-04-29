@@ -3,7 +3,7 @@ import Foundation
 struct GitHubSearchEntity: Decodable {
     var items: [GitHubItem]?
 }
-// MARK: - GitHubユーザーデータ一覧 -
+// MARK: - GitHub リポジトリデータ構造 -
 struct GitHubItem: Decodable {
     let fullName: String
     let language: String?

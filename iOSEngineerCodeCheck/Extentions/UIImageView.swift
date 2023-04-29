@@ -1,5 +1,6 @@
 import UIKit
 
+// MARK: - 画像の取得を非同期的に行なう -
 extension UIImageView {
     /// 画像の読み込みを非同期で行なう。
     func loadImageAsynchronous(url: URL?) {
