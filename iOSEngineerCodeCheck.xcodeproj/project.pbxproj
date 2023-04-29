@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		386069A029FC0CC400BCF6AE /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView.swift */; };
+		386069A029FC0CC400BCF6AE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */; };
 		386069A229FC284000BCF6AE /* CacheImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386069A129FC283F00BCF6AE /* CacheImage.swift */; };
 		386069A429FD164300BCF6AE /* StarOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386069A329FD164300BCF6AE /* StarOrder.swift */; };
 		38F34E5D29F801E900120671 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 38F34E5C29F801E900120671 /* swiftlint.yml */; };
@@ -55,7 +55,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3860699F29FC0CC400BCF6AE /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		386069A129FC283F00BCF6AE /* CacheImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CacheImage.swift; sourceTree = "<group>"; };
 		386069A329FD164300BCF6AE /* StarOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarOrder.swift; sourceTree = "<group>"; };
 		38F34E5C29F801E900120671 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
@@ -116,6 +116,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		38789E3329FDADC700732BE8 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				38F34E5C29F801E900120671 /* swiftlint.yml */,
+				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
+				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		38789E3429FDAFC700732BE8 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
+				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
 		38F34E5F29F91E6400120671 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -223,7 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				38F34E8829FA43FF00120671 /* UIImage+Extension.swift */,
-				3860699F29FC0CC400BCF6AE /* UIImageView.swift */,
+				3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */,
 				38F34E8A29FA61BE00120671 /* UIViewController+Extension.swift */,
 			);
 			path = Extentions;
@@ -252,15 +271,12 @@
 		BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */ = {
 			isa = PBXGroup;
 			children = (
-				BFD945DE244DC5E80012785A /* AppDelegate.swift */,
-				BFD945E0244DC5E80012785A /* SceneDelegate.swift */,
+				38789E3429FDAFC700732BE8 /* App */,
 				38F34E6429F91EE500120671 /* GitHubSearch */,
 				38F34E6F29F9200E00120671 /*  GItHubDetail */,
 				38F34E8729FA432100120671 /* Extentions */,
 				38F34E7C29F9526900120671 /* Utilities  */,
-				38F34E5C29F801E900120671 /* swiftlint.yml */,
-				BFD945E7244DC5EB0012785A /* Assets.xcassets */,
-				BFD945E9244DC5EB0012785A /* LaunchScreen.storyboard */,
+				38789E3329FDADC700732BE8 /* Resource */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 			);
 			path = iOSEngineerCodeCheck;
@@ -454,7 +470,7 @@
 				386069A229FC284000BCF6AE /* CacheImage.swift in Sources */,
 				38F34E6E29F91FDB00120671 /* GitHubSearchProtocol.swift in Sources */,
 				38F34E6829F91F5400120671 /* GitHubSearchPresenter.swift in Sources */,
-				386069A029FC0CC400BCF6AE /* UIImageView.swift in Sources */,
+				386069A029FC0CC400BCF6AE /* UIImageView+Extension.swift in Sources */,
 				38F34E6C29F91F8C00120671 /* GitHubSearchRouter.swift in Sources */,
 				38F34E8929FA43FF00120671 /* UIImage+Extension.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
