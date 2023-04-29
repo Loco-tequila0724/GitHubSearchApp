@@ -129,11 +129,20 @@
                                 <color key="backgroundColor" red="0.15823033450000001" green="0.1324724853" blue="0.27844560149999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="☆ Star 数  "/>
+                                <buttonConfiguration key="configuration" style="plain" title="☆ Star 数  ">
+                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="18"/>
+                                </buttonConfiguration>
                                 <connections>
                                     <action selector="starOrderButton:" destination="mWg-7I-heg" eventType="touchUpInside" id="6Hb-zp-Jjf"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="GitHub Search." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IV-k7-Dos">
+                                <rect key="frame" x="37" y="119" width="210" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="o1j-4d-bjU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

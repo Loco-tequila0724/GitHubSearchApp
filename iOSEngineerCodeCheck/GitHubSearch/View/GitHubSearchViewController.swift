@@ -8,14 +8,17 @@ final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet private weak var starOderButton: UIButton! {
         didSet {
-            starOderButton.layer.cornerRadius = 8
-            starOderButton.clipsToBounds = true
+            if #available(iOS 15.0, *) {
+                starOderButton.configuration = nil
+            }
             starOderButton.setTitle("☆ Star数 ", for: .normal)
             starOderButton.titleLabel?.font = .systemFont(
                 ofSize: 18,
                 weight: .semibold
             )
-            starOderButton.backgroundColor = .lightGray
+            starOderButton.layer.cornerRadius = 8
+            starOderButton.clipsToBounds = true
+            starOderButton.titleLabel?.adjustsFontSizeToFitWidth = true
         }
     }
 
@@ -48,13 +51,13 @@ private extension GitHubSearchViewController {
 // MARK: - GitHubSearchViewプロトコルに関する -
 extension GitHubSearchViewController: GitHubSearchView {
     func configure() {
-        searchBar.placeholder = "GitHubのリポジトリを検索"
+        searchBar.placeholder = "GitHub リポジトリを検索"
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
         notFoundLabel.text = nil
         frontView.isHidden = true
-        setupNavigationBar(title: "リポジトリを検索")
+        setupNavigationBar(title: "ホーム")
     }
     /// 画面の状態をリセットする
     func resetGitList() {
@@ -106,10 +109,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     func didChangeStarOrder(starOrder: StarOrder) {
         starOderButton.setTitle(starOrder.buttonText, for: .normal)
         starOderButton.backgroundColor = starOrder.color
-        starOderButton.titleLabel?.font = .systemFont(
-            ofSize: 18,
-            weight: .semibold
-        )
     }
 }
 
