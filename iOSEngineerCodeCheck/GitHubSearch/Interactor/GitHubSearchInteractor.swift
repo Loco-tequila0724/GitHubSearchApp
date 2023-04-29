@@ -3,6 +3,7 @@ import Foundation
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
     let gitHubApi = GitHubApiManager()
+
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
