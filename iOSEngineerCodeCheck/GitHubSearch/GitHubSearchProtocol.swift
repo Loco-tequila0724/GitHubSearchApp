@@ -25,7 +25,7 @@ protocol GitHubSearchPresentation: AnyObject {
     /// 検索テキストの変更を通知
     func searchTextDidChange()
     /// セルタップを通知
-    func didSelectRow(gitHub: GitHubItem)
+    func didSelectRow(gitHubItem: GitHubItem)
     /// お気に入り順のボタンタップを通知
     func starOderButtonDidPush()
 }
@@ -48,5 +48,5 @@ protocol GitHubSearchOutputUsecase: AnyObject {
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
     static func assembleModules() -> UIViewController
-    func showGitHubDetailVC(gitHub: GitHubItem)
+    func showGitHubDetailVC(gitHubItem: GitHubItem)
 }

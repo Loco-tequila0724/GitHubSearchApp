@@ -173,7 +173,7 @@ extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let gitHubItem = presenter.gitHubList[indexPath.row]
         // セルタップを通知。GitHubデータを渡してます。
-        presenter.didSelectRow(gitHub: gitHubItem)
+        presenter.didSelectRow(gitHubItem: gitHubItem)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
