@@ -154,7 +154,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJs-2B-Moe">
                                                 <rect key="frame" x="16.5" y="20.5" width="105" height="40"/>
-                                                <color key="backgroundColor" red="0.15823033450000001" green="0.1324724853" blue="0.27844560149999997" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="K0u-mN-hg0"/>
                                                     <constraint firstAttribute="width" constant="105" id="TXG-If-ymq"/>
@@ -218,7 +218,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="24r-F6-fgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-184.05797101449278" y="-526.33928571428567"/>
+            <point key="canvasLocation" x="-509" y="-526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ll8-3m-9O5">
