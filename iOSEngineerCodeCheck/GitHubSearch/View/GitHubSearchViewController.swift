@@ -123,7 +123,7 @@ extension GitHubSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let isEmptyText = searchBar.text?.isEmpty else { return }
         if isEmptyText {
-        // テキストが空になったら事を通知。テーブルビューをリセットするため。
+            // テキストが空になった事を通知。テーブルビューをリセットするため。
             presenter.searchTextDidChange()
             searchBar.placeholder = "GitHub リポジトリを検索"
         } else {
@@ -159,12 +159,9 @@ extension GitHubSearchViewController: UITableViewDataSource {
             stars: "☆ \(gitHub.stargazersCount)"
         )
 
-        Task {
-            // 画像キャッシュを使用。
-            let url = gitHub.owner.avatarUrl
-            let image = await ImageProvider.shared.createPhotoImage(url: url)
-            cell.gitHubImage(image: image ?? UIImage())
-        }
+        let url = gitHub.owner.avatarUrl
+
+        cell.gitHubImage(url: url)
         return cell
     }
 }
