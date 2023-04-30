@@ -9,8 +9,8 @@ extension UIViewController {
         )
         let ok = UIAlertAction(title: "OK", style: .default)// swiftlint:disable:this all
         alert.addAction(ok)
-        DispatchQueue.main.async {
-            self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async { [weak self] in
+            self?.present(alert, animated: true, completion: nil)
         }
     }
 

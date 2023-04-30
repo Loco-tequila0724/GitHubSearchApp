@@ -1,9 +1,9 @@
 import UIKit
 
 final class GitHubDetailRouter {
-    var viewController: UIViewController?
+    private weak var viewController: UIViewController?
 
-    init(viewController: UIViewController? = nil) {
+    private init(viewController: UIViewController? = nil) {
         self.viewController = viewController
     }
 }

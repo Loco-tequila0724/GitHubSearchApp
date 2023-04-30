@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		386069A029FC0CC400BCF6AE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */; };
 		386069A429FD164300BCF6AE /* StarOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386069A329FD164300BCF6AE /* StarOrder.swift */; };
+		38852C1D29FF218800EFE63D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38852C1C29FF218800EFE63D /* ViewController.swift */; };
 		38F34E5D29F801E900120671 /* swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 38F34E5C29F801E900120671 /* swiftlint.yml */; };
 		38F34E6629F91F3000120671 /* GitHubSearchInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */; };
 		38F34E6829F91F5400120671 /* GitHubSearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */; };
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		386069A329FD164300BCF6AE /* StarOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarOrder.swift; sourceTree = "<group>"; };
+		38852C1C29FF218800EFE63D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		38F34E5C29F801E900120671 /* swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = swiftlint.yml; sourceTree = "<group>"; };
 		38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchInteractor.swift; sourceTree = "<group>"; };
 		38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchPresenter.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
+				38852C1C29FF218800EFE63D /* ViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -472,6 +475,7 @@
 				38F34E8929FA43FF00120671 /* UIImage+Extension.swift in Sources */,
 				BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */,
 				38F34E7E29F952B800120671 /* ApiError.swift in Sources */,
+				38852C1D29FF218800EFE63D /* ViewController.swift in Sources */,
 				38F34E8029F9574F00120671 /* GitHubSearchTableViewCell.swift in Sources */,
 				BFD945E1244DC5E80012785A /* SceneDelegate.swift in Sources */,
 			);

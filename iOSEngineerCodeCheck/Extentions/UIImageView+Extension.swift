@@ -8,8 +8,8 @@ extension UIImageView {
         Task.detached {
             let imageData: Data? = try Data(contentsOf: url)
             guard let imageData else { return }
-            await MainActor.run {
-                self.image = UIImage(data: imageData)
+            await MainActor.run { [weak self] in
+                self?.image = UIImage(data: imageData)
             }
         }
     }
