@@ -55,11 +55,11 @@ extension GitHubSearchTableViewCell {
 private extension GitHubSearchTableViewCell {
     /// アバターの写真を非同期処理で生成する。
     func makeUserAvatarImage(url: URL) {
-        // キャッシュを有効にするためのURLSessionConfiguration オブジェクトを作成
+
         let configuration = URLSessionConfiguration.default
         // キャッシュがある場合は、キャッシュデータを使用し、それ以外の場合はネットワークからデータをロードする
         configuration.requestCachePolicy = .returnCacheDataElseLoad
-        //  キャッシュを有効にした URLSession オブジェクトを作成
+
         let session = URLSession(configuration: configuration)
 
         var request = URLRequest(url: url)
@@ -77,9 +77,8 @@ private extension GitHubSearchTableViewCell {
             }
 
             let image = UIImage(data: data)
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
                 self?.gitHubImageView.image = image
-
             }
         }
         task?.resume()
