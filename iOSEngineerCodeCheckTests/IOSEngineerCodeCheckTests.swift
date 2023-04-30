@@ -1,26 +1,32 @@
 import XCTest
 @testable import iOSEngineerCodeCheck
 
-class IOSEngineerCodeCheckTests: XCTestCase {
+// MARK: - すいません。勉強不足でまだUnitテストは上手く行えませんでした。 -
+final class IOSEngineerCodeCheckTests: XCTestCase {
+    var gitHubApi: GitHubApiManager!
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        gitHubApi = GitHubApiManager()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    ///  API通信。実行されているかテスト。データの取得が出来ているかテスト。
+    func testFetchApi() throws {
+        let expectation = XCTestExpectation(description: "fetch data")
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+        gitHubApi.fetch(text: "Swift") { result in
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+            switch result {
+            case .success(let gitHubItem):
+                // 中身がnilだった場合はエラー
+                let nilItems = gitHubItem.items == nil ? true : false
+                XCTAssertNotNil(nilItems)
+            case .failure(let error):
+                // エラーが返ってきたことを通知する。
+                XCTFail(error.localizedDescription)
+            }
+            expectation.fulfill()
         }
+        // ６秒たってもFulFillされない場合はデータの取得が行われていない。
+        wait(for: [expectation], timeout: 6)
     }
-
 }
