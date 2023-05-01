@@ -2,9 +2,9 @@ import UIKit
 
 // VIPERアーキテクチャは適用していません。
 final class GitHubSearchTableViewCell: UITableViewCell {
-    @IBOutlet private weak var gitHubImageView: UIImageView! {
+    @IBOutlet private weak var avatarImageView: UIImageView! {
         didSet {
-            gitHubImageView.layer.cornerRadius = 6
+            avatarImageView.layer.cornerRadius = 6
         }
     }
     @IBOutlet private weak var fullNameLabel: UILabel! {
@@ -28,7 +28,7 @@ final class GitHubSearchTableViewCell: UITableViewCell {
     /// テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
 
-    var gitHubImage: UIImageView { gitHubImageView }
+    var gitHubImage: UIImageView { avatarImageView }
 
     /// URLSessionで使用するタスク
     private var task: URLSessionDataTask? {
@@ -67,9 +67,7 @@ private extension GitHubSearchTableViewCell {
 
         task = session.dataTask(with: request) { [weak self] data, response, error in
             // タスクがキャンセルされたらリターン
-            if let error { Debug.log(errorDescription: error.localizedDescription)
-                return
-            }
+            if let error { return }
 
             guard let data, let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {
@@ -78,7 +76,7 @@ private extension GitHubSearchTableViewCell {
 
             let image = UIImage(data: data)
             DispatchQueue.main.async { [weak self] in
-                self?.gitHubImageView.image = image
+                self?.avatarImageView.image = image?.resize() // 画像のリサイズ
             }
         }
         task?.resume()

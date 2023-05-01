@@ -2,6 +2,7 @@ import UIKit
 
 final class GitHubSearchRouter {
     private weak var viewController: UIViewController?
+
     private init(viewController: UIViewController? = nil) {
         self.viewController = viewController
     }

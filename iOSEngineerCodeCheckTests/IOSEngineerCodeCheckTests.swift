@@ -1,7 +1,8 @@
 import XCTest
 @testable import iOSEngineerCodeCheck
 
-// MARK: - すいません。勉強不足でまだUnitテストは上手く行えませんでした。 -
+// MARK: - SchemeをiOSEngineerCodeCheckに変更するとテスト可能です。 -
+// 新しく作ったスキームからテストコードを動かす事が出来ませんでした。
 final class IOSEngineerCodeCheckTests: XCTestCase {
     var gitHubApi: GitHubApiManager!
 

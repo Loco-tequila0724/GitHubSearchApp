@@ -84,8 +84,8 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="avatarImageView" destination="SUq-hS-P6u" id="hKB-f5-z6l"/>
                                             <outlet property="fullNameLabel" destination="RlK-vK-39u" id="MDX-5l-Dr9"/>
-                                            <outlet property="gitHubImageView" destination="SUq-hS-P6u" id="hKB-f5-z6l"/>
                                             <outlet property="languageLabel" destination="MS1-kr-SfU" id="PIn-ac-D4r"/>
                                             <outlet property="starsLabel" destination="Vgh-Ro-zjZ" id="KhI-l7-etp"/>
                                         </connections>
@@ -153,11 +153,11 @@
                                         <rect key="frame" x="276" y="0.0" width="138" height="81"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJs-2B-Moe">
-                                                <rect key="frame" x="16.5" y="20.5" width="105" height="40"/>
+                                                <rect key="frame" x="15" y="20.5" width="108" height="40"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="K0u-mN-hg0"/>
-                                                    <constraint firstAttribute="width" constant="105" id="TXG-If-ymq"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="105" id="TXG-If-ymq"/>
                                                 </constraints>
                                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Button"/>
@@ -178,9 +178,13 @@
                                     </view>
                                 </subviews>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="GIj-gS-cEP" secondAttribute="bottom" id="2vE-H5-4gH"/>
                                     <constraint firstAttribute="height" constant="81" id="IFK-JW-CDr"/>
                                     <constraint firstItem="9IV-k7-Dos" firstAttribute="width" secondItem="K31-sg-1Ex" secondAttribute="width" multiplier="2.5" id="JCe-YN-ssH"/>
+                                    <constraint firstItem="GIj-gS-cEP" firstAttribute="leading" secondItem="9IV-k7-Dos" secondAttribute="trailing" id="JTf-Vr-wcx"/>
+                                    <constraint firstAttribute="trailing" secondItem="GIj-gS-cEP" secondAttribute="trailing" id="KM1-H8-ac4"/>
                                     <constraint firstItem="GIj-gS-cEP" firstAttribute="leading" secondItem="9IV-k7-Dos" secondAttribute="trailing" id="a7x-xJ-MHA"/>
+                                    <constraint firstItem="GIj-gS-cEP" firstAttribute="top" secondItem="ZxL-Dc-iWN" secondAttribute="top" id="scM-av-zkS"/>
                                 </constraints>
                             </stackView>
                         </subviews>
@@ -218,7 +222,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="24r-F6-fgY" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-509" y="-526"/>
+            <point key="canvasLocation" x="-454" y="-526"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Ll8-3m-9O5">

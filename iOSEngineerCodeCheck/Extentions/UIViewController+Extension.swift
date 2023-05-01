@@ -1,6 +1,7 @@
 import UIKit
 
 extension UIViewController {
+    ///  API通信。失敗した場合のエラーのアラート
     func errorAlert(message: String) {
         let alert = UIAlertController(
             title: "エラーです。",
