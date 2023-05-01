@@ -29,8 +29,8 @@ GitHubのリポジトリを検索するアプリです。
 ・SwiftLint 導入  
 
 ### アプリ画面
-<img src="https://github.com/Loco-tequila0724/GitHubSearchApp/blob/main/Simulator%20Screenshot%20-%20iPhone%2014%20Pro%20-%202023-05-01%20at%2015.52.17.png" width="400">  
-<img src="https://github.com/Loco-tequila0724/GitHubSearchApp/blob/main/Simulator%20Screenshot%20-%20iPhone%2014%20Pro%20-%202023-05-01%20at%2015.54.32.png" width="400">  
+<img width="332" alt="スクリーンショット 2023-05-01 18 35 46" src="https://user-images.githubusercontent.com/77542296/235435791-f7c50d8d-498c-42d4-8b9c-8272acdab904.png" width="400">  
+<img width="353" alt="スクリーンショット 2023-05-01 17 10 08" src="https://user-images.githubusercontent.com/77542296/235435644-4100ae92-1a59-4f33-870d-d0dcbd5eaa25.png" width="400">    
 
 ## 取り組んだ課題
 ・すべての課題を対応(済)
@@ -38,6 +38,8 @@ GitHubのリポジトリを検索するアプリです。
 ## アプリ名・アプリのアイコンを自作
 フリー素材『icooon mono』  
 作図 ツール『Cacoo(カクー)』
+
+<img width="100" alt="スクリーンショット 2023-04-30 8 00 50" src="https://user-images.githubusercontent.com/77542296/235435051-31725753-1521-4d75-b779-023724fd9b7c.png" width="400">
 
 [アイコンのリンク①](https://icooon-mono.com/14925-%e7%81%ab%e6%98%9f%e4%ba%ba%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b33/)  
 [アイコンのリンク②](https://icooon-mono.com/00039-%e6%a4%9c%e7%b4%a2%e7%94%a8%e3%81%ae%e8%99%ab%e7%9c%bc%e9%8f%a1%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b3%e7%b4%a0%e6%9d%90/)  
@@ -75,6 +77,6 @@ GitHubのリポジトリを検索するアプリです。
 直近、VIPERアーキテクチャを学習しました。  
 [学習内容リンク](https://www.notion.so/VIPER-45727e3a383f4e98b4416ca19a0cd9a2)  
 
-<img src="https://github.com/Loco-tequila0724/GitHubSearchApp/blob/main/%E3%82%B9%E3%82%AF%E3%83%AA%E3%83%BC%E3%83%B3%E3%82%B7%E3%83%A7%E3%83%83%E3%83%88%202023-05-01%2017.18.51.png" width="600">  
+<img width="1253" alt="スクリーンショット 2023-05-01 17 18 51" src="https://user-images.githubusercontent.com/77542296/235435028-00bbf6b9-a496-4c5c-a685-4fe49ccc07d4.png" width="600">  
 
 新しく学んだことをさっそく実践で使用。いろんな技術をどんどん試していこうという意欲があります。
