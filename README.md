@@ -41,7 +41,7 @@ GitHubのリポジトリを検索するアプリです。
 フリー素材『icooon mono』  
 作図 ツール『Cacoo(カクー)』
 
-<img width="100" alt="スクリーンショット 2023-04-30 8 00 50" src="https://user-images.githubusercontent.com/77542296/235435051-31725753-1521-4d75-b779-023724fd9b7c.png" width="400">
+<img width="314" alt="スクリーンショット 2023-05-02 3 32 01" src="https://user-images.githubusercontent.com/77542296/235507544-8ef388aa-015d-4ad9-8701-14f50fc2f2ff.png" width="230">
 
 [アイコンのリンク①](https://icooon-mono.com/14925-%e7%81%ab%e6%98%9f%e4%ba%ba%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b33/)  
 [アイコンのリンク②](https://icooon-mono.com/00039-%e6%a4%9c%e7%b4%a2%e7%94%a8%e3%81%ae%e8%99%ab%e7%9c%bc%e9%8f%a1%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b3%e7%b4%a0%e6%9d%90/)  
@@ -77,7 +77,7 @@ GitHubのリポジトリを検索するアプリです。
 
 ### VIPERアーキテクチャの適用
 
-最近VIPERアーキテクチャを学習したので、新しく学んだことをさっそく実践で使用しました。
+最近VIPERアーキテクチャを学習したので、新しく学んだことをさっそく実践で使用しました。  
 いろんな技術をどんどん試していこうという意欲があります。  
 [学習内容リンク](https://www.notion.so/VIPER-45727e3a383f4e98b4416ca19a0cd9a2)  
 
