@@ -30,7 +30,7 @@ final class GitHubSearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        presenter.viewDidLoad()
+        presenter.viewDidLoad()
     }
 }
 
