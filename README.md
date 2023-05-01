@@ -2,51 +2,77 @@
 
 ## 概要
 
-本プロジェクトは株式会社ゆめみ（以下弊社）が、弊社に iOS エンジニアを希望する方に出す課題のベースプロジェクトです。本課題が与えられた方は、下記の概要を詳しく読んだ上で課題を取り組んでください。
+新機能やUIのブラッシュアップも行い、指定された課題にすべて取り組みました。
+詳細は下記を御覧ください。
 
 ## アプリ仕様
 
-本アプリは GitHub のリポジトリーを検索するアプリです。
-
-![動作イメージ](README_Images/app.gif)
+アプリ名『 GitRepo Find 』
+GitHubのリポジトリを検索するアプリです。
 
 ### 環境
 
-- IDE：基本最新の安定版（本概要更新時点では Xcode 14.1）
-- Swift：基本最新の安定版（本概要更新時点では Swift 5.7）
-- 開発ターゲット：基本最新の安定版（本概要更新時点では iOS 16.1）
-- サードパーティーライブラリーの利用：オープンソースのものに限り制限しない
+- IDE：Xcode 14.3 
+- Swift: 5.8 
+- 開発ターゲット： iOS 15.0
+- サードパーティーライブラリーの利用： 無し
+- 設計: VIPERアーキテクチャ
+- UIkitのみ SwiftUI未使用 ストーリーボードのみ
 
-### 動作
+### 細かな設定
 
-1. 何かしらのキーワードを入力
-2. GitHub API（`search/repositories`）でリポジトリーを検索し、結果一覧を概要（リポジトリ名）で表示
-3. 特定の結果を選択したら、該当リポジトリの詳細（リポジトリ名、オーナーアイコン、プロジェクト言語、Star 数、Watcher 数、Fork 数、Issue 数）を表示
+・iPad非対応
+・ダークモード非対応
+・画面の回転不可 (縦画面で固定)
+・ステータスバー lightモードで固定
+・ローカライズ(未)
+・SwiftLint 導入
 
-## 課題取り組み方法
-
-Issues を確認した上、本プロジェクトを [**Duplicate** してください](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/duplicating-a-repository)（Fork しないようにしてください。必要ならプライベートリポジトリーにしても大丈夫です）。今後のコミットは全てご自身のリポジトリーで行ってください。
-
-コードチェックの課題 Issue は全て [`課題`](https://github.com/yumemi/ios-engineer-codecheck/milestone/1) Milestone がついており、難易度に応じて Label が [`初級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A初級+milestone%3A課題)、[`中級`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3A中級+milestone%3A課題+) と [`ボーナス`](https://github.com/yumemi/ios-engineer-codecheck/issues?q=is%3Aopen+is%3Aissue+label%3Aボーナス+milestone%3A課題+) に分けられています。課題の必須／選択は下記の表とします：
-
-|   | 初級 | 中級 | ボーナス
-|--:|:--:|:--:|:--:|
-| 新卒／未経験者 | 必須 | 選択 | 選択 |
-| 中途／経験者 | 必須 | 必須 | 選択 |
+### アプリ画面
 
 
-課題 Issueをご自身のリポジトリーにコピーするGitHub Actionsをご用意しております。  
-[こちらのWorkflow](./.github/workflows/copy-issues.yml)を[手動でトリガーする](https://docs.github.com/ja/actions/managing-workflow-runs/manually-running-a-workflow)ことでコピーできますのでご活用下さい。
+## 取り組んだ課題
+・すべての課題を対応(済)
 
-課題が完成したら、リポジトリーのアドレスを教えてください。
+## アプリ名・アプリのアイコンを自作
+フリー素材『icooon mono』
+作図 ツール『Cacoo(カクー)』
 
-## 参考情報
+使用したアイコンのリンク
+https://icooon-mono.com/14925-%e7%81%ab%e6%98%9f%e4%ba%ba%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b33/
+https://icooon-mono.com/00039-%e6%a4%9c%e7%b4%a2%e7%94%a8%e3%81%ae%e8%99%ab%e7%9c%bc%e9%8f%a1%e3%82%a2%e3%82%a4%e3%82%b3%e3%83%b3%e7%b4%a0%e6%9d%90/
+アイコンのライセンス確認(済)
+https://icooon-mono.com/license/
 
-提出された課題の評価ポイントについても詳しく書かれてありますので、ぜひご覧ください。
+## UIをブラッシュアップ
+・カスタムセル使用、画像とstar数の表示
+・ナビゲーションバーの色とタイトル指定
+・データローディング表示
+・API通信。ユーザーへエラーの表示。
+・サーチバーのテキストが空になったらテーブルビューをリセット
 
-- [私が（iOS エンジニアの）採用でコードチェックする時何を見ているのか](https://qiita.com/lovee/items/d76c68341ec3e7beb611)
-- [CocoaPods の利用手引き](https://qiita.com/ykws/items/b951a2e24ca85013e722)
-- [ChatGPT (Model: GPT-4) でコードリファクタリングをやってみる](https://qiita.com/mitsuharu_e/items/213491c668ab75924cfd)
+## 新機能
 
-ChatGPTなどAIサービスの利用は禁止しておりません。  
-利用にあたって工夫したプロンプトやソースコメント等をご提出頂くと加点評価する場合がございます。 (減点評価はありません)
+### 検索結果順序ソート機能
+テーブルビューの順序を降順・昇順に並び替えるボタンを実装。リポジトリのスター数で判断してソートしてます。
+
+実装した理由
+人は人気なものや有名なものから情報を得たい、買いたい性質がある(信用度が高いから)
+ランダムな順番で表示されているよりも、ユーザーがすぐ確認しやすいようソート機能があれば便利。と考え実装しました。
+
+## アピールポイント・挑戦したこと
+
+### テーブルビューが滑らかに動く
+
+画像のカクつきやチラつきなど防止するため細かく設定しました。
+・非同期で画像の取得と生成
+・画像のりサイズ
+・画像キャッシュの使用
+・タスクのキャンセル
+
+### VIPERアーキテクチャの適用
+
+直近、VIPERアーキテクチャを学習しました。
+学習内容こちらです。https://www.notion.so/VIPER-45727e3a383f4e98b4416ca19a0cd9a2
+
+新しく学んだことをさっそく実践で使用。いろんな技術をどんどん試していこうという意欲があります。
