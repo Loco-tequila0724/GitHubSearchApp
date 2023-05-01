@@ -4,8 +4,8 @@
 
 新機能やUIのブラッシュアップも行い、指定された課題にすべて取り組みました。  
 
-問題を１件追加で書いてます。(解決済)
-[Issues](https://github.com/Loco-tequila0724/GitHubSearchApp/issues/12)
+問題を１件追加で書いてます。(解決済)  
+[Issues](https://github.com/Loco-tequila0724/GitHubSearchApp/issues/12) リンク
 
 ## アプリ仕様
 
