@@ -125,9 +125,6 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         if isEmptyText {
             // テキストが空になった事を通知。テーブルビューをリセットするため。
             presenter.searchTextDidChange()
-            searchBar.placeholder = "GitHub リポジトリを検索"
-        } else {
-            searchBar.placeholder = ""
         }
     }
 
