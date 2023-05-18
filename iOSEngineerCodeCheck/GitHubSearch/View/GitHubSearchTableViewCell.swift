@@ -1,3 +1,11 @@
+//
+//  GitHubSearchTableViewCell.swift
+//  iOSEngineerCodeCheck
+//
+//  Created by 日高隼人 on 2023/04/25.
+//  Copyright © 2023 YUMEMI Inc. All rights reserved.
+//
+
 import UIKit
 
 // VIPERアーキテクチャは適用していません。
@@ -28,7 +36,7 @@ final class GitHubSearchTableViewCell: UITableViewCell {
     /// テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
 
-    var gitHubImage: UIImageView { avatarImageView }
+    var avatarImage: UIImageView { avatarImageView }
 
     /// URLSessionで使用するタスク
     private var task: URLSessionDataTask? {
@@ -47,15 +55,14 @@ extension GitHubSearchTableViewCell {
         starsLabel.text = stars
     }
 
-    func gitHubImage(url: URL) {
-        makeUserAvatarImage(url: url)
+    func avatarImage(url: URL) {
+        makeAvatarImage(url: url)
     }
 }
 
 private extension GitHubSearchTableViewCell {
     /// アバターの写真を非同期処理で生成する。
-    func makeUserAvatarImage(url: URL) {
-
+    func makeAvatarImage(url: URL) {
         let configuration = URLSessionConfiguration.default
         // キャッシュがある場合は、キャッシュデータを使用し、それ以外の場合はネットワークからデータをロードする
         configuration.requestCachePolicy = .returnCacheDataElseLoad
@@ -67,10 +74,7 @@ private extension GitHubSearchTableViewCell {
 
         task = session.dataTask(with: request) { [weak self] data, response, error in
             // タスクがキャンセルされたらリターン
-            if let error {
-                Debug.log(errorDescription: error.localizedDescription)
-                return
-            }
+            if let error { return }
 
             guard let data, let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {

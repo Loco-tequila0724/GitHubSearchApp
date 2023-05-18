@@ -1,3 +1,11 @@
+//
+//  GitHubSearchPresenter.swift
+//  iOSEngineerCodeCheck
+//
+//  Created by 日高隼人 on 2023/04/25.
+//  Copyright © 2023 YUMEMI Inc. All rights reserved.
+//
+
 import Foundation
 
 final class GitHubSearchPresenter {
@@ -5,9 +13,9 @@ final class GitHubSearchPresenter {
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
     //  実際に表示に使用するGitHubリスト
-    var gitHubList: [GitHubItem] = []
+    var items: [Item] = []
     //  一番最初に取得したデータを保管
-    var gitHubListDefault: [GitHubItem] = []
+    var defaultItems: [Item] = []
     //  Star数のボタンの状態を保管。(降順,昇順,デフォルト)
     var starOrder: StarOrder = .default
 
@@ -28,23 +36,23 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
     func searchButtonDidPush(text: String) {
-        gitHubList = []
-        gitHubListDefault = []
+        items = []
+        defaultItems = []
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetchGitHubResult(text: text)
+        interactor.fetch(text: text)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
-        gitHubList = []
+        items = []
         view?.resetDisplay()
-        interactor.gitHubApi.task?.cancel()
+        interactor.apiManager.task?.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
-    func didSelectRow(gitHubItem: GitHubItem) {
-        router.showGitHubDetailVC(gitHubItem: gitHubItem)
+    func didSelectRow(item: Item) {
+        router.showGitHubDetailViewController(item: item)
     }
 
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
@@ -54,19 +62,19 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
             changeOrder(
                 starOrder: .desc,
                 // スター数が多い順にソート
-                gitHubList: gitHubList.sorted { $0.stargazersCount > $01.stargazersCount }
+                items: items.sorted { $0.stargazersCount > $01.stargazersCount }
             )
         case .desc:
             changeOrder(
-                starOrder: .ask,
+                starOrder: .asc,
                 // スター数が少ない順にソート
-                gitHubList: gitHubList.sorted { $0.stargazersCount < $01.stargazersCount }
+                items: items.sorted { $0.stargazersCount < $01.stargazersCount }
             )
-        case .ask:
+        case .asc:
             changeOrder(
                 starOrder: .default,
                 // デフォルトの順番
-                gitHubList: gitHubListDefault
+                items: defaultItems
             )
         }
     }
@@ -75,12 +83,12 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     /// GitHubデータをGitHubListへ加工しViewへ渡す。
-    func didFetchGitHubResult(result: Result<GitHubSearchEntity, ApiError>) {
+    func didFetchResult(result: Result<GitHubSearchEntity, ApiError>) {
         view?.stopLoading()
         switch result {
         case .success(let gitHubData):
             //  データの取得が成功した場合は、 GitHubリストのデフォルトに保管。
-            self.gitHubListDefault = gitHubData.items!
+            self.defaultItems = gitHubData.items!
         case .failure(let error):
             if error == .notFound {
                 // GitHubの結果が無いことを通知
@@ -94,15 +102,15 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         switch starOrder {
         case .desc:
             // スター数が多い順にソート
-            gitHubList = gitHubListDefault.sorted { $0.stargazersCount > $1.stargazersCount }
+            items = defaultItems.sorted { $0.stargazersCount > $1.stargazersCount }
             view?.tableViewReload()
-        case .ask:
+        case .asc:
             // スター数が少ない順にソート
-            gitHubList = gitHubListDefault.sorted { $0.stargazersCount < $1.stargazersCount }
+            items = defaultItems.sorted { $0.stargazersCount < $1.stargazersCount }
             view?.tableViewReload()
         case .`default`:
             // デフォルトの順番
-            gitHubList = gitHubListDefault
+            items = defaultItems
             view?.tableViewReload()
         }
     }
@@ -110,14 +118,14 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 // MARK: - このファイル内のみで使用する。 -
 private extension GitHubSearchPresenter {
     /// スター数ボタンの状態によって、データを加工してViewに返す処理。
-    func changeOrder(starOrder: StarOrder, gitHubList: [GitHubItem]) {
+    func changeOrder(starOrder: StarOrder, items: [Item]) {
         // 現在のスター数の状態を保管
         self.starOrder = starOrder
         // Viewへ見た目の状態を返す
         view?.didChangeStarOrder(starOrder: starOrder)
-        guard !gitHubList.isEmpty else { return }
+        guard !items.isEmpty else { return }
         // GitHubデータがある場合は配列をソートして状態を保管
-        self.gitHubList = gitHubList
+        self.items = items
         view?.tableViewReload()
     }
 }

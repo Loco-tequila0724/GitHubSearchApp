@@ -1,3 +1,11 @@
+//
+//  GitHubSearchRouter.swift
+//  iOSEngineerCodeCheck
+//
+//  Created by 日高隼人 on 2023/04/25.
+//  Copyright © 2023 YUMEMI Inc. All rights reserved.
+//
+
 import UIKit
 
 final class GitHubSearchRouter {
@@ -23,9 +31,9 @@ extension GitHubSearchRouter: GitHubSearchWireFrame {
         return view
     }
 
-    func showGitHubDetailVC(gitHubItem: GitHubItem) {
+    func showGitHubDetailViewController(item: Item) {
         // GitHubのデータはここで持たせて次の画面に渡します。
-        let gitHubDetailRouterVC = GitHubDetailRouter.assembleModules(gitHubItem: gitHubItem)
-        viewController?.navigationController?.pushViewController(gitHubDetailRouterVC, animated: true)
+        let gitHubDetailRouterViewController = GitHubDetailRouter.assembleModules(item: item)
+        viewController?.navigationController?.pushViewController(gitHubDetailRouterViewController, animated: true)
     }
 }

@@ -1,0 +1,6 @@
+framework module Pods_iOSEngineerCodeCheckTests {
+  umbrella header "Pods-iOSEngineerCodeCheckTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

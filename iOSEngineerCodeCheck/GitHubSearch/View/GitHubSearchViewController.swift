@@ -1,3 +1,11 @@
+//
+//  ViewController.swift
+//  iOSEngineerCodeCheck
+//
+//  Created by 史 翔新 on 2020/04/20.
+//  Copyright © 2020 YUMEMI Inc. All rights reserved.
+//
+
 import UIKit
 
 final class GitHubSearchViewController: UIViewController {
@@ -125,9 +133,6 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         if isEmptyText {
             // テキストが空になった事を通知。テーブルビューをリセットするため。
             presenter.searchTextDidChange()
-            searchBar.placeholder = "GitHub リポジトリを検索"
-        } else {
-            searchBar.placeholder = ""
         }
     }
 
@@ -142,35 +147,35 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
 extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.gitHubList.count
+        return presenter.items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
         cell.selectionStyle = .none
         // 写真表示をリセット
-        cell.gitHubImage.image = nil
+        cell.avatarImage.image = nil
 
-        let gitHub = presenter.gitHubList[indexPath.row]
+        let item = presenter.items[indexPath.row]
 
         cell.configure(
-            fullName: gitHub.fullName,
-            language: "言語 \(gitHub.language ?? "")",
-            stars: "☆ \(gitHub.stargazersCount)"
+            fullName: item.fullName,
+            language: "言語 \(item.language ?? "")",
+            stars: "☆ \(item.stargazersCount)"
         )
 
-        let url = gitHub.owner.avatarUrl
+        let url = item.owner.avatarUrl
 
-        cell.gitHubImage(url: url)
+        cell.avatarImage(url: url)
         return cell
     }
 }
 
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let gitHubItem = presenter.gitHubList[indexPath.row]
+        let item = presenter.items[indexPath.row]
         // セルタップを通知。GitHubデータを渡してます。
-        presenter.didSelectRow(gitHubItem: gitHubItem)
+        presenter.didSelectRow(item: item)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
