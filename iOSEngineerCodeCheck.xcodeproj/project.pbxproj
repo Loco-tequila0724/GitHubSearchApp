@@ -159,7 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
-				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
 			);
@@ -170,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */,
+				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
 				38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */,
 			);
 			path = Interactor;
@@ -245,7 +245,6 @@
 		38F34E7529F920AB00120671 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				38F34E7629F920E600120671 /* GitHubDetailRouter.swift */,
 				38D37C722A168B88005EA7C6 /* GitHubDetailWireFrame.swift */,
 			);
 			path = Router;
@@ -254,6 +253,7 @@
 		38F34E7C29F9526900120671 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				38F34E7629F920E600120671 /* GitHubDetailRouter.swift */,
 				38F34E6229F91E9400120671 /* Entity */,
 				38F34E8C29FBA01900120671 /* GitHubApi.swift */,
 				38F34E7D29F952B800120671 /* ApiError.swift */,
