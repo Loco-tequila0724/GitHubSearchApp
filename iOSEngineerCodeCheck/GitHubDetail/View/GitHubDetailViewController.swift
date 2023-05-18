@@ -14,7 +14,7 @@ final class GitHubDetailViewController: UIViewController {
     }
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
-    @IBOutlet private weak var wathcersLabel: UILabel!
+    @IBOutlet private weak var watchersLabel: UILabel!
     @IBOutlet private weak var forksLabel: UILabel!
     @IBOutlet private weak var issuesLabel: UILabel!
 
@@ -47,7 +47,7 @@ extension GitHubDetailViewController: GitHubDetailView {
         titleLabel.text = gitHubItem.fullName
         languageLabel.text = "言語 \(gitHubItem.language ?? "")"
         starsLabel.text    = "\(String(gitHubItem.stargazersCount))"
-        wathcersLabel.text = "\(String(gitHubItem.watchersCount))"
+        watchersLabel.text = "\(String(gitHubItem.watchersCount))"
         forksLabel.text    = "\(String(gitHubItem.forksCount))"
         issuesLabel.text   = "\(String(gitHubItem.openIssuesCount))"
     }

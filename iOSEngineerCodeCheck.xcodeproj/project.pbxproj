@@ -201,7 +201,7 @@
 			path = GitHubSearch;
 			sourceTree = "<group>";
 		};
-		38F34E6F29F9200E00120671 /*  GItHubDetail */ = {
+		38F34E6F29F9200E00120671 /* GitHubDetail */ = {
 			isa = PBXGroup;
 			children = (
 				38F34E7A29F9217700120671 /* GitHubDetailProtocol.swift */,
@@ -209,7 +209,7 @@
 				38F34E7229F9207400120671 /* Presenter */,
 				38F34E7529F920AB00120671 /* Router */,
 			);
-			path = " GItHubDetail";
+			path = GitHubDetail;
 			sourceTree = "<group>";
 		};
 		38F34E7029F9202A00120671 /* View */ = {
@@ -307,7 +307,7 @@
 			children = (
 				38789E3429FDAFC700732BE8 /* App */,
 				38F34E6429F91EE500120671 /* GitHubSearch */,
-				38F34E6F29F9200E00120671 /*  GItHubDetail */,
+				38F34E6F29F9200E00120671 /* GitHubDetail */,
 				38F34E8729FA432100120671 /* Extentions */,
 				38F34E7C29F9526900120671 /* Utilities  */,
 				38789E3329FDADC700732BE8 /* Resource */,

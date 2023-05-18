@@ -58,11 +58,11 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
             )
         case .desc:
             changeOrder(
-                starOrder: .ask,
+                starOrder: .asc,
                 // スター数が少ない順にソート
                 gitHubList: gitHubList.sorted { $0.stargazersCount < $01.stargazersCount }
             )
-        case .ask:
+        case .asc:
             changeOrder(
                 starOrder: .default,
                 // デフォルトの順番
@@ -96,7 +96,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             // スター数が多い順にソート
             gitHubList = gitHubListDefault.sorted { $0.stargazersCount > $1.stargazersCount }
             view?.tableViewReload()
-        case .ask:
+        case .asc:
             // スター数が少ない順にソート
             gitHubList = gitHubListDefault.sorted { $0.stargazersCount < $1.stargazersCount }
             view?.tableViewReload()
