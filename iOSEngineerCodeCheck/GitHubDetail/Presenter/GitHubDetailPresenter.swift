@@ -3,7 +3,7 @@ import Foundation
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
     var router: GitHubDetailRouter?
-    var gitHubItem: GitHubItem?
+    var item: Item?
 
     init(
         view: GitHubDetailView? = nil,

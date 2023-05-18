@@ -1,10 +1,10 @@
 import Foundation
 
 struct GitHubSearchEntity: Decodable {
-    var items: [GitHubItem]?
+    var items: [Item]?
 }
 // MARK: - GitHub リポジトリデータ構造 -
-struct GitHubItem: Decodable {
+struct Item: Decodable {
     let fullName: String
     let language: String?
     let stargazersCount: Int

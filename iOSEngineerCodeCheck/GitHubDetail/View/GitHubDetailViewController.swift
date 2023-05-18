@@ -41,14 +41,14 @@ extension GitHubDetailViewController: GitHubDetailView {
     /// 初期画面の構成
     func configure() {
         setupNavigationBar(title: "リポジトリ")
-        guard let gitHubItem = presenter.gitHubItem else { return }
-        let imageURL = gitHubItem.owner.avatarUrl
+        guard let item = presenter.item else { return }
+        let imageURL = item.owner.avatarUrl
         imageView.loadImageAsynchronous(url: imageURL)
-        titleLabel.text = gitHubItem.fullName
-        languageLabel.text = "言語 \(gitHubItem.language ?? "")"
-        starsLabel.text    = "\(String(gitHubItem.stargazersCount))"
-        watchersLabel.text = "\(String(gitHubItem.watchersCount))"
-        forksLabel.text    = "\(String(gitHubItem.forksCount))"
-        issuesLabel.text   = "\(String(gitHubItem.openIssuesCount))"
+        titleLabel.text = item.fullName
+        languageLabel.text = "言語 \(item.language ?? "")"
+        starsLabel.text    = "\(String(item.stargazersCount))"
+        watchersLabel.text = "\(String(item.watchersCount))"
+        forksLabel.text    = "\(String(item.forksCount))"
+        issuesLabel.text   = "\(String(item.openIssuesCount))"
     }
 }

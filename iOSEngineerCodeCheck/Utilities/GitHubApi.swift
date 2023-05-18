@@ -1,34 +1,34 @@
 import Foundation
 
 // MARK: - GitHub API通信で使用する -
-class GitHubApiManager {
+class ApiManager {
     var decoder: JSONDecoder = JSONDecoder()
-    var gitHubResult: (Result<GitHubSearchEntity, ApiError>)?
+    var result: (Result<GitHubSearchEntity, ApiError>)?
     var task: Task<(), Never>?
 }
 
 // MARK: - 他ファイルから使用するる類 -
-extension GitHubApiManager {
+extension ApiManager {
     /// GitHubデータベースから取得した結果を返す。
     func fetch(text: String, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
         task = Task {
             do {
                 let request = try self.urlRequest(text: text)
-                let gitHubData = try await convertGitHub(request: request)
-                gitHubResult = .success(gitHubData)
-                completion(gitHubResult!)
+                let gitHubData = try await convert(request: request)
+                result = .success(gitHubData)
+                completion(result!)
             } catch let apiError {
                 // タスクをキャンセルされたらリターン
                 if Task.isCancelled { return }
-                gitHubResult = .failure(apiError as? ApiError ?? .unknown)
-                completion(gitHubResult!)
+                result = .failure(apiError as? ApiError ?? .unknown)
+                completion(result!)
             }
         }
     }
 }
 
 // MARK: - API通信を行なうための部品類 -
-private extension GitHubApiManager {
+private extension ApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
     func urlRequest(text: String) throws -> URLRequest {
         guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)&per_page=60") else {
@@ -40,7 +40,7 @@ private extension GitHubApiManager {
     }
 
     /// API通信。デコード。GitHubデータへ変換。
-    func convertGitHub(request: URLRequest) async throws -> GitHubSearchEntity {
+    func convert(request: URLRequest) async throws -> GitHubSearchEntity {
         let (data, response) = try await URLSession.shared.data(for: request)
         let httpResponse = response as? HTTPURLResponse
         ///  短時間で検索されすぎるとこのエラーが返る

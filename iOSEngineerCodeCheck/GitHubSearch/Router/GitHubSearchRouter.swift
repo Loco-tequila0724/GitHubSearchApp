@@ -23,9 +23,9 @@ extension GitHubSearchRouter: GitHubSearchWireFrame {
         return view
     }
 
-    func showGitHubDetailViewController(gitHubItem: GitHubItem) {
+    func showGitHubDetailViewController(item: Item) {
         // GitHubのデータはここで持たせて次の画面に渡します。
-        let gitHubDetailRouterViewController = GitHubDetailRouter.assembleModules(gitHubItem: gitHubItem)
+        let gitHubDetailRouterViewController = GitHubDetailRouter.assembleModules(item: item)
         viewController?.navigationController?.pushViewController(gitHubDetailRouterViewController, animated: true)
     }
 }

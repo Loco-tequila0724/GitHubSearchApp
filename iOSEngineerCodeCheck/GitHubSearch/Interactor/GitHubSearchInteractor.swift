@@ -2,14 +2,14 @@ import Foundation
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
-    let gitHubApi = GitHubApiManager()
+    let apiManager = ApiManager()
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
-    func fetchGitHubResult(text: String) {
-        gitHubApi.fetch(text: text) { [weak self] result in
-            self?.presenter?.didFetchGitHubResult(result: result)
+    func fetch(text: String) {
+        apiManager.fetch(text: text) { [weak self] result in
+            self?.presenter?.didFetchResult(result: result)
         }
     }
 }
