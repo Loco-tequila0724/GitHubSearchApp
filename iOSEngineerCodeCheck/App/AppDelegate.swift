@@ -1,5 +1,4 @@
 import UIKit
-// swiftlint:disable all
 
 @UIApplicationMain
 final class AppDelegate: UIResponder, UIApplicationDelegate {

@@ -15,7 +15,6 @@ final class IOSEngineerCodeCheckTests: XCTestCase {
         let expectation = XCTestExpectation(description: "fetch data")
 
         gitHubApi.fetch(text: "Swift") { result in
-
             switch result {
             case .success(let gitHubItem):
                 // 中身がnilだった場合はエラー

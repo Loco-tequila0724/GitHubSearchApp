@@ -55,7 +55,6 @@ extension GitHubSearchTableViewCell {
 private extension GitHubSearchTableViewCell {
     /// アバターの写真を非同期処理で生成する。
     func makeUserAvatarImage(url: URL) {
-
         let configuration = URLSessionConfiguration.default
         // キャッシュがある場合は、キャッシュデータを使用し、それ以外の場合はネットワークからデータをロードする
         configuration.requestCachePolicy = .returnCacheDataElseLoad

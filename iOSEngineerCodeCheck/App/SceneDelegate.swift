@@ -1,5 +1,5 @@
 import UIKit
-// swiftlint:disable all
+
 final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
