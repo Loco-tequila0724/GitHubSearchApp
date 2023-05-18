@@ -66,10 +66,7 @@ private extension GitHubSearchTableViewCell {
 
         task = session.dataTask(with: request) { [weak self] data, response, error in
             // タスクがキャンセルされたらリターン
-            if let error {
-                Debug.log(errorDescription: error.localizedDescription)
-                return
-            }
+            if let error { return }
 
             guard let data, let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {

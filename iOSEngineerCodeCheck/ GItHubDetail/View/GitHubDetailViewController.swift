@@ -27,11 +27,6 @@ final class GitHubDetailViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
-
-    deinit {
-        let fileName = NSString(#file).lastPathComponent as NSString
-        print(#function, " 🌀メモリが開放された", fileName)
-    }
 }
 
 extension GitHubDetailViewController {
