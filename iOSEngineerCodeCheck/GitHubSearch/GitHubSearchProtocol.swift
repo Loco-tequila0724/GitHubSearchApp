@@ -48,5 +48,5 @@ protocol GitHubSearchOutputUsecase: AnyObject {
 // Router
 protocol GitHubSearchWireFrame: AnyObject {
     static func assembleModules() -> UIViewController
-    func showGitHubDetailVC(gitHubItem: GitHubItem)
+    func showGitHubDetailViewController(gitHubItem: GitHubItem)
 }

@@ -44,7 +44,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
     func didSelectRow(gitHubItem: GitHubItem) {
-        router.showGitHubDetailVC(gitHubItem: gitHubItem)
+        router.showGitHubDetailViewController(gitHubItem: gitHubItem)
     }
 
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)

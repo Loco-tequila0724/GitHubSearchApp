@@ -195,7 +195,6 @@
 				38F34E5F29F91E6400120671 /* View */,
 				38F34E6029F91E7000120671 /* Interactor */,
 				38F34E6129F91E8400120671 /* Presenter */,
-				38F34E6229F91E9400120671 /* Entity */,
 				38F34E6329F91EA900120671 /* Router */,
 			);
 			path = GitHubSearch;
@@ -237,13 +236,14 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
-		38F34E7C29F9526900120671 /* Utilities  */ = {
+		38F34E7C29F9526900120671 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				38F34E6229F91E9400120671 /* Entity */,
 				38F34E8C29FBA01900120671 /* GitHubApi.swift */,
 				38F34E7D29F952B800120671 /* ApiError.swift */,
 			);
-			path = "Utilities ";
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		38F34E8729FA432100120671 /* Extentions */ = {
@@ -309,7 +309,7 @@
 				38F34E6429F91EE500120671 /* GitHubSearch */,
 				38F34E6F29F9200E00120671 /* GitHubDetail */,
 				38F34E8729FA432100120671 /* Extentions */,
-				38F34E7C29F9526900120671 /* Utilities  */,
+				38F34E7C29F9526900120671 /* Utilities */,
 				38789E3329FDADC700732BE8 /* Resource */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 			);
