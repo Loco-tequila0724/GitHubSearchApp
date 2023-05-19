@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - GitHub API通信で使用する -
-class ApiManager {
+final class ApiManager {
     var decoder: JSONDecoder = JSONDecoder()
     var result: (Result<GitHubSearchEntity, ApiError>)?
     var task: Task<(), Never>?
@@ -18,26 +18,10 @@ class ApiManager {
 // MARK: - 他ファイルから使用するる類 -
 extension ApiManager {
     /// GitHubデータベースから取得した結果を返す。
-    func fetch(text: String, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
+    func fetch(orderRepository: OrderRepository, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
         task = Task {
             do {
-                let request = try self.urlRequest(text: text)
-                let gitHubData = try await convert(request: request)
-                result = .success(gitHubData)
-                completion(result!)
-            } catch let apiError {
-                // タスクをキャンセルされたらリターン
-                if Task.isCancelled { return }
-                result = .failure(apiError as? ApiError ?? .unknown)
-                completion(result!)
-            }
-        }
-    }
-
-    func fetch1(orderRepository: OrderRepository, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
-        task = Task {
-            do {
-                let request = try self.urlRequest1(url: orderRepository.url)
+                let request = try self.urlRequest(url: orderRepository.url)
                 let gitHubData = try await convert(request: request)
                 result = .success(gitHubData)
                 completion(result!)
@@ -54,19 +38,11 @@ extension ApiManager {
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
-    func urlRequest(text: String) throws -> URLRequest {
-        guard let url: URL = URL(string: "https://api.github.com/search/repositories?q=\(text)&per_page=60") else {
-            throw ApiError.notFound
-        }
-        var request = URLRequest(url: url)
-        return request
-    }
-
-    func urlRequest1(url: URL?) throws -> URLRequest {
+    func urlRequest(url: URL?) throws -> URLRequest {
         guard let url: URL = url else {
             throw ApiError.notFound
         }
-        var request = URLRequest(url: url)
+        let request = URLRequest(url: url)
         return request
     }
 

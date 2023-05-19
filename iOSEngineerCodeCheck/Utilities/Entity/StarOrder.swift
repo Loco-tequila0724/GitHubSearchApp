@@ -32,10 +32,10 @@ enum StarOrder {
 }
 ///  リポジトリを表示する順序に関する
 protocol OrderRepository {
-    var items: [Item?] { get }
+    var items: [Item?] { get set }
     var text: String { get }
     var color: UIColor { get }
-    var word: String { get }
+    var word: String { get set }
     var url: URL? { get }
 }
 
