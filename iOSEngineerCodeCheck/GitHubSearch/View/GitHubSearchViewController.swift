@@ -121,9 +121,9 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(repository: RepositoryManager) {
-        starOderButton.setTitle(repository.current.text, for: .normal)
-        starOderButton.backgroundColor = repository.current.color
+    func didChangeStarOrder(repository: RepositoryItem) {
+        starOderButton.setTitle(repository.text, for: .normal)
+        starOderButton.backgroundColor = repository.color
     }
 }
 
@@ -142,7 +142,7 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
         var repository = presenter.repository.current
         repository.word = text
-        presenter.searchButtonDidPush(orderRepository: repository)
+        presenter.searchButtonDidPush(repositoryItem: repository)
         searchBar.resignFirstResponder()
     }
 }
