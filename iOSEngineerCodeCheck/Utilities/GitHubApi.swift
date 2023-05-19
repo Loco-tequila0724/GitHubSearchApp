@@ -18,7 +18,7 @@ final class ApiManager {
 // MARK: - 他ファイルから使用するる類 -
 extension ApiManager {
     /// GitHubデータベースから取得した結果を返す。
-    func fetch(orderRepository: OrderRepository, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
+    func fetch(orderRepository: RepositoryItem, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
         task = Task {
             do {
                 let request = try self.urlRequest(url: orderRepository.url)

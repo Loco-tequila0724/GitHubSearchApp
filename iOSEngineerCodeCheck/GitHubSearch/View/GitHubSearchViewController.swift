@@ -67,7 +67,6 @@ extension GitHubSearchViewController: GitHubSearchView {
         notFoundLabel.text = nil
         frontView.isHidden = true
         setupNavigationBar(title: "ホーム")
-        presenter.orderRepository = DefaultRepository()
     }
 
     /// 画面の状態をリセットする
@@ -122,9 +121,9 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(starOrder: StarOrder) {
-        starOderButton.setTitle(starOrder.text, for: .normal)
-        starOderButton.backgroundColor = starOrder.color
+    func didChangeStarOrder(repository: RepositoryManager) {
+        starOderButton.setTitle(repository.current.text, for: .normal)
+        starOderButton.backgroundColor = repository.current.color
     }
 }
 
@@ -141,16 +140,16 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         // テキストが空、もしくはローディング中はタップ無効。
         guard let text = searchBar.text, !text.isEmpty, !isLoading else { return }
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
-        var repository = presenter.orderRepository
-        repository?.word = text
-        presenter.searchButtonDidPush(orderRepository: repository!)
+        var repository = presenter.repository.current
+        repository.word = text
+        presenter.searchButtonDidPush(orderRepository: repository)
         searchBar.resignFirstResponder()
     }
 }
 
 extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.orderRepository?.items.count ?? 0
+        return presenter.repository.current.items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -159,7 +158,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
         // 写真表示をリセット
         cell.avatarImage.image = nil
 
-        guard let item = presenter.orderRepository?.items[indexPath.row] else { return UITableViewCell() }
+        guard let item = presenter.repository.current.items[indexPath.row] else { return UITableViewCell() }
 
         cell.configure(
             fullName: item.fullName,
@@ -176,7 +175,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = presenter.orderRepository?.items[indexPath.row] else { return }
+        guard let item = presenter.repository.current.items[indexPath.row] else { return }
         // セルタップを通知。GitHubデータを渡してます。
         presenter.didSelectRow(item: item)
     }

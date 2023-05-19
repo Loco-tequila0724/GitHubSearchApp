@@ -12,8 +12,8 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
-
-    var orderRepository: OrderRepository!
+    var repository = RepositoryManager()
+    var order: Order = .default
 
     init(
         view: GitHubSearchView? = nil,
@@ -31,7 +31,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(orderRepository: OrderRepository) {
+    func searchButtonDidPush(orderRepository: RepositoryItem) {
         view?.resetDisplay()
         view?.startLoading()
         interactor.fetch(orderRepository: orderRepository)
@@ -47,29 +47,16 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     func didSelectRow(item: Item) {
         router.showGitHubDetailViewController(item: item)
     }
-
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
     func starOderButtonDidPush() {
-//        switch starOrder {
-//        case .`default`:
-//            changeOrder(
-//                starOrder: .desc,
-//                // スター数が多い順にソート
-//                items: items.sorted { $0.stargazersCount > $01.stargazersCount }
-//            )
-//        case .desc:
-//            changeOrder(
-//                starOrder: .asc,
-//                // スター数が少ない順にソート
-//                items: items.sorted { $0.stargazersCount < $01.stargazersCount }
-//            )
-//        case .asc:
-//            changeOrder(
-//                starOrder: .default,
-//                // デフォルトの順番
-//                items: defaultItems
-//            )
-//        }
+        switch order {
+        case .`default`:
+            break
+        case .desc:
+            break
+        case .asc:
+            break
+        }
     }
 }
 
@@ -80,8 +67,16 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         view?.stopLoading()
         switch result {
         case .success(let gitHubData):
-            //  データの取得が成功した場合は、 GitHubリストのデフォルトに保管。
-            self.orderRepository?.items = gitHubData.items!
+            repository.current.items = gitHubData.items!
+
+            switch order {
+            case .`default`:
+                repository.`default`.items = gitHubData.items!
+            case .desc:
+                repository.desc.items = gitHubData.items!
+            case .asc:
+                repository.asc.items = gitHubData.items!
+            }
             view?.tableViewReload()
         case .failure(let error):
             if error == .notFound {
@@ -93,7 +88,4 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             }
         }
     }
-}
-// MARK: - このファイル内のみで使用する。 -
-private extension GitHubSearchPresenter {
 }
