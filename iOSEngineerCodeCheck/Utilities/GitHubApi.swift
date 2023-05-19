@@ -60,6 +60,8 @@ private extension ApiManager {
             throw ApiError.serverError
         }
 
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+
         let gitHubData = try decoder.decode(GitHubSearchEntity.self, from: data)
 
         // GitHubのItemsの中身が空だったらエラーを返す。
