@@ -30,45 +30,83 @@ enum StarOrder {
         }
     }
 }
-
-protocol StarOrderTest {
+///  リポジトリを表示する順序に関する
+protocol OrderRepository {
     var items: [Item?] { get }
     var text: String { get }
     var color: UIColor { get }
+    var word: String { get }
+    var url: URL? { get }
 }
 
-struct StarDesc: StarOrderTest {
+/// 順序がデフォルト時の際に使用する
+struct DefaultRepository: OrderRepository {
     var items: [Item?]
+    var word: String
     var text: String
     var color: UIColor
 
-    init() {
+    init(word: String = "") {
         self.items = []
+        self.word = word
+        self.text = "☆ Star数 "
+        self.color = .lightGray
+    }
+
+    var url: URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.github.com"
+        components.path = "/search/repositories"
+        components.queryItems = [.init(name: "q", value: word)]
+        return components.url
+    }
+}
+
+/// スター数が多い順の際に使用する
+struct DescRepository: OrderRepository {
+    var items: [Item?]
+    var word: String
+    var text: String
+    var color: UIColor
+
+    init(word: String = "") {
+        self.items = []
+        self.word = word
         self.text = "☆ Star数 ⍋"
         self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
     }
-}
 
-struct StarAsc: StarOrderTest {
-    var items: [Item?]
-    var text: String
-    var color: UIColor
-
-    init() {
-        self.items = []
-        self.text = "☆ Star数 ⍒"
-        self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+    var url: URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.github.com"
+        components.path = "/search/repositories"
+        components.queryItems = [.init(name: "q", value: word), .init(name: "order", value: "desc"), .init(name: "per_page", value: "60")]
+        return components.url
     }
 }
 
-struct StarDefault: StarOrderTest {
+/// スター数が少ない順の際に使用する
+struct AscRepository: OrderRepository {
     var items: [Item?]
+    var word: String
     var text: String
     var color: UIColor
 
-    init() {
+    init(word: String) {
         self.items = []
-        self.text = "☆ Star数 "
-        self.color = .lightGray
+        self.word = word
+        self.text = "☆ Star数 ⍒"
+        self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+    }
+
+    var url: URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.github.com"
+        components.path = "/search/repositories"
+        components.queryItems = [.init(name: "q", value: word), .init(name: "order", value: "asc"), .init(name: "per_page", value: "60")]
+        return components.url
     }
 }

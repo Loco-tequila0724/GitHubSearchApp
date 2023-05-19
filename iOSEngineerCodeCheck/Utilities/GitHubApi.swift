@@ -33,6 +33,22 @@ extension ApiManager {
             }
         }
     }
+
+    func fetch1(orderRepository: OrderRepository, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
+        task = Task {
+            do {
+                let request = try self.urlRequest1(url: orderRepository.url)
+                let gitHubData = try await convert(request: request)
+                result = .success(gitHubData)
+                completion(result!)
+            } catch let apiError {
+                // タスクをキャンセルされたらリターン
+                if Task.isCancelled { return }
+                result = .failure(apiError as? ApiError ?? .unknown)
+                completion(result!)
+            }
+        }
+    }
 }
 
 // MARK: - API通信を行なうための部品類 -
@@ -43,7 +59,14 @@ private extension ApiManager {
             throw ApiError.notFound
         }
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        return request
+    }
+
+    func urlRequest1(url: URL?) throws -> URLRequest {
+        guard let url: URL = url else {
+            throw ApiError.notFound
+        }
+        var request = URLRequest(url: url)
         return request
     }
 
