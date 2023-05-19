@@ -159,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
+				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
 			);
@@ -169,7 +170,6 @@
 			isa = PBXGroup;
 			children = (
 				38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */,
-				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
 				38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */,
 			);
 			path = Interactor;
