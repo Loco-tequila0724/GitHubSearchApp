@@ -31,14 +31,16 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(orderRepository: RepositoryItem) {
+    func searchButtonDidPush(repositoryItem: RepositoryItem) {
+        resetRepository()
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(orderRepository: orderRepository)
+        interactor.fetch(orderRepository: repositoryItem)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
+        resetRepository()
         view?.resetDisplay()
         interactor.apiManager.task?.cancel()
     }
@@ -51,12 +53,18 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     func starOderButtonDidPush() {
         switch order {
         case .`default`:
-            break
+            order = .desc
+            repository.current = repository.desc
         case .desc:
-            break
+            order = .asc
+            repository.current = repository.asc
         case .asc:
-            break
+            order = .`default`
+            repository.current = repository.`default`
         }
+
+        view?.didChangeStarOrder(repository: repository.current)
+        view?.tableViewReload()
     }
 }
 
@@ -87,5 +95,14 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
                 view?.appearErrorAlert(message: error.errorDescription!)
             }
         }
+    }
+}
+
+private extension GitHubSearchPresenter {
+    func resetRepository() {
+        repository.current.items = []
+        repository.default.items = []
+        repository.desc.items = []
+        repository.asc.items = []
     }
 }
