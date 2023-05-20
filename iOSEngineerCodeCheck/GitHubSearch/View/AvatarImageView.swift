@@ -8,14 +8,26 @@
 
 import UIKit
 
-class AvatarImageView: UIImageView {
+final class AvatarImageView: UIImageView {
+    private let imageLoader = ImageLoader()
 
-    /*
-    // Only override draw() if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func draw(_ rect: CGRect) {
-        // Drawing code
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        accessibilityIgnoresInvertColors = true
+        layer.cornerRadius = 6
     }
-    */
 
+    func load(url: URL?) async {
+        do {
+            imageLoader.cancel()
+            let image = try await imageLoader.load(url: url)
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image.resize()
+            }
+        } catch {
+            DispatchQueue.main.async { [weak self] in
+                self?.image = UIImage(named: "Untitled")
+            }
+        }
+    }
 }
