@@ -13,10 +13,11 @@ protocol GitHubSearchPresentation: AnyObject {
     var view: GitHubSearchView? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
-    var items: [Item] { get }
+    var repository: RepositoryManager { get }
+
     func viewDidLoad()
     /// サーチボタンのタップ通知
-    func searchButtonDidPush(text: String)
+    func searchButtonDidPush(word: String)
     /// 検索テキストの変更を通知
     func searchTextDidChange()
     /// セルタップを通知

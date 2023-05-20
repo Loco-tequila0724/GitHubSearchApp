@@ -18,5 +18,5 @@ protocol GitHubSearchView: AnyObject {
     func resetDisplay()
     func appearErrorAlert(message: String)
     func appearNotFound(text: String)
-    func didChangeStarOrder(starOrder: StarOrder)
+    func didChangeStarOrder(repository: SearchRepositoryItem)
 }

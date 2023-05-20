@@ -12,12 +12,8 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
     var interactor: GitHubSearchInputUsecase
     var router: GitHubSearchWireFrame
-    //  実際に表示に使用するGitHubリスト
-    var items: [Item] = []
-    //  一番最初に取得したデータを保管
-    var defaultItems: [Item] = []
-    //  Star数のボタンの状態を保管。(降順,昇順,デフォルト)
-    var starOrder: StarOrder = .default
+    var repository = RepositoryManager()
+    var order: Order = .default
 
     init(
         view: GitHubSearchView? = nil,
@@ -35,17 +31,16 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(text: String) {
-        items = []
-        defaultItems = []
+    func searchButtonDidPush(word: String) {
+        reset()
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(text: text)
+        interactor.fetch(word: word)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
-        items = []
+        reset()
         view?.resetDisplay()
         interactor.apiManager.task?.cancel()
     }
@@ -57,38 +52,33 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
     func starOderButtonDidPush() {
-        switch starOrder {
+        switch order {
         case .`default`:
-            changeOrder(
-                starOrder: .desc,
-                // スター数が多い順にソート
-                items: items.sorted { $0.stargazersCount > $01.stargazersCount }
-            )
+            order = .desc
+            repository.current = repository.desc
         case .desc:
-            changeOrder(
-                starOrder: .asc,
-                // スター数が少ない順にソート
-                items: items.sorted { $0.stargazersCount < $01.stargazersCount }
-            )
+            order = .asc
+            repository.current = repository.asc
         case .asc:
-            changeOrder(
-                starOrder: .default,
-                // デフォルトの順番
-                items: defaultItems
-            )
+            order = .`default`
+            repository.current = repository.`default`
         }
+        view?.didChangeStarOrder(repository: repository.current)
+        view?.tableViewReload()
     }
 }
 
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    /// GitHubデータをGitHubListへ加工しViewへ渡す。
-    func didFetchResult(result: Result<GitHubSearchEntity, ApiError>) {
+    /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
+    func didFetchResult(result: Result<GitHubRepositories, ApiError>) {
         view?.stopLoading()
+
         switch result {
-        case .success(let gitHubData):
-            //  データの取得が成功した場合は、 GitHubリストのデフォルトに保管。
-            self.defaultItems = gitHubData.items!
+        case .success(let item):
+            setRepositoryItem(item: item)
+            setCurrentRepository()
+            view?.tableViewReload()
         case .failure(let error):
             if error == .notFound {
                 // GitHubの結果が無いことを通知
@@ -98,34 +88,34 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
                 view?.appearErrorAlert(message: error.errorDescription!)
             }
         }
-        /// GitHubリストの順番をここでソートしてから、tableViewのリロード。
-        switch starOrder {
-        case .desc:
-            // スター数が多い順にソート
-            items = defaultItems.sorted { $0.stargazersCount > $1.stargazersCount }
-            view?.tableViewReload()
-        case .asc:
-            // スター数が少ない順にソート
-            items = defaultItems.sorted { $0.stargazersCount < $1.stargazersCount }
-            view?.tableViewReload()
-        case .`default`:
-            // デフォルトの順番
-            items = defaultItems
-            view?.tableViewReload()
-        }
     }
 }
-// MARK: - このファイル内のみで使用する。 -
+
 private extension GitHubSearchPresenter {
-    /// スター数ボタンの状態によって、データを加工してViewに返す処理。
-    func changeOrder(starOrder: StarOrder, items: [Item]) {
-        // 現在のスター数の状態を保管
-        self.starOrder = starOrder
-        // Viewへ見た目の状態を返す
-        view?.didChangeStarOrder(starOrder: starOrder)
-        guard !items.isEmpty else { return }
-        // GitHubデータがある場合は配列をソートして状態を保管
-        self.items = items
-        view?.tableViewReload()
+    /// 保管しているリポジトリのデータをリセット
+    func reset() {
+        repository.current.items = []
+        repository.default.items = []
+        repository.desc.items = []
+        repository.asc.items = []
+    }
+
+    ///  APIから取得したデータを各リポジトリへセット
+    func setRepositoryItem(item: GitHubRepositories) {
+        repository.`default`.items = item.`default`.items!
+        repository.desc.items = item.desc.items!
+        repository.asc.items = item.asc.items!
+    }
+
+    ///  現在の画面に使用するためのリポジトリをセット
+    func setCurrentRepository() {
+        switch order {
+        case .`default`:
+            repository.current = repository.`default`
+        case .desc:
+            repository.current = repository.desc
+        case .asc:
+            repository.current = repository.asc
+        }
     }
 }
