@@ -36,7 +36,10 @@ struct DefaultRepository: RepositoryItem {
         components.scheme = "https"
         components.host = "api.github.com"
         components.path = "/search/repositories"
-        components.queryItems = [.init(name: "q", value: word), .init(name: "per_page", value: "50")]
+        components.queryItems = [
+                .init(name: "q", value: word),
+                .init(name: "per_page", value: "50")
+        ]
         return components.url
     }
 }
@@ -60,7 +63,12 @@ struct DescRepository: RepositoryItem {
         components.scheme = "https"
         components.host = "api.github.com"
         components.path = "/search/repositories"
-        components.queryItems = [.init(name: "q", value: word), .init(name: "order", value: "desc"), .init(name: "per_page", value: "50")]
+        components.queryItems = [
+                .init(name: "q", value: word),
+                .init(name: "sort", value: "stars"),
+                .init(name: "order", value: "desc"),
+                .init(name: "per_page", value: "50")
+        ]
         return components.url
     }
 }
@@ -84,7 +92,12 @@ struct AscRepository: RepositoryItem {
         components.scheme = "https"
         components.host = "api.github.com"
         components.path = "/search/repositories"
-        components.queryItems = [.init(name: "q", value: word), .init(name: "order", value: "asc"), .init(name: "per_page", value: "50")]
+        components.queryItems = [
+                .init(name: "q", value: word),
+                .init(name: "sort", value: "stars"),
+                .init(name: "order", value: "asc"),
+                .init(name: "per_page", value: "50")
+        ]
         return components.url
     }
 }
