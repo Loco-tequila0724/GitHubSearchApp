@@ -140,9 +140,7 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         // テキストが空、もしくはローディング中はタップ無効。
         guard let text = searchBar.text, !text.isEmpty, !isLoading else { return }
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
-        var repository = presenter.repository.current
-        repository.word = text
-        presenter.searchButtonDidPush(repositoryItem: repository)
+        presenter.searchButtonDidPush(word: text)
         searchBar.resignFirstResponder()
     }
 }

@@ -31,16 +31,16 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(repositoryItem: RepositoryItem) {
-        resetRepository()
+    func searchButtonDidPush(word: String) {
+        reset()
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(orderRepository: repositoryItem)
+        interactor.fetch(word: word)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
-        resetRepository()
+        reset()
         view?.resetDisplay()
         interactor.apiManager.task?.cancel()
     }
@@ -49,6 +49,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     func didSelectRow(item: Item) {
         router.showGitHubDetailViewController(item: item)
     }
+
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
     func starOderButtonDidPush() {
         switch order {
@@ -62,7 +63,6 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
             order = .`default`
             repository.current = repository.`default`
         }
-
         view?.didChangeStarOrder(repository: repository.current)
         view?.tableViewReload()
     }
@@ -71,20 +71,13 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     /// GitHubデータをGitHubListへ加工しViewへ渡す。
-    func didFetchResult(result: Result<GitHubSearchEntity, ApiError>) {
+    func didFetchResult(result: Result<RepositoryEntity, ApiError>) {
         view?.stopLoading()
-        switch result {
-        case .success(let gitHubData):
-            repository.current.items = gitHubData.items!
 
-            switch order {
-            case .`default`:
-                repository.`default`.items = gitHubData.items!
-            case .desc:
-                repository.desc.items = gitHubData.items!
-            case .asc:
-                repository.asc.items = gitHubData.items!
-            }
+        switch result {
+        case .success(let item):
+            setRepositoryItem(item: item)
+            setCurrentRepository()
             view?.tableViewReload()
         case .failure(let error):
             if error == .notFound {
@@ -99,10 +92,27 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 }
 
 private extension GitHubSearchPresenter {
-    func resetRepository() {
+    func reset() {
         repository.current.items = []
         repository.default.items = []
         repository.desc.items = []
         repository.asc.items = []
+    }
+
+    func setRepositoryItem(item: RepositoryEntity) {
+        repository.`default`.items = item.`default`.items!
+        repository.desc.items = item.desc.items!
+        repository.asc.items = item.asc.items!
+    }
+
+    func setCurrentRepository() {
+        switch order {
+        case .`default`:
+            repository.current = repository.`default`
+        case .desc:
+            repository.current = repository.desc
+        case .asc:
+            repository.current = repository.asc
+        }
     }
 }
