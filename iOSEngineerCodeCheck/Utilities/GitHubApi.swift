@@ -10,26 +10,33 @@ import Foundation
 
 // MARK: - GitHub API通信で使用する -
 final class ApiManager {
-    var decoder: JSONDecoder = JSONDecoder()
-    var result: (Result<GitHubSearchEntity, ApiError>)?
-    var task: Task<(), Never>?
+    private var decoder: JSONDecoder = JSONDecoder()
+    private (set) var task: Task<(), Never>?
 }
 
 // MARK: - 他ファイルから使用するる類 -
 extension ApiManager {
     /// GitHubデータベースから取得した結果を返す。
-    func fetch(orderRepository: OrderRepository, completion: @escaping(Result<GitHubSearchEntity, ApiError>) -> Void) {
+    func fetch(word: String, completion: @escaping(Result<RepositoryEntity, ApiError>) -> Void) {
         task = Task {
             do {
-                let request = try self.urlRequest(url: orderRepository.url)
-                let gitHubData = try await convert(request: request)
-                result = .success(gitHubData)
-                completion(result!)
+                let request = try urlRequest(word: word)
+
+                async let defaultRepository = convert(request: request.default)
+                async let descRepository = convert(request: request.desc)
+                async let ascRepository = convert(request: request.asc)
+
+                let repository = RepositoryEntity(
+                    default: try await defaultRepository,
+                    desc: try await descRepository,
+                    asc: try await ascRepository)
+
+                completion(.success(repository))
             } catch let apiError {
                 // タスクをキャンセルされたらリターン
                 if Task.isCancelled { return }
-                result = .failure(apiError as? ApiError ?? .unknown)
-                completion(result!)
+
+                completion(.failure(apiError as? ApiError ?? .unknown))
             }
         }
     }
@@ -38,12 +45,20 @@ extension ApiManager {
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
-    func urlRequest(url: URL?) throws -> URLRequest {
-        guard let url: URL = url else {
+    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) {
+        guard
+            let defaultURL: URL = DefaultRepository(word: word).url,
+            let descURL: URL = DescRepository(word: word).url,
+            let ascURL: URL = AscRepository(word: word).url
+            else {
             throw ApiError.notFound
         }
-        let request = URLRequest(url: url)
-        return request
+
+        let defaultRequest = URLRequest(url: defaultURL)
+        let descRequest = URLRequest(url: descURL)
+        let ascRequest = URLRequest(url: ascURL)
+
+        return (defaultRequest, descRequest, ascRequest)
     }
 
     /// API通信。デコード。GitHubデータへ変換。
