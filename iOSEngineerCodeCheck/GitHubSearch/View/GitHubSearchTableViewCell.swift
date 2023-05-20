@@ -10,29 +10,10 @@ import UIKit
 
 // VIPERアーキテクチャは適用していません。
 final class GitHubSearchTableViewCell: UITableViewCell {
-    @IBOutlet private weak var avatarImageView: UIImageView! {
-        didSet {
-            avatarImageView.layer.cornerRadius = 6
-        }
-    }
-    @IBOutlet private weak var fullNameLabel: UILabel! {
-        didSet {
-            fullNameLabel.adjustsFontSizeToFitWidth = true
-            fullNameLabel.minimumScaleFactor = 0.7
-        }
-    }
-    @IBOutlet private weak var languageLabel: UILabel! {
-        didSet {
-            languageLabel.adjustsFontSizeToFitWidth = true
-            languageLabel.minimumScaleFactor = 0.7
-        }
-    }
-    @IBOutlet private weak var starsLabel: UILabel! {
-        didSet {
-            starsLabel.adjustsFontSizeToFitWidth = true
-            starsLabel.minimumScaleFactor = 0.7
-        }
-    }
+    @IBOutlet private weak var avatarImageView: UIImageView!
+    @IBOutlet private weak var fullNameLabel: UILabel!
+    @IBOutlet private weak var languageLabel: UILabel!
+    @IBOutlet private weak var starsLabel: UILabel!
     /// テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
 
@@ -44,6 +25,11 @@ final class GitHubSearchTableViewCell: UITableViewCell {
             // 以前のタスクがあればキャンセルします。
             oldValue?.cancel()
         }
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        setUp()
     }
 }
 
@@ -61,6 +47,18 @@ extension GitHubSearchTableViewCell {
 }
 
 private extension GitHubSearchTableViewCell {
+    func setUp() {
+        avatarImageView.layer.cornerRadius = 6
+
+        fullNameLabel.adjustsFontSizeToFitWidth = true
+        fullNameLabel.minimumScaleFactor = 0.7
+
+        languageLabel.adjustsFontSizeToFitWidth = true
+        languageLabel.minimumScaleFactor = 0.7
+
+        starsLabel.adjustsFontSizeToFitWidth = true
+        starsLabel.minimumScaleFactor = 0.7
+    }
     /// アバターの写真を非同期処理で生成する。
     func makeAvatarImage(url: URL) {
         let configuration = URLSessionConfiguration.default
