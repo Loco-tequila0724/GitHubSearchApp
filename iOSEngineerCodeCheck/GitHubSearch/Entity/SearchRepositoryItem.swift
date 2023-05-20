@@ -9,7 +9,7 @@
 import UIKit
 
 ///  リポジトリを表示する順序に関する
-protocol RepositoryItem {
+protocol SearchRepositoryItem {
     var items: [Item?] { get set }
     var text: String { get }
     var color: UIColor { get }
@@ -18,7 +18,7 @@ protocol RepositoryItem {
 }
 
 /// 順序がデフォルト時の際に使用する
-struct DefaultRepository: RepositoryItem {
+struct DefaultRepository: SearchRepositoryItem {
     var items: [Item?]
     var word: String
     var text: String
@@ -45,7 +45,7 @@ struct DefaultRepository: RepositoryItem {
 }
 
 /// スター数が多い順の際に使用する
-struct DescRepository: RepositoryItem {
+struct DescRepository: SearchRepositoryItem {
     var items: [Item?]
     var word: String
     var text: String
@@ -74,7 +74,7 @@ struct DescRepository: RepositoryItem {
 }
 
 /// スター数が少ない順の際に使用する
-struct AscRepository: RepositoryItem {
+struct AscRepository: SearchRepositoryItem {
     var items: [Item?]
     var word: String
     var text: String

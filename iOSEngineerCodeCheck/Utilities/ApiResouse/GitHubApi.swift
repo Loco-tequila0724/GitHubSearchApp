@@ -16,8 +16,8 @@ final class ApiManager {
 
 // MARK: - 他ファイルから使用するる類 -
 extension ApiManager {
-    /// GitHubデータベースから取得した結果を返す。
-    func fetch(word: String, completion: @escaping(Result<RepositoryEntity, ApiError>) -> Void) {
+    /// GitHub APIから取得した結果を返す。
+    func fetch(word: String, completion: @escaping(Result<GitHubRepositories, ApiError>) -> Void) {
         task = Task {
             do {
                 let request = try urlRequest(word: word)
@@ -26,7 +26,7 @@ extension ApiManager {
                 async let descRepository = convert(request: request.desc)
                 async let ascRepository = convert(request: request.asc)
 
-                let repository = RepositoryEntity(
+                let repository = GitHubRepositories(
                     default: try await defaultRepository,
                     desc: try await descRepository,
                     asc: try await ascRepository)
@@ -45,7 +45,8 @@ extension ApiManager {
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
-    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) {
+    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) {  // swiftlint:disable:this all
+
         guard
             let defaultURL: URL = DefaultRepository(word: word).url,
             let descURL: URL = DescRepository(word: word).url,
@@ -62,7 +63,7 @@ private extension ApiManager {
     }
 
     /// API通信。デコード。GitHubデータへ変換。
-    func convert(request: URLRequest) async throws -> GitHubSearchEntity {
+    func convert(request: URLRequest) async throws -> RepositoryItem {
         let (data, response) = try await URLSession.shared.data(for: request)
         let httpResponse = response as? HTTPURLResponse
         ///  短時間で検索されすぎるとこのエラーが返る
@@ -76,7 +77,7 @@ private extension ApiManager {
 
         decoder.keyDecodingStrategy = .convertFromSnakeCase
 
-        let gitHubData = try decoder.decode(GitHubSearchEntity.self, from: data)
+        let gitHubData = try decoder.decode(RepositoryItem.self, from: data)
 
         // GitHubのItemsの中身が空だったらエラーを返す。
         let isEmpty = (gitHubData.items?.compactMap { $0 }.isEmpty)!

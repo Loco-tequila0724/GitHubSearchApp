@@ -70,8 +70,8 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    /// GitHubデータをGitHubListへ加工しViewへ渡す。
-    func didFetchResult(result: Result<RepositoryEntity, ApiError>) {
+    /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
+    func didFetchResult(result: Result<GitHubRepositories, ApiError>) {
         view?.stopLoading()
 
         switch result {
@@ -92,6 +92,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 }
 
 private extension GitHubSearchPresenter {
+    /// 保管しているリポジトリのデータをリセット
     func reset() {
         repository.current.items = []
         repository.default.items = []
@@ -99,12 +100,14 @@ private extension GitHubSearchPresenter {
         repository.asc.items = []
     }
 
-    func setRepositoryItem(item: RepositoryEntity) {
+    ///  APIから取得したデータを各リポジトリへセット
+    func setRepositoryItem(item: GitHubRepositories) {
         repository.`default`.items = item.`default`.items!
         repository.desc.items = item.desc.items!
         repository.asc.items = item.asc.items!
     }
 
+    ///  現在の画面に使用するためのリポジトリをセット
     func setCurrentRepository() {
         switch order {
         case .`default`:

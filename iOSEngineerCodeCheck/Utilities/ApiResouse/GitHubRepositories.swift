@@ -8,15 +8,15 @@
 
 import Foundation
 
-struct RepositoryEntity {
-    let `default`: GitHubSearchEntity
-    let desc: GitHubSearchEntity
-    let asc: GitHubSearchEntity
+/// 
+struct GitHubRepositories {
+    let `default`: RepositoryItem
+    let desc: RepositoryItem
+    let asc: RepositoryItem
 
-    init(`default`: GitHubSearchEntity, desc: GitHubSearchEntity, asc: GitHubSearchEntity) {
+    init(`default`: RepositoryItem, desc: RepositoryItem, asc: RepositoryItem) {
         self.default = `default`
         self.desc = desc
         self.asc = asc
     }
 }
-

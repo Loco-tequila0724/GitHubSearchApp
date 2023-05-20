@@ -9,12 +9,12 @@
 import Foundation
 
 struct RepositoryManager {
-    var current: RepositoryItem
+    var current: SearchRepositoryItem
     var `default`: DefaultRepository
     var desc: DescRepository
     var asc: AscRepository
 
-    init(currentRepository: RepositoryItem! = DefaultRepository()) {
+    init(currentRepository: SearchRepositoryItem! = DefaultRepository()) {
         self.current = currentRepository
         self.`default` = DefaultRepository()
         self.desc = DescRepository()
