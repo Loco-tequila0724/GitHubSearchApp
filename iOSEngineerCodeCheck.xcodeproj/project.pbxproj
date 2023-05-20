@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		049329AF80B2D1AF611F8FBE /* Pods_iOSEngineerCodeCheckTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6800159216A43DB8C841CD73 /* Pods_iOSEngineerCodeCheckTests.framework */; };
 		08BF68F158EBC28B42E4CFAD /* Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 282A5810E3EA27C8C1BD0C41 /* Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework */; };
+		380A2F992A191DCF009941A6 /* AvatarImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380A2F982A191DCF009941A6 /* AvatarImageView.swift */; };
 		386069A029FC0CC400BCF6AE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */; };
 		386069A429FD164300BCF6AE /* SearchRepositoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386069A329FD164300BCF6AE /* SearchRepositoryItem.swift */; };
 		388949C92A17E57100307A11 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388949C82A17E57100307A11 /* Order.swift */; };
@@ -66,6 +67,7 @@
 /* Begin PBXFileReference section */
 		282A5810E3EA27C8C1BD0C41 /* Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSEngineerCodeCheck_iOSEngineerCodeCheckUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A7C55CFD63E6B2D8C5483EB /* Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests/Pods-iOSEngineerCodeCheck-iOSEngineerCodeCheckUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		380A2F982A191DCF009941A6 /* AvatarImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarImageView.swift; sourceTree = "<group>"; };
 		3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		386069A329FD164300BCF6AE /* SearchRepositoryItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRepositoryItem.swift; sourceTree = "<group>"; };
 		388949C82A17E57100307A11 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 			children = (
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
 				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
+				380A2F982A191DCF009941A6 /* AvatarImageView.swift */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
 			);
@@ -605,6 +608,7 @@
 				38F34E6629F91F3000120671 /* GitHubSearchInteractor.swift in Sources */,
 				38F34E7729F920E600120671 /* GitHubDetailRouter.swift in Sources */,
 				38D37C6B2A16886E005EA7C6 /* GitHubSearchWireFrame.swift in Sources */,
+				380A2F992A191DCF009941A6 /* AvatarImageView.swift in Sources */,
 				388949C92A17E57100307A11 /* Order.swift in Sources */,
 				BF0A658D244F2A3B00280FA6 /* GitHubDetailViewController.swift in Sources */,
 				38F34E6829F91F5400120671 /* GitHubSearchPresenter.swift in Sources */,
