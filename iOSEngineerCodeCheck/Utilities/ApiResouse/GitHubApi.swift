@@ -14,7 +14,7 @@ final class ApiManager {
     private (set) var task: Task<(), Never>?
 }
 
-// MARK: - 他ファイルから使用するる類 -
+// MARK: - 他ファイルから使用する類 -
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
     func fetch(word: String, completion: @escaping(Result<GitHubRepositories, ApiError>) -> Void) {
@@ -33,9 +33,6 @@ extension ApiManager {
 
                 completion(.success(repository))
             } catch let apiError {
-                // タスクをキャンセルされたらリターン
-                if Task.isCancelled { return }
-
                 completion(.failure(apiError as? ApiError ?? .unknown))
             }
         }
@@ -45,7 +42,7 @@ extension ApiManager {
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
     /// リクエスト生成。URLがない場合、NotFoundエラーを返す。
-    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) {  // swiftlint:disable:this all
+    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) { // swiftlint:disable:this all
 
         guard
             let defaultURL: URL = DefaultRepository(word: word).url,
