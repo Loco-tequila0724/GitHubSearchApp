@@ -166,7 +166,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
         let url = item.owner.avatarUrl
 
-        cell.avatarImage(url: url)
+        cell.setAvatarImage(url: url)
         return cell
     }
 }
