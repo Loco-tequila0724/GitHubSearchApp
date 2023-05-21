@@ -153,8 +153,6 @@ extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
         cell.selectionStyle = .none
-        // 写真表示をリセット
-        cell.avatarImage.image = nil
 
         guard let item = presenter.repository.current.items[indexPath.row] else { return UITableViewCell() }
 

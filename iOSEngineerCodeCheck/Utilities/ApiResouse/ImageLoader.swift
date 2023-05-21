@@ -11,7 +11,9 @@ import UIKit.UIImage
 
 final class ImageLoader {
     private var task: Task<(), Error>?
+}
 
+extension ImageLoader {
     func load(url: URL?) async throws -> UIImage {
         guard let url else { throw ApiError.invalidData }
 

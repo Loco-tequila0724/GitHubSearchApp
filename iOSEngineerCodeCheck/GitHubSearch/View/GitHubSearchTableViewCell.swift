@@ -17,8 +17,6 @@ final class GitHubSearchTableViewCell: UITableViewCell {
     /// テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
 
-    var avatarImage: UIImageView { avatarImageView }
-
     override func awakeFromNib() {
         super.awakeFromNib()
         setUp()
@@ -32,11 +30,9 @@ extension GitHubSearchTableViewCell {
         languageLabel.text = language
         starsLabel.text = stars
     }
-
+    // アバター画像の生成
     func setAvatarImage(url: URL) {
-        Task {
-           await avatarImageView.load(url: url)
-        }
+        avatarImageView.load(url: url)
     }
 }
 

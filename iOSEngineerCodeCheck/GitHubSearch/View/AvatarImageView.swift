@@ -16,17 +16,23 @@ final class AvatarImageView: UIImageView {
         accessibilityIgnoresInvertColors = true
         layer.cornerRadius = 6
     }
+}
 
-    func load(url: URL?) async {
-        do {
-            imageLoader.cancel()
-            let image = try await imageLoader.load(url: url)
-            DispatchQueue.main.async { [weak self] in
-                self?.image = image.resize()
-            }
-        } catch {
-            DispatchQueue.main.async { [weak self] in
-                self?.image = UIImage(named: "Untitled")
+extension AvatarImageView {
+    func load(url: URL?) {
+        Task {
+            do {
+                imageLoader.cancel()
+                image = nil
+                let image = try await imageLoader.load(url: url)
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = image.resize()
+                }
+            } catch {
+                // もし画像の取得がエラーだった場合、ダミーの画像を表示。
+                DispatchQueue.main.async { [weak self] in
+                    self?.image = UIImage(named: "Untitled")
+                }
             }
         }
     }
