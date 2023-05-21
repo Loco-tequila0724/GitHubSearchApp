@@ -31,7 +31,7 @@ extension ApiManager {
                     desc: try await descRepository,
                     asc: try await ascRepository)
 
-                completion(.success(repository))
+                completion(.success(repository)) 
             } catch let apiError {
                 completion(.failure(apiError as? ApiError ?? .unknown))
             }
