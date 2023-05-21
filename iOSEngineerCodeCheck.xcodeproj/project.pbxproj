@@ -180,7 +180,6 @@
 			children = (
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
 				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
-				380A2F982A191DCF009941A6 /* AvatarImageView.swift */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
 			);
@@ -279,6 +278,7 @@
 		38F34E7C29F9526900120671 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				380A2F982A191DCF009941A6 /* AvatarImageView.swift */,
 				38F34E6229F91E9400120671 /* ApiResouse */,
 			);
 			path = Utilities;

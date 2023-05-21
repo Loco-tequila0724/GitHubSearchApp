@@ -32,7 +32,9 @@ extension GitHubSearchTableViewCell {
     }
     // アバター画像の生成
     func setAvatarImage(url: URL) {
-        avatarImageView.load(url: url)
+        Task {
+            await avatarImageView.setUp(url: url)
+        }
     }
 }
 
