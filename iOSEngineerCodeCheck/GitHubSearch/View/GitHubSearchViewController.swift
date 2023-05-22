@@ -127,6 +127,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 }
 
+// MARK: - サーチボタンに関する -
 extension GitHubSearchViewController: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let isEmptyText = searchBar.text?.isEmpty else { return }
@@ -142,6 +143,18 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
         presenter.searchButtonDidPush(word: text)
         searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+
+    // キャンセルボタンを表示
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+    }
+
+    // キャンセルボタンとキーボードを非表示。
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        searchBar.setShowsCancelButton(false, animated: true)
     }
 }
 
