@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oRs-JB-gNc">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21678"/>
@@ -96,7 +96,7 @@
                                 <rect key="frame" x="0.0" y="229" width="414" height="633"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
-                                        <rect key="frame" x="188.5" y="198" width="37" height="37"/>
+                                        <rect key="frame" x="188.5" y="266.5" width="37" height="37"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="37" id="F0y-PC-QiL"/>
                                             <constraint firstAttribute="width" constant="37" id="NRK-Dn-0cy"/>
@@ -104,7 +104,7 @@
                                         <color key="color" systemColor="labelColor"/>
                                     </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果がみつかりませんでした。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14X-ZN-avM">
-                                        <rect key="frame" x="64.5" y="204.5" width="285.5" height="24"/>
+                                        <rect key="frame" x="64.5" y="273" width="285.5" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="PqQ-3M-Ll3"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="285.5" id="bd8-M7-7fv"/>
@@ -117,10 +117,9 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstItem="14X-ZN-avM" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="8nV-bt-riz"/>
-                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="Jkh-dy-vmn"/>
-                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" constant="-100" id="aFc-Zq-UFP"/>
+                                    <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" multiplier="0.9" id="aFc-Zq-UFP"/>
                                     <constraint firstItem="51X-Gw-He7" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="as9-y1-Cjr"/>
-                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" constant="-100" id="r3k-rr-A0y"/>
+                                    <constraint firstItem="51X-Gw-He7" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" multiplier="0.9" id="r3k-rr-A0y"/>
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxL-Dc-iWN">
