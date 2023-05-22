@@ -9,10 +9,6 @@
 import Foundation
 import UIKit.UIImage
 
-enum TaskError: Error {
-    case cancel
-}
-
 /// 画像の取得処理に関する。
 final class ImageLoader {
     private var task: Task<(), Error>? {

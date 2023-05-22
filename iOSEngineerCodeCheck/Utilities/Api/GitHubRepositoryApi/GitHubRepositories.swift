@@ -8,7 +8,6 @@
 
 import Foundation
 
-/// 
 struct GitHubRepositories {
     let `default`: RepositoryItem
     let desc: RepositoryItem
