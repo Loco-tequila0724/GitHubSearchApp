@@ -14,12 +14,7 @@ final class GitHubDetailViewController: UIViewController {
             imageView.layer.cornerRadius = 7
         }
     }
-    @IBOutlet private weak var titleLabel: UILabel! {
-        didSet {
-            titleLabel.adjustsFontSizeToFitWidth = true
-            titleLabel.minimumScaleFactor = 0.5
-        }
-    }
+    @IBOutlet private weak var fullNameLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
     @IBOutlet private weak var watchersLabel: UILabel!
@@ -52,11 +47,11 @@ extension GitHubDetailViewController: GitHubDetailView {
         guard let item = presenter.item else { return }
         let imageURL = item.owner.avatarUrl
         imageView.loadImageAsynchronous(url: imageURL)
-        titleLabel.text = item.fullName
+        fullNameLabel.text = item.fullName
         languageLabel.text = "言語 \(item.language ?? "")"
-        starsLabel.text    = "\(String(item.stargazersCount))"
+        starsLabel.text = "\(String(item.stargazersCount))"
         watchersLabel.text = "\(String(item.watchersCount))"
-        forksLabel.text    = "\(String(item.forksCount))"
-        issuesLabel.text   = "\(String(item.openIssuesCount))"
+        forksLabel.text = "\(String(item.forksCount))"
+        issuesLabel.text = "\(String(item.openIssuesCount))"
     }
 }
