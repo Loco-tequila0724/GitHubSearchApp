@@ -18,14 +18,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="Nhh-bC-RlQ">
-                                <rect key="frame" x="0.0" y="173" width="414" height="56"/>
+                                <rect key="frame" x="0.0" y="157" width="414" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>
                                     <outlet property="delegate" destination="mWg-7I-heg" id="f3E-NW-Esu"/>
                                 </connections>
                             </searchBar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="liG-7t-Vgz">
-                                <rect key="frame" x="0.0" y="229" width="414" height="633"/>
+                                <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="GitHubSearchCell" rowHeight="85" id="cPw-yt-da1" customClass="GitHubSearchTableViewCell" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="414" height="85"/>
@@ -93,10 +93,10 @@
                                 </prototypes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
-                                <rect key="frame" x="0.0" y="229" width="414" height="633"/>
+                                <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
-                                        <rect key="frame" x="188.5" y="266.5" width="37" height="37"/>
+                                        <rect key="frame" x="188.5" y="273.5" width="37" height="37"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="37" id="F0y-PC-QiL"/>
                                             <constraint firstAttribute="width" constant="37" id="NRK-Dn-0cy"/>
@@ -104,7 +104,7 @@
                                         <color key="color" systemColor="labelColor"/>
                                     </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="結果がみつかりませんでした。" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14X-ZN-avM">
-                                        <rect key="frame" x="64.5" y="273" width="285.5" height="24"/>
+                                        <rect key="frame" x="64.5" y="280" width="285.5" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="PqQ-3M-Ll3"/>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="285.5" id="bd8-M7-7fv"/>
@@ -123,13 +123,13 @@
                                 </constraints>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZxL-Dc-iWN">
-                                <rect key="frame" x="0.0" y="92" width="414" height="81"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="65"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K31-sg-1Ex">
-                                        <rect key="frame" x="0.0" y="0.0" width="79" height="81"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="79" height="65"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" verticalHuggingPriority="251" image="Untitled" translatesAutoresizingMaskIntoConstraints="NO" id="xvf-IS-xhX">
-                                                <rect key="frame" x="14.5" y="15.5" width="50" height="50"/>
+                                                <rect key="frame" x="14.5" y="7.5" width="50" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="50" id="AmD-8G-0fl"/>
                                                     <constraint firstAttribute="height" constant="50" id="Dbo-V4-Hp5"/>
@@ -143,16 +143,16 @@
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="251" text="GitRepo Find." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="9IV-k7-Dos">
-                                        <rect key="frame" x="79" y="0.0" width="197" height="81"/>
+                                        <rect key="frame" x="79" y="0.0" width="197" height="65"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="28"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" horizontalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GIj-gS-cEP">
-                                        <rect key="frame" x="276" y="0.0" width="138" height="81"/>
+                                        <rect key="frame" x="276" y="0.0" width="138" height="65"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJs-2B-Moe">
-                                                <rect key="frame" x="15" y="20.5" width="108" height="40"/>
+                                                <rect key="frame" x="15" y="12.5" width="108" height="40"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="K0u-mN-hg0"/>
@@ -178,7 +178,7 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="GIj-gS-cEP" secondAttribute="bottom" id="2vE-H5-4gH"/>
-                                    <constraint firstAttribute="height" constant="81" id="IFK-JW-CDr"/>
+                                    <constraint firstAttribute="height" constant="65" id="IFK-JW-CDr"/>
                                     <constraint firstItem="9IV-k7-Dos" firstAttribute="width" secondItem="K31-sg-1Ex" secondAttribute="width" multiplier="2.5" id="JCe-YN-ssH"/>
                                     <constraint firstItem="GIj-gS-cEP" firstAttribute="leading" secondItem="9IV-k7-Dos" secondAttribute="trailing" id="JTf-Vr-wcx"/>
                                     <constraint firstAttribute="trailing" secondItem="GIj-gS-cEP" secondAttribute="trailing" id="KM1-H8-ac4"/>
