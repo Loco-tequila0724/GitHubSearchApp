@@ -15,6 +15,7 @@ enum ApiError: Error, LocalizedError {
     case serverError // サーバー側で何らかの問題が発生し、リクエストを処理できない場合に返される。
     case forbidden // リクエストされたアクションを実行するための権限がない場合に返される。
     case unknown // 上記のいずれにも該当しない、原因不明のエラーが発生した場合に返される。
+    case cancel // タスクキャンセルされたら返す
 
     var errorDescription: String? {
         switch self {
@@ -23,11 +24,7 @@ enum ApiError: Error, LocalizedError {
         case .serverError: return "サーバー側で何らかの問題が発生しました。"
         case .forbidden: return "検索上限に掛かりました時間をおいて再開してください。"
         case .unknown: return "原因不明のエラーが発生しました。"
+        case .cancel: return "キャンセルされました。"
         }
     }
-}
-
-// MARK: - 画像の生成時に使用する -
-enum TaskError: Error {
-    case cancel
 }

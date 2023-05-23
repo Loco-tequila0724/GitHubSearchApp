@@ -71,7 +71,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
-    func didFetchResult(result: Result<GitHubRepositories, ApiError>) {
+    func didFetchResult(result: Result<GitHubRepositories, Error>) {
         view?.stopLoading()
 
         switch result {
@@ -80,13 +80,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             setCurrentRepository()
             view?.tableViewReload()
         case .failure(let error):
-            if error == .notFound {
-                // GitHubの結果が無いことを通知
-                view?.appearNotFound(text: error.errorDescription!)
-            } else {
-                // エラー内容を通知。
-                view?.appearErrorAlert(message: error.errorDescription!)
-            }
+            setAppearError(error: error)
         }
     }
 }
@@ -116,6 +110,22 @@ private extension GitHubSearchPresenter {
             repository.current = repository.desc
         case .asc:
             repository.current = repository.asc
+        }
+    }
+
+    /// API通信でエラーが返ってきた場合の処理
+    func setAppearError(error: Error) {
+        if error is ApiError {
+            guard let apiError = error as? ApiError else { return }
+            // 独自で定義したエラーを通知
+            switch apiError {
+            case .cancel: return
+            case .notFound: view?.appearNotFound(message: apiError.errorDescription!)
+            default: view?.appearErrorAlert(message: apiError.errorDescription!)
+            }
+        } else {
+            //  標準のURLSessionのエラーを返す
+            view?.appearErrorAlert(message: error.localizedDescription)
         }
     }
 }

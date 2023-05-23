@@ -30,7 +30,7 @@ extension ImageLoader {
                     configuration.resume(returning: image)
                 } catch let error {
                     if Task.isCancelled {
-                        configuration.resume(throwing: TaskError.cancel)
+                        configuration.resume(throwing: ApiError.cancel)
                     } else {
                         configuration.resume(throwing: error)
                     }

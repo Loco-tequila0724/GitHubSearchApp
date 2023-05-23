@@ -30,9 +30,9 @@ extension AvatarImageView {
             }
         } catch let error {
             // タスク(画像の取得処理)がキャンセルされたらリターン
-            guard error as? TaskError != TaskError.cancel else { return }
+            if error as? ApiError == .cancel { return }
 
-            // もし画像の取得がエラーだった場合、ダミーの画像を表示。
+            // 画像の取得がエラーだった場合、ダミーの画像を表示。
             DispatchQueue.main.async { [weak self] in
                 self?.image = UIImage(named: "Untitled")
             }
