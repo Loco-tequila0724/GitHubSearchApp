@@ -12,6 +12,7 @@ import Foundation
 protocol GitHubDetailPresentation: AnyObject {
     var view: GitHubDetailView? { get }
     var router: GitHubDetailRouter? { get }
-    var item: Item? { get }
+    var item: Item! { get }
     func viewDidLoad()
+    func safariButtoDidPush()
 }

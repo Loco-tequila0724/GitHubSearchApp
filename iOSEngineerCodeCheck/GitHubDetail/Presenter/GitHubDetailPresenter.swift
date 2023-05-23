@@ -11,7 +11,7 @@ import Foundation
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
     var router: GitHubDetailRouter?
-    var item: Item?
+    var item: Item!
 
     init(
         view: GitHubDetailView? = nil,
@@ -23,6 +23,11 @@ final class GitHubDetailPresenter {
 
 extension GitHubDetailPresenter: GitHubDetailPresentation {
     func viewDidLoad() {
-        view?.configure()
+        view?.configure(item: item)
+    }
+
+    func safariButtoDidPush() {
+        guard let url = URL(string: item.owner.htmlUrl) else { return }
+        view?.showGitHubSite(url: url)
     }
 }

@@ -44,7 +44,7 @@ extension UIViewController {
         navigationItem.scrollEdgeAppearance = appearance
     }
 
-    func setupNavigationBar(title: String, fontSize: CGFloat = 18, rightBarButtonAction: Selector) {
+    func setupNavigationBar(title: String, fontSize: CGFloat = 18, buttonImage: UIImage, rightBarButtonAction: Selector) {
         navigationItem.title = title
 
         navigationItem.backBarButtonItem =
@@ -61,7 +61,7 @@ extension UIViewController {
             target: self,
             action: rightBarButtonAction)
         navigationItem.rightBarButtonItem?.tintColor = .white
-        navigationItem.rightBarButtonItem?.image = UIImage(systemName: "safari")
+        navigationItem.rightBarButtonItem?.image = buttonImage
 
         let appearance = UINavigationBarAppearance()
         appearance.configureWithOpaqueBackground()

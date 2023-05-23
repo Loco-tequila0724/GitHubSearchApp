@@ -24,4 +24,5 @@ struct Item: Decodable {
 
 struct Owner: Decodable {
     let avatarUrl: URL
+    let htmlUrl: String
 }
