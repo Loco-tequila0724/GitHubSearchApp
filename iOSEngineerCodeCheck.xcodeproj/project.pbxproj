@@ -35,7 +35,7 @@
 		38F34E8629F9D2EC00120671 /* GitHubDetail.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 38F34E8529F9D2EC00120671 /* GitHubDetail.storyboard */; };
 		38F34E8929FA43FF00120671 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E8829FA43FF00120671 /* UIImage+Extension.swift */; };
 		38F34E8B29FA61BE00120671 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E8A29FA61BE00120671 /* UIViewController+Extension.swift */; };
-		38F34E8D29FBA01900120671 /* GitHubApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E8C29FBA01900120671 /* GitHubApi.swift */; };
+		38F34E8D29FBA01900120671 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F34E8C29FBA01900120671 /* ApiManager.swift */; };
 		BDB65C02297987D4B80721A7 /* Pods_iOSEngineerCodeCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD80E72FBF004B667967296 /* Pods_iOSEngineerCodeCheck.framework */; };
 		BF0A658D244F2A3B00280FA6 /* GitHubDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0A658C244F2A3B00280FA6 /* GitHubDetailViewController.swift */; };
 		BFD945DF244DC5E80012785A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFD945DE244DC5E80012785A /* AppDelegate.swift */; };
@@ -94,7 +94,7 @@
 		38F34E8529F9D2EC00120671 /* GitHubDetail.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = GitHubDetail.storyboard; sourceTree = "<group>"; };
 		38F34E8829FA43FF00120671 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		38F34E8A29FA61BE00120671 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
-		38F34E8C29FBA01900120671 /* GitHubApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubApi.swift; sourceTree = "<group>"; };
+		38F34E8C29FBA01900120671 /* ApiManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		52D2206D7A9B386F0E0F0611 /* Pods-iOSEngineerCodeCheck.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.debug.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.debug.xcconfig"; sourceTree = "<group>"; };
 		6800159216A43DB8C841CD73 /* Pods_iOSEngineerCodeCheckTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_iOSEngineerCodeCheckTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7AD290DB0AE8C8777AF5F335 /* Pods-iOSEngineerCodeCheck.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOSEngineerCodeCheck.release.xcconfig"; path = "Target Support Files/Pods-iOSEngineerCodeCheck/Pods-iOSEngineerCodeCheck.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,6 +147,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		385124C32A1C151B0093CFA8 /* ImageLoader */ = {
+			isa = PBXGroup;
+			children = (
+				380A2F9A2A193BA5009941A6 /* ImageLoader.swift */,
+			);
+			path = ImageLoader;
+			sourceTree = "<group>";
+		};
 		38789E3329FDADC700732BE8 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
@@ -175,11 +183,41 @@
 			path = Entity;
 			sourceTree = "<group>";
 		};
+		38B77F572A1C18A9006E5640 /* GitHubRepositoryApi */ = {
+			isa = PBXGroup;
+			children = (
+				38F34E8C29FBA01900120671 /* ApiManager.swift */,
+				388949CC2A18C63000307A11 /* GitHubRepositories.swift */,
+				38F34E6929F91F7100120671 /* RepositoryItem.swift */,
+			);
+			path = GitHubRepositoryApi;
+			sourceTree = "<group>";
+		};
+		38B77F582A1C19D3006E5640 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
+				38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */,
+				38D37C6C2A1688B6005EA7C6 /* GitHubSearchPresentation.swift */,
+				38D37C6A2A16886E005EA7C6 /* GitHubSearchWireFrame.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		38B77F592A1C1A5E006E5640 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				38D37C6E2A168AAD005EA7C6 /* GitHubDetailView.swift */,
+				38D37C702A168AE8005EA7C6 /* GitHubDetailPresentation.swift */,
+				38D37C722A168B88005EA7C6 /* GitHubDetailWireFrame.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		38F34E5F29F91E6400120671 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				BFD945E4244DC5E80012785A /* Main.storyboard */,
-				38D37C642A168715005EA7C6 /* GitHubSearchView.swift */,
 				BFD945E2244DC5E80012785A /* GitHubSearchViewController.swift */,
 				38F34E7F29F9574F00120671 /* GitHubSearchTableViewCell.swift */,
 			);
@@ -189,7 +227,6 @@
 		38F34E6029F91E7000120671 /* Interactor */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */,
 				38F34E6529F91F3000120671 /* GitHubSearchInteractor.swift */,
 			);
 			path = Interactor;
@@ -198,28 +235,24 @@
 		38F34E6129F91E8400120671 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C6C2A1688B6005EA7C6 /* GitHubSearchPresentation.swift */,
 				38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
 		};
-		38F34E6229F91E9400120671 /* ApiResouse */ = {
+		38F34E6229F91E9400120671 /* Api */ = {
 			isa = PBXGroup;
 			children = (
-				388949CC2A18C63000307A11 /* GitHubRepositories.swift */,
-				38F34E6929F91F7100120671 /* RepositoryItem.swift */,
-				38F34E8C29FBA01900120671 /* GitHubApi.swift */,
-				380A2F9A2A193BA5009941A6 /* ImageLoader.swift */,
 				38F34E7D29F952B800120671 /* ApiError.swift */,
+				385124C32A1C151B0093CFA8 /* ImageLoader */,
+				38B77F572A1C18A9006E5640 /* GitHubRepositoryApi */,
 			);
-			path = ApiResouse;
+			path = Api;
 			sourceTree = "<group>";
 		};
 		38F34E6329F91EA900120671 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C6A2A16886E005EA7C6 /* GitHubSearchWireFrame.swift */,
 				38F34E6B29F91F8C00120671 /* GitHubSearchRouter.swift */,
 			);
 			path = Router;
@@ -228,6 +261,7 @@
 		38F34E6429F91EE500120671 /* GitHubSearch */ = {
 			isa = PBXGroup;
 			children = (
+				38B77F582A1C19D3006E5640 /* Protocols */,
 				38F34E5F29F91E6400120671 /* View */,
 				38F34E6029F91E7000120671 /* Interactor */,
 				38F34E6129F91E8400120671 /* Presenter */,
@@ -240,6 +274,7 @@
 		38F34E6F29F9200E00120671 /* GitHubDetail */ = {
 			isa = PBXGroup;
 			children = (
+				38B77F592A1C1A5E006E5640 /* Protocols */,
 				38F34E7029F9202A00120671 /* View */,
 				38F34E7229F9207400120671 /* Presenter */,
 				38F34E7529F920AB00120671 /* Router */,
@@ -250,7 +285,6 @@
 		38F34E7029F9202A00120671 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C6E2A168AAD005EA7C6 /* GitHubDetailView.swift */,
 				BF0A658C244F2A3B00280FA6 /* GitHubDetailViewController.swift */,
 				38F34E8529F9D2EC00120671 /* GitHubDetail.storyboard */,
 			);
@@ -260,7 +294,6 @@
 		38F34E7229F9207400120671 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C702A168AE8005EA7C6 /* GitHubDetailPresentation.swift */,
 				38F34E7329F920A300120671 /* GitHubDetailPresenter.swift */,
 			);
 			path = Presenter;
@@ -269,7 +302,6 @@
 		38F34E7529F920AB00120671 /* Router */ = {
 			isa = PBXGroup;
 			children = (
-				38D37C722A168B88005EA7C6 /* GitHubDetailWireFrame.swift */,
 				38F34E7629F920E600120671 /* GitHubDetailRouter.swift */,
 			);
 			path = Router;
@@ -279,7 +311,7 @@
 			isa = PBXGroup;
 			children = (
 				380A2F982A191DCF009941A6 /* AvatarImageView.swift */,
-				38F34E6229F91E9400120671 /* ApiResouse */,
+				38F34E6229F91E9400120671 /* Api */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -606,7 +638,7 @@
 				38D37C712A168AE8005EA7C6 /* GitHubDetailPresentation.swift in Sources */,
 				38F34E7429F920A300120671 /* GitHubDetailPresenter.swift in Sources */,
 				38D37C6D2A1688B6005EA7C6 /* GitHubSearchPresentation.swift in Sources */,
-				38F34E8D29FBA01900120671 /* GitHubApi.swift in Sources */,
+				38F34E8D29FBA01900120671 /* ApiManager.swift in Sources */,
 				38F34E8B29FA61BE00120671 /* UIViewController+Extension.swift in Sources */,
 				388949CB2A17E5F500307A11 /* RepositoryManager.swift in Sources */,
 				38F34E6629F91F3000120671 /* GitHubSearchInteractor.swift in Sources */,

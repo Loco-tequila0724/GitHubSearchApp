@@ -17,6 +17,6 @@ protocol GitHubSearchView: AnyObject {
     func tableViewReload()
     func resetDisplay()
     func appearErrorAlert(message: String)
-    func appearNotFound(text: String)
+    func appearNotFound(message: String)
     func didChangeStarOrder(repository: SearchRepositoryItem)
 }

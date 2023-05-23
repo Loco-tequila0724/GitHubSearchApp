@@ -9,10 +9,6 @@
 import Foundation
 import UIKit.UIImage
 
-enum TaskError: Error {
-    case cancel
-}
-
 /// 画像の取得処理に関する。
 final class ImageLoader {
     private var task: Task<(), Error>? {
@@ -34,7 +30,7 @@ extension ImageLoader {
                     configuration.resume(returning: image)
                 } catch let error {
                     if Task.isCancelled {
-                        configuration.resume(throwing: TaskError.cancel)
+                        configuration.resume(throwing: ApiError.cancel)
                     } else {
                         configuration.resume(throwing: error)
                     }
