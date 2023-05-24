@@ -39,6 +39,7 @@ extension ImageLoader {
         }
     }
 }
+
 /// 画像の取得に関する。
 private extension ImageLoader {
     var session: URLSession {

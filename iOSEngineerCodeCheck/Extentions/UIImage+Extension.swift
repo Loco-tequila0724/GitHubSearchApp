@@ -6,9 +6,8 @@
 //  Copyright © 2023 YUMEMI Inc. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIImage
 
-/// 画像の容量を下げる事い使用する
 extension UIImage {
     /// 画像サイズを圧縮
     func resize() -> UIImage {

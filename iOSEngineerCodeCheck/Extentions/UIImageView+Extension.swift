@@ -6,7 +6,7 @@
 //  Copyright © 2023 YUMEMI Inc. All rights reserved.
 //
 
-import UIKit
+import UIKit.UIImageView
 
 // MARK: - 画像の取得を非同期的に行なう -
 extension UIImageView {

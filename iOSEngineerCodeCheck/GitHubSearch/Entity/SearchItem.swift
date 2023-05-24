@@ -6,19 +6,21 @@
 //  Copyright © 2023 YUMEMI Inc. All rights reserved.
 //
 
-import UIKit
+import Foundation
+import UIKit.UIColor
 
-///  リポジトリを表示する順序に関する
-protocol SearchRepositoryItem {
+// MARK: - レビュー者の方へ、このファイルにUrlのデータを保持したのは間違った、責務的に違ったと思っています... -
+
+protocol SearchItem {
     var items: [Item?] { get set }
+    var word: String { get set }
     var text: String { get }
     var color: UIColor { get }
-    var word: String { get set }
     var url: URL? { get }
 }
 
 /// 順序がデフォルト時の際に使用する
-struct DefaultRepository: SearchRepositoryItem {
+struct DefaultSearchItem: SearchItem {
     var items: [Item?]
     var word: String
     var text: String
@@ -45,7 +47,7 @@ struct DefaultRepository: SearchRepositoryItem {
 }
 
 /// スター数が多い順の際に使用する
-struct DescRepository: SearchRepositoryItem {
+struct DescSearchItem: SearchItem {
     var items: [Item?]
     var word: String
     var text: String
@@ -74,7 +76,7 @@ struct DescRepository: SearchRepositoryItem {
 }
 
 /// スター数が少ない順の際に使用する
-struct AscRepository: SearchRepositoryItem {
+struct AscSearchItem: SearchItem {
     var items: [Item?]
     var word: String
     var text: String

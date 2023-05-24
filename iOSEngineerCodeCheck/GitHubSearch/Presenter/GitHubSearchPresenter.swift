@@ -96,7 +96,7 @@ private extension GitHubSearchPresenter {
 
     ///  APIから取得したデータを各リポジトリへセット
     func setRepositoryItem(item: GitHubRepositories) {
-        repository.`default`.items = item.`default`.items!
+        repository.default.items = item.default.items!
         repository.desc.items = item.desc.items!
         repository.asc.items = item.asc.items!
     }

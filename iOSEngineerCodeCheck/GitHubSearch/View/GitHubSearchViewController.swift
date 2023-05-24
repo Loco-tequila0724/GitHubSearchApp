@@ -102,7 +102,7 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// エラーアラートの表示
     func appearErrorAlert(message: String) {
-        self.errorAlert(message: message)
+        errorAlert(message: message)
     }
 
     /// GitHubデータの取得が0件の場合に表示
@@ -121,7 +121,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(repository: SearchRepositoryItem) {
+    func didChangeStarOrder(repository: SearchItem) {
         starOderButton.setTitle(repository.text, for: .normal)
         starOderButton.backgroundColor = repository.color
     }
@@ -172,7 +172,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
         cell.configure(
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
-            stars: "☆ \(item.stargazersCount)"
+            stars: "☆ \(item.stargazersCount.decimal())"
         )
 
         let url = item.owner.avatarUrl
