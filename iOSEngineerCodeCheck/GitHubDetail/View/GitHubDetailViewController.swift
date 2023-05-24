@@ -53,10 +53,10 @@ extension GitHubDetailViewController: GitHubDetailView {
         imageView.loadImageAsynchronous(url: item.owner.avatarUrl)
         fullNameLabel.text = item.fullName
         languageLabel.text = "言語 \(item.language ?? "")"
-        starsLabel.text = "\(String(item.stargazersCount))"
-        watchersLabel.text = "\(String(item.watchersCount))"
-        forksLabel.text = "\(String(item.forksCount))"
-        issuesLabel.text = "\(String(item.openIssuesCount))"
+        starsLabel.text = "\(item.stargazersCount.decimal())"
+        watchersLabel.text = "\(item.watchersCount.decimal())"
+        forksLabel.text = "\(item.forksCount.decimal())"
+        issuesLabel.text = "\(item.openIssuesCount.decimal())"
     }
 
     @objc func safari (_ sender: UIBarButtonItem) {
