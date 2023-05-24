@@ -9,6 +9,7 @@
 import Foundation
 
 extension Int {
+    /// カンマ区切りの数字に変換する
     func decimal() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal

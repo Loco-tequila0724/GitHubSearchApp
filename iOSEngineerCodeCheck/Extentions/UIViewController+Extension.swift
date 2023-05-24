@@ -23,6 +23,7 @@ extension UIViewController {
         }
     }
 
+    /// GitHubSearchViewControllerで使用する
     func setupNavigationBar(title: String, fontSize: CGFloat = 18) {
         navigationItem.title = title
 
@@ -44,6 +45,7 @@ extension UIViewController {
         navigationItem.scrollEdgeAppearance = appearance
     }
 
+    /// GitHubDetailViewControllerで使用する
     func setupNavigationBar(title: String, fontSize: CGFloat = 18, buttonImage: UIImage, rightBarButtonAction: Selector) {
         navigationItem.title = title
 
@@ -55,7 +57,8 @@ extension UIViewController {
             action: nil)
         navigationItem.backBarButtonItem?.tintColor = .white
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        navigationItem.rightBarButtonItem =
+            UIBarButtonItem(
             title: "",
             style: .done,
             target: self,

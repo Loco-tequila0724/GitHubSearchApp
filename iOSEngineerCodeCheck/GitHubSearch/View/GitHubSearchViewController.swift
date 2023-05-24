@@ -121,7 +121,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(repository: SearchRepositoryItem) {
+    func didChangeStarOrder(repository: SearchItem) {
         starOderButton.setTitle(repository.text, for: .normal)
         starOderButton.backgroundColor = repository.color
     }

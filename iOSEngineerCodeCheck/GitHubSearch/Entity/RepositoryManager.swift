@@ -9,15 +9,15 @@
 import Foundation
 
 struct RepositoryManager {
-    var current: SearchRepositoryItem
-    var `default`: DefaultRepository
-    var desc: DescRepository
-    var asc: AscRepository
+    var current: SearchItem
+    var `default`: DefaultSearchItem
+    var desc: DescSearchItem
+    var asc: AscSearchItem
 
-    init(currentRepository: SearchRepositoryItem! = DefaultRepository()) {
-        self.current = currentRepository
-        self.`default` = DefaultRepository()
-        self.desc = DescRepository()
-        self.asc = AscRepository()
+    init(currentSearchItem: SearchItem = DefaultSearchItem()) {
+        self.current = currentSearchItem
+        self.`default` = DefaultSearchItem()
+        self.desc = DescSearchItem()
+        self.asc = AscSearchItem()
     }
 }

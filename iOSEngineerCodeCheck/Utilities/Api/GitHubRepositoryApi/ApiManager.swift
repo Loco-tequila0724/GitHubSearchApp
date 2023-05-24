@@ -49,9 +49,9 @@ private extension ApiManager {
     func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) { // swiftlint:disable:this all
 
         guard
-            let defaultURL: URL = DefaultRepository(word: word).url,
-            let descURL: URL = DescRepository(word: word).url,
-            let ascURL: URL = AscRepository(word: word).url
+            let defaultURL: URL = DefaultSearchItem(word: word).url,
+            let descURL: URL = DescSearchItem(word: word).url,
+            let ascURL: URL = AscSearchItem(word: word).url
             else {
             throw ApiError.notFound
         }
