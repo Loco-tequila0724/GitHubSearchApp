@@ -34,7 +34,7 @@ extension ApiManager {
                     if let apiError = error as? ApiError {
                         configuration.resume(returning: .failure(apiError))
                     } else {
-                    /// 標準のURLSessionのエラーを返す
+                        /// 標準のURLSessionのエラーを返す
                         configuration.resume(returning: .failure(error))
                     }
                 }
@@ -63,8 +63,7 @@ private extension ApiManager {
         return (defaultRequest, descRequest, ascRequest)
     }
 
-    /// API通信を行い取得データをデコード
-    func convert(request: URLRequest) async throws -> RepositoryItem {
+    func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: request)
         let httpResponse = response as? HTTPURLResponse
         //  短時間で検索されすぎると上限に掛かりこのエラーが返る
@@ -76,8 +75,14 @@ private extension ApiManager {
             throw ApiError.serverError
         }
 
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return data
+    }
 
+    /// API通信を行い取得データをデコード
+    func convert(request: URLRequest) async throws -> RepositoryItem {
+        let data = try await httpData(request: request)
+
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         let gitHubData = try decoder.decode(RepositoryItem.self, from: data)
 
         // リポジトリデータがnilまたは、中身が空ならエラーを返す
