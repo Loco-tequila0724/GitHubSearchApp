@@ -46,7 +46,7 @@ extension ApiManager {
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
     /// リクエスト生成
-    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) { // swiftlint:disable:this all
+    func makeRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) { // swiftlint:disable:this all
 
         guard
             let defaultURL: URL = DefaultSearchItem(word: word).url,
@@ -96,7 +96,7 @@ private extension ApiManager {
 private extension ApiManager {
     /// リポジトリデータ(デフォルト, 降順, 昇順)をセット
     func setRepositories(word: String) async throws -> GitHubRepositories {
-        let request = try self.urlRequest(word: word)
+        let request = try self.makeRequest(word: word)
 
         async let defaultRepository = self.convert(request: request.default)
         async let descRepository = self.convert(request: request.desc)
