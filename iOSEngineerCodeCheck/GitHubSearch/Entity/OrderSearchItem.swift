@@ -22,7 +22,7 @@ struct DefaultOrderSearchItem: OrderSearchItem {
     var text: String
     var color: UIColor
 
-    init(word: String = "") {
+    init() {
         self.items = []
         self.text = "☆ Star数 "
         self.color = .lightGray
@@ -47,7 +47,7 @@ struct DescOrderSearchItem: OrderSearchItem {
     var text: String
     var color: UIColor
 
-    init(word: String = "") {
+    init() {
         self.items = []
         self.text = "☆ Star数 ⍋"
         self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
@@ -74,7 +74,7 @@ struct AscOrderSearchItem: OrderSearchItem {
     var text: String
     var color: UIColor
 
-    init(word: String = "") {
+    init() {
         self.items = []
         self.text = "☆ Star数 ⍒"
         self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
