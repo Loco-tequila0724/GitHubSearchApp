@@ -17,12 +17,12 @@ final class ApiManager {
 // MARK: - API通信を行なう-
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
-    func fetch(word: String) async -> Result<GitHubRepositories, Error> {
+    func fetch(url: URL?) async -> Result<RepositoryItem, Error> {
         return await withCheckedContinuation { configuration in
             task = Task {
                 do {
-                    let repositories = try await setRepositories(word: word)
-                    configuration.resume(returning: .success(repositories))
+                    let repositoryItem = try await convert(request: makeRequest(url: url))
+                    configuration.resume(returning: .success(repositoryItem))
                 } catch let error {
                     /// タスクがキャンセルたら、キャンセルエラーを返す。
                     guard !Task.isCancelled else {
@@ -34,7 +34,7 @@ extension ApiManager {
                     if let apiError = error as? ApiError {
                         configuration.resume(returning: .failure(apiError))
                     } else {
-                    /// 標準のURLSessionのエラーを返す
+                        /// 標準のURLSessionのエラーを返す
                         configuration.resume(returning: .failure(error))
                     }
                 }
@@ -45,26 +45,14 @@ extension ApiManager {
 
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
-    /// リクエスト生成
-    func urlRequest(word: String) throws -> (`default`: URLRequest, desc: URLRequest, asc: URLRequest) { // swiftlint:disable:this all
+    func makeRequest(url: URL?) throws -> URLRequest { // swiftlint:disable:this all
+        guard let url else { throw ApiError.notFound }
+        let request = URLRequest(url: url)
 
-        guard
-            let defaultURL: URL = DefaultSearchItem(word: word).url,
-            let descURL: URL = DescSearchItem(word: word).url,
-            let ascURL: URL = AscSearchItem(word: word).url
-            else {
-            throw ApiError.notFound
-        }
-
-        let defaultRequest = URLRequest(url: defaultURL)
-        let descRequest = URLRequest(url: descURL)
-        let ascRequest = URLRequest(url: ascURL)
-
-        return (defaultRequest, descRequest, ascRequest)
+        return request
     }
 
-    /// API通信を行い取得データをデコード
-    func convert(request: URLRequest) async throws -> RepositoryItem {
+    func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await URLSession.shared.data(for: request)
         let httpResponse = response as? HTTPURLResponse
         //  短時間で検索されすぎると上限に掛かりこのエラーが返る
@@ -76,32 +64,20 @@ private extension ApiManager {
             throw ApiError.serverError
         }
 
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        return data
+    }
 
-        let gitHubData = try decoder.decode(RepositoryItem.self, from: data)
+    func convert(request: URLRequest) async throws -> RepositoryItem {
+        let data = try await httpData(request: request)
+
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        let repositoryItem = try decoder.decode(RepositoryItem.self, from: data)
 
         // リポジトリデータがnilまたは、中身が空ならエラーを返す
-        guard let items = gitHubData.items, !(items.isEmpty) else {
+        guard let items = repositoryItem.items, !(items.isEmpty) else {
             throw ApiError.notFound
         }
-        return gitHubData
-    }
-}
 
-private extension ApiManager {
-    /// リポジトリデータ(デフォルト, 降順, 昇順)をセット
-    func setRepositories(word: String) async throws -> GitHubRepositories {
-        let request = try self.urlRequest(word: word)
-
-        async let defaultRepository = self.convert(request: request.default)
-        async let descRepository = self.convert(request: request.desc)
-        async let ascRepository = self.convert(request: request.asc)
-
-        let repositories = GitHubRepositories(
-            default: try await defaultRepository,
-            desc: try await descRepository,
-            asc: try await ascRepository)
-
-        return repositories
+        return repositoryItem
     }
 }

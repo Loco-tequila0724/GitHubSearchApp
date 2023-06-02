@@ -25,7 +25,7 @@ extension ImageLoader {
         return try await withCheckedThrowingContinuation { configuration in
             task = Task {
                 do {
-                    let request = try request(url: url)
+                    let request = try makeRequest(url: url)
                     let image = try await convert(request: request)
                     configuration.resume(returning: image)
                 } catch let error {
@@ -49,18 +49,23 @@ private extension ImageLoader {
         return session
     }
 
-    func request(url: URL?) throws -> URLRequest {
+    func makeRequest(url: URL?) throws -> URLRequest {
         guard let url else { throw ApiError.invalidData }
         let request = URLRequest(url: url)
         return request
     }
 
-    func convert(request: URLRequest) async throws -> UIImage {
+    func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
         guard let httpURLResponse = response as? HTTPURLResponse,
             httpURLResponse.statusCode == 200 else {
             throw ApiError.serverError
         }
+        return data
+    }
+
+    func convert(request: URLRequest) async throws -> UIImage {
+        let data = try await httpData(request: request)
         let image = UIImage(data: data)!
         return image
     }

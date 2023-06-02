@@ -9,31 +9,26 @@
 import Foundation
 import UIKit.UIColor
 
-// MARK: - レビュー者の方へ、このファイルにUrlのデータを保持したのは間違った、責務的に違ったと思っています... -
-
-protocol SearchItem {
+protocol OrderSearchItem {
     var items: [Item?] { get set }
-    var word: String { get set }
     var text: String { get }
     var color: UIColor { get }
-    var url: URL? { get }
+    func url(word: String) -> URL?
 }
 
 /// 順序がデフォルト時の際に使用する
-struct DefaultSearchItem: SearchItem {
+struct DefaultOrderSearchItem: OrderSearchItem {
     var items: [Item?]
-    var word: String
     var text: String
     var color: UIColor
 
     init(word: String = "") {
         self.items = []
-        self.word = word
         self.text = "☆ Star数 "
         self.color = .lightGray
     }
 
-    var url: URL? {
+    func url(word: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"
@@ -47,20 +42,18 @@ struct DefaultSearchItem: SearchItem {
 }
 
 /// スター数が多い順の際に使用する
-struct DescSearchItem: SearchItem {
+struct DescOrderSearchItem: OrderSearchItem {
     var items: [Item?]
-    var word: String
     var text: String
     var color: UIColor
 
     init(word: String = "") {
         self.items = []
-        self.word = word
         self.text = "☆ Star数 ⍋"
         self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
     }
 
-    var url: URL? {
+    func url(word: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"
@@ -76,20 +69,18 @@ struct DescSearchItem: SearchItem {
 }
 
 /// スター数が少ない順の際に使用する
-struct AscSearchItem: SearchItem {
+struct AscOrderSearchItem: OrderSearchItem {
     var items: [Item?]
-    var word: String
     var text: String
     var color: UIColor
 
     init(word: String = "") {
         self.items = []
-        self.word = word
         self.text = "☆ Star数 ⍒"
         self.color = #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
     }
 
-    var url: URL? {
+    func url(word: String) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"

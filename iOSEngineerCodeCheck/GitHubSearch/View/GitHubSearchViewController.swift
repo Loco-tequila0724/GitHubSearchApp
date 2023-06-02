@@ -52,6 +52,7 @@ extension GitHubSearchViewController {
 
 private extension GitHubSearchViewController {
     @IBAction func starOrderButton(_ sender: Any) {
+        guard !isLoading else { return }
         presenter.starOderButtonDidPush()
     }
 }
@@ -121,9 +122,9 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(repository: SearchItem) {
-        starOderButton.setTitle(repository.text, for: .normal)
-        starOderButton.backgroundColor = repository.color
+    func didChangeStarOrder(searchItem: OrderSearchItem) {
+        starOderButton.setTitle(searchItem.text, for: .normal)
+        starOderButton.backgroundColor = searchItem.color
     }
 }
 
@@ -160,14 +161,14 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
 extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.repository.current.items.count
+        return presenter.order.current.items.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
         cell.selectionStyle = .none
 
-        guard let item = presenter.repository.current.items[indexPath.row] else { return UITableViewCell() }
+        guard let item = presenter.order.current.items[indexPath.row] else { return UITableViewCell() }
 
         cell.configure(
             fullName: item.fullName,
@@ -184,7 +185,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = presenter.repository.current.items[indexPath.row] else { return }
+        guard let item = presenter.order.current.items[indexPath.row] else { return }
         // セルタップを通知。GitHubデータを渡してます。
         presenter.didSelectRow(item: item)
     }

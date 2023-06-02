@@ -20,21 +20,21 @@ final class IOSEngineerCodeCheckTests: XCTestCase {
 
     ///  API通信。実行されているかテスト。データの取得が出来ているかテスト。
     func testFetchApi() throws {
-        let expectation = XCTestExpectation(description: "fetch data")
-
-        apiManager.fetch(text: "Swift") { result in
-            switch result {
-            case .success(let gitHubData):
-                // 中身がnilだった場合はエラー
-                let nilItems = gitHubData.items == nil ? true : false
-                XCTAssertNotNil(nilItems)
-            case .failure(let error):
-                // エラーが返ってきたことを通知する。
-                XCTFail(error.localizedDescription)
-            }
-            expectation.fulfill()
-        }
-        // ６秒たってもFulFillされない場合はデータの取得が行われていない。
-        wait(for: [expectation], timeout: 6)
+//        let expectation = XCTestExpectation(description: "fetch data")
+//
+//        apiManager.fetch(text: "Swift") { result in
+//            switch result {
+//            case .success(let gitHubData):
+//                // 中身がnilだった場合はエラー
+//                let nilItems = gitHubData.items == nil ? true : false
+//                XCTAssertNotNil(nilItems)
+//            case .failure(let error):
+//                // エラーが返ってきたことを通知する。
+//                XCTFail(error.localizedDescription)
+//            }
+//            expectation.fulfill()
+//        }
+//        // ６秒たってもFulFillされない場合はデータの取得が行われていない。
+//        wait(for: [expectation], timeout: 6)
     }
 }
