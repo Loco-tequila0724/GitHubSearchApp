@@ -45,7 +45,6 @@ extension ApiManager {
 
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
-    /// リクエスト生成
     func makeRequest(url: URL?) throws -> URLRequest { // swiftlint:disable:this all
         guard let url else { throw ApiError.notFound }
         let request = URLRequest(url: url)
@@ -68,17 +67,17 @@ private extension ApiManager {
         return data
     }
 
-    /// API通信を行い取得データをデコード
     func convert(request: URLRequest) async throws -> RepositoryItem {
         let data = try await httpData(request: request)
 
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let gitHubData = try decoder.decode(RepositoryItem.self, from: data)
+        let repositoryItem = try decoder.decode(RepositoryItem.self, from: data)
 
         // リポジトリデータがnilまたは、中身が空ならエラーを返す
-        guard let items = gitHubData.items, !(items.isEmpty) else {
+        guard let items = repositoryItem.items, !(items.isEmpty) else {
             throw ApiError.notFound
         }
-        return gitHubData
+
+        return repositoryItem
     }
 }
