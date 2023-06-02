@@ -13,7 +13,7 @@ protocol GitHubSearchPresentation: AnyObject {
     var view: GitHubSearchView? { get }
     var interactor: GitHubSearchInputUsecase { get }
     var router: GitHubSearchWireFrame { get }
-    var repository: RepositoryManager { get }
+    var order: OrderItemManager { get }
 
     func viewDidLoad()
     /// サーチボタンのタップ通知
