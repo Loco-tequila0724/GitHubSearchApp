@@ -1,13 +1,6 @@
 
 # 株式会社ゆめみ iOS エンジニアコードチェック課題
 
-## 概要
-
-新機能やUIのブラッシュアップも行い、指定された課題にすべて取り組みました。  
-
-問題を１件追加で書いてます。(解決済)  
-[Issues](https://github.com/Loco-tequila0724/GitHubSearchApp/issues/12) リンク
-<br>
 ## アプリ仕様
 
 アプリ名『 GitRepo Find 』  
@@ -29,7 +22,9 @@ GitHubのリポジトリを検索するアプリです。
 ・画面の回転対応
 ・ステータスバー lightモードで固定  
 ・ローカライズ(未)  
-・SwiftLint 導入  
+・SwiftLint 導入 CocoaPods使用
+・ライブラリの利用： 無し
+
 <br>
 
 ### アプリ画面
