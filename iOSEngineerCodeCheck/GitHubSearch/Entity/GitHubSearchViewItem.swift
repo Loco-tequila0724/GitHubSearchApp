@@ -14,11 +14,11 @@ struct GitHubSearchViewItem {
     let fullName: String
     let language: String?
     let stargazersCount: Int
-    let avatarImageView: UIImage
+    let avatarImageView: UIImage?
 }
 
 extension GitHubSearchViewItem {
-    init(item: Item, image: UIImage) {
+    init(item: Item, image: UIImage?) {
         self.init(
             id: item.id,
             fullName: item.fullName,

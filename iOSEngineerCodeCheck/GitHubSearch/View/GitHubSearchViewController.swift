@@ -161,33 +161,28 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
 extension GitHubSearchViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter.order.current.items.count
+        return presenter.numberOfRow
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
         cell.selectionStyle = .none
 
-        guard let item = presenter.order.current.items[indexPath.row] else { return UITableViewCell() }
+        let item = presenter.item(at: indexPath.row)
 
         cell.configure(
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
             stars: "☆ \(item.stargazersCount.decimal())"
         )
-
-        let url = item.owner.avatarUrl
-
-        cell.setAvatarImage(url: url)
         return cell
     }
 }
 
 extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = presenter.order.current.items[indexPath.row] else { return }
         // セルタップを通知。GitHubデータを渡してます。
-        presenter.didSelectRow(item: item)
+        presenter.didSelectRow(at: indexPath.row)
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

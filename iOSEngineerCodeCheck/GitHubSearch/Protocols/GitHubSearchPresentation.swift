@@ -11,9 +11,8 @@ import Foundation
 // Presenter
 protocol GitHubSearchPresentation: AnyObject {
     var view: GitHubSearchView? { get }
-    var interactor: GitHubSearchInputUsecase { get }
-    var router: GitHubSearchWireFrame { get }
-    var order: OrderItemManager { get }
+
+    var numberOfRow: Int { get }
 
     func viewDidLoad()
     /// サーチボタンのタップ通知
@@ -21,7 +20,9 @@ protocol GitHubSearchPresentation: AnyObject {
     /// 検索テキストの変更を通知
     func searchTextDidChange()
     /// セルタップを通知
-    func didSelectRow(item: Item)
+    func didSelectRow(at index: Int)
     /// お気に入り順のボタンタップを通知
     func starOderButtonDidPush()
+
+    func item(at index: Int) -> GitHubSearchViewItem
 }

@@ -10,9 +10,9 @@ import Foundation
 
 final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
-    var interactor: GitHubSearchInputUsecase
-    var router: GitHubSearchWireFrame
-    var order = OrderItemManager()
+    private var interactor: GitHubSearchInputUsecase
+    private var router: GitHubSearchWireFrame
+    private var order = OrderItemManager()
     private var orderType: Order = .default
     private var word: String = ""
 
@@ -27,6 +27,10 @@ final class GitHubSearchPresenter {
 }
 // MARK: - GitHubSearchPresentationプロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchPresentation {
+    var numberOfRow: Int {
+        return order.current.items.count
+    }
+
     func viewDidLoad() {
         view?.configure()
     }
@@ -49,7 +53,8 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
-    func didSelectRow(item: Item) {
+    func didSelectRow(at index: Int) {
+        let item = order.current.items[index]
         router.showGitHubDetailViewController(item: item)
     }
 
@@ -58,6 +63,11 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         changeStarOrder()
         fetchOrSetSearchOrderItem()
         view?.tableViewReload()
+    }
+
+    func item(at index: Int) -> GitHubSearchViewItem {
+        // TODO: - 仮に設定。後で変更する。
+        return GitHubSearchViewItem(item: order.current.items[index], image: nil)
     }
 }
 

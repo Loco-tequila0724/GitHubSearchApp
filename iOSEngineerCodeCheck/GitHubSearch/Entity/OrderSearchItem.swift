@@ -10,7 +10,7 @@ import Foundation
 import UIKit.UIColor
 
 protocol OrderSearchItem {
-    var items: [Item?] { get set }
+    var items: [Item] { get set }
     var text: String { get }
     var color: UIColor { get }
     func url(word: String) -> URL?
@@ -18,7 +18,7 @@ protocol OrderSearchItem {
 
 /// 順序がデフォルト時の際に使用する
 struct DefaultOrderSearchItem: OrderSearchItem {
-    var items: [Item?]
+    var items: [Item]
     var text: String
     var color: UIColor
 
@@ -43,7 +43,7 @@ struct DefaultOrderSearchItem: OrderSearchItem {
 
 /// スター数が多い順の際に使用する
 struct DescOrderSearchItem: OrderSearchItem {
-    var items: [Item?]
+    var items: [Item]
     var text: String
     var color: UIColor
 
@@ -70,7 +70,7 @@ struct DescOrderSearchItem: OrderSearchItem {
 
 /// スター数が少ない順の際に使用する
 struct AscOrderSearchItem: OrderSearchItem {
-    var items: [Item?]
+    var items: [Item]
     var text: String
     var color: UIColor
 
