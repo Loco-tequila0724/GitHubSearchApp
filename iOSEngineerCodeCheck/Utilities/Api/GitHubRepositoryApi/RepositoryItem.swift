@@ -13,6 +13,7 @@ struct RepositoryItem: Decodable {
 }
 // MARK: - GitHub リポジトリデータ構造 -
 struct Item: Decodable {
+    let id: Int
     let fullName: String
     let language: String?
     let stargazersCount: Int
