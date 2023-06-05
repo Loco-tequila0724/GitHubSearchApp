@@ -11,12 +11,6 @@ import UIKit.UIImage
 
 /// 画像の取得処理に関する。
 final class ImageLoader {
-    private var task: Task<(), Error>? {
-        didSet {
-            // 古いタスクがまだ残っていたらタスクをキャンセル
-            oldValue?.cancel()
-        }
-    }
 }
 
 extension ImageLoader {
@@ -29,11 +23,7 @@ extension ImageLoader {
                     let image = try await convert(request: request)
                     configuration.resume(returning: image)
                 } catch let error {
-                    if Task.isCancelled {
-                        configuration.resume(throwing: ApiError.cancel)
-                    } else {
-                        configuration.resume(throwing: error)
-                    }
+                    configuration.resume(throwing: error)
                 }
             }
         }

@@ -93,7 +93,10 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             setAppearError(error: error)
         }
     }
+}
 
+private extension GitHubSearchPresenter {
+    /// 画像の取得が完了したら、そのセルだけリロード。
     func fetchAvatarImages(items: [Item]?) async {
         guard let items else { return }
 
@@ -102,24 +105,27 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
                 group.addTask {
                     do {
                         try await Task { @MainActor in
+                            // 画像を生成する
                             let image = try await self.imageLoader.load(url: item.owner.avatarUrl)
-
                             self.avatarImages[item.id] = image
 
+                            // 画像元のセルの順番(インデックス番号)を調べリロードする。
                             if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
                                 self.view?.reloadRow(at: index)
                             }
                         }.value
-                    } catch let error {
-                        print(error.localizedDescription)
+                    } catch {
+                        // エラーだった場合は、ダミーの画像が入る
+                        self.avatarImages[item.id] = UIImage(named: "Untitled")!
+                        if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
+                            self.view?.reloadRow(at: index)
+                        }
                     }
                 }
             }
         }
     }
-}
 
-private extension GitHubSearchPresenter {
     var url: URL? {
         switch orderType {
         case .`default`: return order.`default`.url(word: word)
