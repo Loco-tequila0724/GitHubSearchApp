@@ -14,10 +14,10 @@ final class GitHubSearchPresenter {
     private var interactor: GitHubSearchInputUsecase
     private var router: GitHubSearchWireFrame
     private var order = OrderItemManager()
+    private let imageLoader = ImageLoader()
     private var orderType: Order = .default
     private var word: String = ""
     private var avatarImages: [Int: UIImage] = [:]
-    private let imageLoader = ImageLoader()
 
     init(
         view: GitHubSearchView? = nil,
@@ -116,9 +116,11 @@ private extension GitHubSearchPresenter {
                         }.value
                     } catch {
                         // エラーだった場合は、ダミーの画像が入る
-                        self.avatarImages[item.id] = UIImage(named: "Untitled")!
-                        if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
-                            self.view?.reloadRow(at: index)
+                        DispatchQueue.main.async {
+                            self.avatarImages[item.id] = UIImage(named: "Untitled")!
+                            if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
+                                self.view?.reloadRow(at: index)
+                            }
                         }
                     }
                 }

@@ -9,8 +9,16 @@
 import Foundation
 import UIKit.UIImage
 
+protocol ImageLoaderProtocol {
+    var session: URLSession { get }
+    func load(url: URL?) async throws -> UIImage
+    func makeRequest(url: URL?) throws -> URLRequest
+    func httpData(request: URLRequest) async throws -> Data
+    func convert(request: URLRequest) async throws -> UIImage
+}
+
 /// 画像の取得処理に関する。
-final class ImageLoader {
+final class ImageLoader: ImageLoaderProtocol {
 }
 
 extension ImageLoader {
@@ -31,7 +39,7 @@ extension ImageLoader {
 }
 
 /// 画像の取得に関する。
-private extension ImageLoader {
+extension ImageLoader {
     var session: URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .returnCacheDataElseLoad

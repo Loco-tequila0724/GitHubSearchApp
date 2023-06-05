@@ -9,6 +9,7 @@
 import Foundation
 import UIKit.UIImage
 
+/// テーブルビューセルへ表示するデータ構造
 struct GitHubSearchViewItem {
     let id: Int
     let fullName: String
