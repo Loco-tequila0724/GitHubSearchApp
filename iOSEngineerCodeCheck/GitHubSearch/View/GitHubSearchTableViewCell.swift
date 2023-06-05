@@ -10,7 +10,7 @@ import UIKit
 
 // VIPERアーキテクチャは適用していません。
 final class GitHubSearchTableViewCell: UITableViewCell {
-    @IBOutlet private weak var avatarImageView: AvatarImageView!
+    @IBOutlet private weak var avatarImageView: UIImageView!
     @IBOutlet private weak var fullNameLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!
@@ -25,21 +25,19 @@ final class GitHubSearchTableViewCell: UITableViewCell {
 
 extension GitHubSearchTableViewCell {
     /// 初期画面の構成
-    func configure(fullName: String, language: String, stars: String) {
-        fullNameLabel.text = fullName
-        languageLabel.text = language
-        starsLabel.text = stars
-    }
-    // アバター画像の生成
-    func setAvatarImage(url: URL) {
-        Task {
-            await avatarImageView.setUp(url: url)
-        }
+    func configure(item: GitHubSearchViewItem) {
+        avatarImageView.image = item.avatarImageView
+        fullNameLabel.text = item.fullName
+        languageLabel.text = item.language
+        starsLabel.text = item.stars
     }
 }
 
 private extension GitHubSearchTableViewCell {
     func setUp() {
+        avatarImageView.accessibilityIgnoresInvertColors = true
+        avatarImageView.layer.cornerRadius = 6
+
         fullNameLabel.adjustsFontSizeToFitWidth = true
         fullNameLabel.minimumScaleFactor = 0.7
 

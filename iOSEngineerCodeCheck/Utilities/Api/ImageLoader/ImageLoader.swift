@@ -11,29 +11,19 @@ import UIKit.UIImage
 
 /// 画像の取得処理に関する。
 final class ImageLoader {
-    private var task: Task<(), Error>? {
-        didSet {
-            // 古いタスクがまだ残っていたらタスクをキャンセル
-            oldValue?.cancel()
-        }
-    }
 }
 
 extension ImageLoader {
     /// GitHub APIから画像データの取得
     func load(url: URL?) async throws -> UIImage {
         return try await withCheckedThrowingContinuation { configuration in
-            task = Task {
+            Task {
                 do {
                     let request = try makeRequest(url: url)
                     let image = try await convert(request: request)
                     configuration.resume(returning: image)
                 } catch let error {
-                    if Task.isCancelled {
-                        configuration.resume(throwing: ApiError.cancel)
-                    } else {
-                        configuration.resume(throwing: error)
-                    }
+                    configuration.resume(throwing: error)
                 }
             }
         }

@@ -10,7 +10,7 @@ import Foundation
 
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
-    var router: GitHubDetailRouter?
+    private var router: GitHubDetailRouter?
     var item: Item!
 
     init(
