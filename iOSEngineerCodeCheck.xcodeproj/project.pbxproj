@@ -177,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				388949C82A17E57100307A11 /* Order.swift */,
-				386069A329FD164300BCF6AE /* OrderSearchItem.swift */,
 				388949CA2A17E5F500307A11 /* OrderItemManager.swift */,
 			);
 			path = Entity;
@@ -234,6 +233,7 @@
 		38F34E6129F91E8400120671 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				386069A329FD164300BCF6AE /* OrderSearchItem.swift */,
 				38E3B1192A2C6E5C00CC18F9 /* GitHubSearchViewItem.swift */,
 				38F34E6729F91F5400120671 /* GitHubSearchPresenter.swift */,
 			);
