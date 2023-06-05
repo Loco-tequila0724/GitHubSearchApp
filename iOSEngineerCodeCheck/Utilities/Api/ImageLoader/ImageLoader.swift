@@ -23,7 +23,7 @@ extension ImageLoader {
     /// GitHub APIから画像データの取得
     func load(url: URL?) async throws -> UIImage {
         return try await withCheckedThrowingContinuation { configuration in
-            task = Task {
+            Task {
                 do {
                     let request = try makeRequest(url: url)
                     let image = try await convert(request: request)

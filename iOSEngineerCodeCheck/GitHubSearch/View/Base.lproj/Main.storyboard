@@ -58,7 +58,7 @@
                                                     <viewLayoutGuide key="contentLayoutGuide" id="WxT-f1-VUh"/>
                                                     <viewLayoutGuide key="frameLayoutGuide" id="LxG-HW-Fij"/>
                                                 </scrollView>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-hS-P6u" customClass="AvatarImageView" customModule="iOSEngineerCodeCheck" customModuleProvider="target">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="SUq-hS-P6u">
                                                     <rect key="frame" x="26" y="10" width="65" height="65"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="65" id="22F-Xn-Su8"/>

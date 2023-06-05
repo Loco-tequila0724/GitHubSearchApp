@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
@@ -15,6 +16,8 @@ final class GitHubSearchPresenter {
     private var order = OrderItemManager()
     private var orderType: Order = .default
     private var word: String = ""
+    private var avatarImages: [Int: UIImage] = [:]
+    private let imageLoader = ImageLoader()
 
     init(
         view: GitHubSearchView? = nil,
@@ -66,8 +69,11 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func item(at index: Int) -> GitHubSearchViewItem {
-        // TODO: - 仮に設定。後で変更する。
-        return GitHubSearchViewItem(item: order.current.items[index], image: nil)
+        let item = order.current.items[index]
+        let image = avatarImages[item.id]
+        let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
+
+        return gitHubSearchViewItem
     }
 }
 
@@ -78,10 +84,37 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         view?.stopLoading()
         switch result {
         case .success(let item):
+            Task.detached { [weak self] in
+                await self?.fetchAvatarImages(items: item.items)
+            }
             setSearchOrderItem(item: item)
             view?.tableViewReload()
         case .failure(let error):
             setAppearError(error: error)
+        }
+    }
+
+    func fetchAvatarImages(items: [Item]?) async {
+        guard let items else { return }
+
+        await withTaskGroup(of: Void.self) { group in
+            for item in items {
+                group.addTask {
+                    do {
+                        try await Task { @MainActor in
+                            let image = try await self.imageLoader.load(url: item.owner.avatarUrl)
+
+                            self.avatarImages[item.id] = image
+
+                            if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
+                                self.view?.reloadRow(at: index)
+                            }
+                        }.value
+                    } catch let error {
+                        print(error.localizedDescription)
+                    }
+                }
+            }
         }
     }
 }

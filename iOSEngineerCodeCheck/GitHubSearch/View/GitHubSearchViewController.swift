@@ -121,6 +121,15 @@ extension GitHubSearchViewController: GitHubSearchView {
         }
     }
 
+    func reloadRow(at index: Int) {
+        tableView.performBatchUpdates {
+            guard index < tableView.numberOfRows(inSection: 0) else {
+                return
+            }
+            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        }
+    }
+
     /// ボタンの見た目を変更する
     func didChangeStarOrder(searchItem: OrderSearchItem) {
         starOderButton.setTitle(searchItem.text, for: .normal)
@@ -170,11 +179,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
         let item = presenter.item(at: indexPath.row)
 
-        cell.configure(
-            fullName: item.fullName,
-            language: "言語 \(item.language ?? "")",
-            stars: "☆ \(item.stargazersCount.decimal())"
-        )
+        cell.configure(item: item)
         return cell
     }
 }
