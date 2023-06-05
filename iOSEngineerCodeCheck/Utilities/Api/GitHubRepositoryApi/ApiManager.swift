@@ -8,6 +8,15 @@
 
 import Foundation
 
+protocol ApiManagerProtocol {
+    var decoder: JSONDecoder { get }
+    var task: Task<(), Never>? { get }
+    func fetch(url: URL?) async -> Result<RepositoryItem, Error>
+    func makeRequest(url: URL?) throws -> URLRequest
+    func httpData(request: URLRequest) async throws -> Data
+    func convert(request: URLRequest) async throws -> RepositoryItem
+}
+
 // MARK: - GitHub API通信で使用する -
 final class ApiManager {
     private var decoder: JSONDecoder = JSONDecoder()
@@ -44,7 +53,7 @@ extension ApiManager {
 }
 
 // MARK: - API通信を行なうための部品類 -
-private extension ApiManager {
+extension ApiManager {
     func makeRequest(url: URL?) throws -> URLRequest { // swiftlint:disable:this all
         guard let url else { throw ApiError.notFound }
         let request = URLRequest(url: url)
