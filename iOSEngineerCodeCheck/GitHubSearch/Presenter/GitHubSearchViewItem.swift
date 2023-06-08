@@ -24,7 +24,7 @@ extension GitHubSearchViewItem {
             id: item.id,
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
-            stars: "☆ \(item.stargazersCount)",
+            stars: "☆ \(item.stargazersCount.decimal())",
             avatarImageView: image
         )
     }

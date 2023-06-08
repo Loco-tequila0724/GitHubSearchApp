@@ -13,6 +13,7 @@
 		385C324E2A1E5C9400EDADC4 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385C324D2A1E5C9400EDADC4 /* Int+Extension.swift */; };
 		386069A029FC0CC400BCF6AE /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */; };
 		386069A429FD164300BCF6AE /* OrderSearchItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386069A329FD164300BCF6AE /* OrderSearchItem.swift */; };
+		3882C69A2A31D6B100FF5B9A /* GitHubDetailViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3882C6992A31D6B100FF5B9A /* GitHubDetailViewItem.swift */; };
 		388949C92A17E57100307A11 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388949C82A17E57100307A11 /* Order.swift */; };
 		388949CB2A17E5F500307A11 /* OrderItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388949CA2A17E5F500307A11 /* OrderItemManager.swift */; };
 		38D37C632A1650B0005EA7C6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 38D37C622A1650B0005EA7C6 /* .swiftlint.yml */; };
@@ -72,6 +73,7 @@
 		385C324D2A1E5C9400EDADC4 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		3860699F29FC0CC400BCF6AE /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		386069A329FD164300BCF6AE /* OrderSearchItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderSearchItem.swift; sourceTree = "<group>"; };
+		3882C6992A31D6B100FF5B9A /* GitHubDetailViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubDetailViewItem.swift; sourceTree = "<group>"; };
 		388949C82A17E57100307A11 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		388949CA2A17E5F500307A11 /* OrderItemManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderItemManager.swift; sourceTree = "<group>"; };
 		38D37C622A1650B0005EA7C6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
@@ -294,6 +296,7 @@
 		38F34E7229F9207400120671 /* Presenter */ = {
 			isa = PBXGroup;
 			children = (
+				3882C6992A31D6B100FF5B9A /* GitHubDetailViewItem.swift */,
 				38F34E7329F920A300120671 /* GitHubDetailPresenter.swift */,
 			);
 			path = Presenter;
@@ -637,6 +640,7 @@
 				380A2F9B2A193BA5009941A6 /* ImageLoader.swift in Sources */,
 				38D37C732A168B88005EA7C6 /* GitHubDetailWireFrame.swift in Sources */,
 				38D37C712A168AE8005EA7C6 /* GitHubDetailPresentation.swift in Sources */,
+				3882C69A2A31D6B100FF5B9A /* GitHubDetailViewItem.swift in Sources */,
 				38F34E7429F920A300120671 /* GitHubDetailPresenter.swift in Sources */,
 				38D37C6D2A1688B6005EA7C6 /* GitHubSearchPresentation.swift in Sources */,
 				38F34E8D29FBA01900120671 /* ApiManager.swift in Sources */,

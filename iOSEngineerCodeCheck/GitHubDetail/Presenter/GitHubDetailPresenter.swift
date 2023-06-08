@@ -10,20 +10,28 @@ import Foundation
 
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
-    private var router: GitHubDetailRouter?
+    private var router: GitHubDetailRouter!
+    private let gitHubDetailViewItem: GitHubDetailViewItem!
     var item: Item!
 
     init(
+        item: Item,
         view: GitHubDetailView? = nil,
-        router: GitHubDetailRouter? = nil) {
+        router: GitHubDetailRouter,
+        gitHubDetailViewItem: GitHubDetailViewItem) {
+        self.item = item
         self.view = view
         self.router = router
+        self.gitHubDetailViewItem = gitHubDetailViewItem
     }
 }
 
 extension GitHubDetailPresenter: GitHubDetailPresentation {
     func viewDidLoad() {
-        view?.configure(item: item)
+        view?.configure(
+            item: gitHubDetailViewItem,
+            avatarUrl: item.owner.avatarUrl
+        )
     }
 
     func safariButtoDidPush() {

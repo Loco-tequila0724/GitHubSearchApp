@@ -11,6 +11,6 @@ import Foundation
 // View
 protocol GitHubDetailView: AnyObject {
     var presenter: GitHubDetailPresenter! { get }
-    func configure(item: Item?)
+    func configure(item: GitHubDetailViewItem, avatarUrl: URL)
     func showGitHubSite(url: URL)
 }
