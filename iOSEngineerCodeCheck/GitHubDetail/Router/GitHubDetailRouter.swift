@@ -20,13 +20,15 @@ extension GitHubDetailRouter: GitHubDetailWireFrame {
     static func assembleModules(item: Item) -> UIViewController {
         let view = GitHubDetailViewController.instantiate()
         let router = GitHubDetailRouter(viewController: view)
+        let gitHubDetailViewItem = GitHubDetailViewItem(item: item)
         let presenter = GitHubDetailPresenter(
+            item: item,
             view: view,
-            router: router
+            router: router,
+            gitHubDetailViewItem: gitHubDetailViewItem
         )
 
         view.presenter = presenter
-        presenter.item = item
 
         return view
     }

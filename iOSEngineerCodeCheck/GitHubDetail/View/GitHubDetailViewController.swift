@@ -42,21 +42,20 @@ extension GitHubDetailViewController {
 
 extension GitHubDetailViewController: GitHubDetailView {
     /// 初期画面の構成
-    func configure(item: Item?) {
+    func configure(item: GitHubDetailViewItem, avatarUrl: URL) {
         setupNavigationBar(
             title: "リポジトリ",
             buttonImage: UIImage(systemName: "safari")!,
             rightBarButtonAction: #selector(safari(_:))
         )
 
-        guard let item else { return }
-        imageView.loadImageAsynchronous(url: item.owner.avatarUrl)
+        imageView.loadImageAsynchronous(url: avatarUrl)
         fullNameLabel.text = item.fullName
-        languageLabel.text = "言語 \(item.language ?? "")"
-        starsLabel.text = "\(item.stargazersCount.decimal())"
-        watchersLabel.text = "\(item.watchersCount.decimal())"
-        forksLabel.text = "\(item.forksCount.decimal())"
-        issuesLabel.text = "\(item.openIssuesCount.decimal())"
+        languageLabel.text = item.language
+        starsLabel.text = item.stars
+        watchersLabel.text = item.watchers
+        forksLabel.text = item.forks
+        issuesLabel.text = item.issues
     }
 
     @objc func safari (_ sender: UIBarButtonItem) {

@@ -14,7 +14,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
     /// gitHubApiにアクセスする
     var apiManager: ApiManager { get }
     /// API通信を行い、GitHubのデータをデータベースから取得
-    func fetch(url: URL?)
+    func fetch(word: String, orderType: Order)
 }
 
 // Interactor アウトプット

@@ -12,6 +12,7 @@ protocol ApiManagerProtocol {
     var decoder: JSONDecoder { get }
     var task: Task<(), Never>? { get }
     func fetch(url: URL?) async -> Result<RepositoryItem, Error>
+    func makeURL(word: String, orderType: Order) -> URL?
     func makeRequest(url: URL?) throws -> URLRequest
     func httpData(request: URLRequest) async throws -> Data
     func convert(request: URLRequest) async throws -> RepositoryItem
@@ -26,10 +27,11 @@ final class ApiManager {
 // MARK: - API通信を行なう-
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
-    func fetch(url: URL?) async -> Result<RepositoryItem, Error> {
+    func fetch(word: String, orderType: Order) async -> Result<RepositoryItem, Error> {
         return await withCheckedContinuation { configuration in
             task = Task {
                 do {
+                    let url = makeURL(word: word, orderType: orderType)
                     let repositoryItem = try await convert(request: makeRequest(url: url))
                     configuration.resume(returning: .success(repositoryItem))
                 } catch let error {
@@ -54,6 +56,47 @@ extension ApiManager {
 
 // MARK: - API通信を行なうための部品類 -
 extension ApiManager {
+    func makeURL(word: String, orderType: Order) -> URL? {
+        switch orderType {
+        case .`default`:
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "api.github.com"
+            components.path = "/search/repositories"
+            components.queryItems = [
+                    .init(name: "q", value: word),
+                    .init(name: "per_page", value: "50")
+            ]
+            return components.url
+
+        case .desc:
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "api.github.com"
+            components.path = "/search/repositories"
+            components.queryItems = [
+                    .init(name: "q", value: word),
+                    .init(name: "sort", value: "stars"),
+                    .init(name: "order", value: "desc"),
+                    .init(name: "per_page", value: "50")
+            ]
+            return components.url
+
+        case .asc:
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = "api.github.com"
+            components.path = "/search/repositories"
+            components.queryItems = [
+                    .init(name: "q", value: word),
+                    .init(name: "sort", value: "stars"),
+                    .init(name: "order", value: "asc"),
+                    .init(name: "per_page", value: "50")
+            ]
+            return components.url
+        }
+    }
+
     func makeRequest(url: URL?) throws -> URLRequest { // swiftlint:disable:this all
         guard let url else { throw ApiError.notFound }
         let request = URLRequest(url: url)
