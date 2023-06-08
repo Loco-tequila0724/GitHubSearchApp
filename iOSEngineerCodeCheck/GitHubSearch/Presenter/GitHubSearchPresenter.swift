@@ -44,7 +44,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         self.word = word
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(url: url)
+        interactor.fetch(word: word, orderType: orderType)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
@@ -96,7 +96,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 }
 
 private extension GitHubSearchPresenter {
-    /// 画像の取得が完了したら、そのセルだけリロード。
+    /// 画像の取得が完了したら、そのセルだけリロード。.. ここ読むの辛いな〜...
     func fetchAvatarImages(items: [Item]?) async {
         guard let items else { return }
 
@@ -125,14 +125,6 @@ private extension GitHubSearchPresenter {
                     }
                 }
             }
-        }
-    }
-
-    var url: URL? {
-        switch orderType {
-        case .`default`: return order.`default`.url(word: word)
-        case .desc: return order.desc.url(word: word)
-        case .asc: return order.asc.url(word: word)
         }
     }
 
@@ -184,7 +176,7 @@ private extension GitHubSearchPresenter {
             if order.`default`.items.isEmpty && !isEmptyWord {
                 order.current.items = []
                 view?.startLoading()
-                interactor.fetch(url: url)
+                interactor.fetch(word: word, orderType: orderType)
             } else {
                 order.current = order.default
             }
@@ -192,7 +184,7 @@ private extension GitHubSearchPresenter {
             if order.desc.items.isEmpty && !isEmptyWord {
                 order.current.items = []
                 view?.startLoading()
-                interactor.fetch(url: url)
+                interactor.fetch(word: word, orderType: orderType)
             } else {
                 order.current = order.desc
             }
@@ -200,7 +192,7 @@ private extension GitHubSearchPresenter {
             if order.asc.items.isEmpty && !isEmptyWord {
                 order.current.items = []
                 view?.startLoading()
-                interactor.fetch(url: url)
+                interactor.fetch(word: word, orderType: orderType)
             } else {
                 order.current = order.asc
             }
