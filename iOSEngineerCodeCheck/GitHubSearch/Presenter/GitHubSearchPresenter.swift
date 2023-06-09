@@ -13,11 +13,12 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
     private var interactor: GitHubSearchInputUsecase
     private var router: GitHubSearchWireFrame
-    private var order = OrderItemManager()
     private let imageLoader = ImageLoader()
     private var orderType: Order = .default
     private var word: String = ""
     private var avatarImages: [Int: UIImage] = [:]
+
+    private var items: [Item] = []
 
     init(
         view: GitHubSearchView? = nil,
@@ -31,7 +32,7 @@ final class GitHubSearchPresenter {
 // MARK: - GitHubSearchPresentationプロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchPresentation {
     var numberOfRow: Int {
-        return order.current.items.count
+        items.count
     }
 
     func viewDidLoad() {
@@ -57,7 +58,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
     func didSelectRow(at index: Int) {
-        let item = order.current.items[index]
+        let item = items[index]
         router.showGitHubDetailViewController(item: item)
     }
 
@@ -69,7 +70,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func item(at index: Int) -> GitHubSearchViewItem {
-        let item = order.current.items[index]
+        let item = items[index]
         let image = avatarImages[item.id]
         let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
 
@@ -110,7 +111,7 @@ private extension GitHubSearchPresenter {
                             self.avatarImages[item.id] = image
 
                             // 画像元のセルの順番(インデックス番号)を調べリロードする。
-                            if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
+                            if let index = items.firstIndex(where: { $0.id == item.id }) {
                                 self.view?.reloadRow(at: index)
                             }
                         }.value
@@ -118,7 +119,7 @@ private extension GitHubSearchPresenter {
                         // エラーだった場合は、ダミーの画像が入る
                         DispatchQueue.main.async {
                             self.avatarImages[item.id] = UIImage(named: "Untitled")!
-                            if let index = self.order.current.items.firstIndex(where: { $0.id == item.id }) {
+                            if let index = items.firstIndex(where: { $0.id == item.id }) {
                                 self.view?.reloadRow(at: index)
                             }
                         }
@@ -130,73 +131,28 @@ private extension GitHubSearchPresenter {
 
     /// 保管しているリポジトリのデータをリセット
     func reset() {
-        order.current.items = []
-        order.default.items = []
-        order.desc.items = []
-        order.asc.items = []
+        items = []
     }
 
     ///  APIから取得したデータを各リポジトリへセット
     func setSearchOrderItem(item: RepositoryItem) {
         let items = item.items!
-        switch orderType {
-        case .`default`:
-            order.`default`.items = items
-            order.current = order.`default`
-        case .desc:
-            order.desc.items = items
-            order.current = order.desc
-        case .asc:
-            order.asc.items = items
-            order.current = order.asc
-        }
+        self.items = items
     }
 
     /// Starソート順のタイプとボタンの見た目を変更する
     func changeStarOrder() {
-        switch orderType {
-        case .`default`:
-            orderType = .desc
-            view?.didChangeStarOrder(searchItem: order.desc)
-        case .desc:
-            orderType = .asc
-            view?.didChangeStarOrder(searchItem: order.asc)
-        case .asc:
-            orderType = .`default`
-            view?.didChangeStarOrder(searchItem: order.default)
-        }
+        self.orderType = orderType.next
+        view?.didChangeStarOrder(searchItem: items, order: orderType)
     }
 
     /// もしリポジトリデータが空だった場合、APIからデータを取得する。データがすでにある場合はそれを使用する。
     func fetchOrSetSearchOrderItem() {
         let isEmptyWord = word.isEmpty
 
-        switch orderType {
-        case .`default`:
-            if order.`default`.items.isEmpty && !isEmptyWord {
-                order.current.items = []
-                view?.startLoading()
-                interactor.fetch(word: word, orderType: orderType)
-            } else {
-                order.current = order.default
-            }
-        case .desc:
-            if order.desc.items.isEmpty && !isEmptyWord {
-                order.current.items = []
-                view?.startLoading()
-                interactor.fetch(word: word, orderType: orderType)
-            } else {
-                order.current = order.desc
-            }
-        case .asc:
-            if order.asc.items.isEmpty && !isEmptyWord {
-                order.current.items = []
-                view?.startLoading()
-                interactor.fetch(word: word, orderType: orderType)
-            } else {
-                order.current = order.asc
-            }
-        }
+        items = []
+        view?.startLoading()
+        interactor.fetch(word: word, orderType: orderType)
     }
 
     /// API通信でエラーが返ってきた場合の処理
@@ -212,6 +168,20 @@ private extension GitHubSearchPresenter {
         } else {
             //  標準のURLSessionのエラーを返す
             view?.appearErrorAlert(message: error.localizedDescription)
+        }
+    }
+}
+
+private extension Order {
+    // 他の画面では異なる表示順にしたくなるかもなので、private extensionとした
+    var next: Order {
+        switch self {
+        case .default:
+            return .desc
+        case .desc:
+            return .asc
+        case .asc:
+            return .default
         }
     }
 }

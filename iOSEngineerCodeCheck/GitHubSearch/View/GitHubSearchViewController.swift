@@ -131,9 +131,33 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(searchItem: OrderSearchItem) {
-        starOderButton.setTitle(searchItem.text, for: .normal)
-        starOderButton.backgroundColor = searchItem.color
+    func didChangeStarOrder(searchItem: [Item], order: Order) {
+        starOderButton.setTitle(order.text, for: .normal)
+        starOderButton.backgroundColor = order.backgroundColor
+    }
+}
+
+private extension Order {
+    var text: String {
+        switch self {
+        case .default:
+            return "☆ Star数 "
+        case .asc:
+            return "☆ Star数 ⍒"
+        case .desc:
+            return "☆ Star数 ⍋"
+        }
+    }
+
+    var backgroundColor: UIColor {
+        switch self {
+        case .default:
+            return .lightGray
+        case .asc:
+            return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        case .desc:
+            return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        }
     }
 }
 
