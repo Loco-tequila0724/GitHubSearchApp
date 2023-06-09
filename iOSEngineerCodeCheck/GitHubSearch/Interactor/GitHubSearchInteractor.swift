@@ -21,9 +21,9 @@ extension GitHubSearchInteractor {
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
-    func fetch(word: String, orderType: Order) {
+    func fetch(word: String, order: Order) {
         Task {
-            let result = await apiManager.fetch(word: word, orderType: orderType)
+            let result = await apiManager.fetch(word: word, orderType: order)
             presenter?.didFetchResult(result: result)
         }
     }
