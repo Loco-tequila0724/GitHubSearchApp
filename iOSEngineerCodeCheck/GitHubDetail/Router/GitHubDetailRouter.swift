@@ -28,7 +28,7 @@ extension GitHubDetailRouter: GitHubDetailWireFrame {
             gitHubDetailViewItem: gitHubDetailViewItem
         )
 
-        view.presenter = presenter
+        view.inject(presenter: presenter)
 
         return view
     }

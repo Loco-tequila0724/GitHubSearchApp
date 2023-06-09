@@ -48,6 +48,10 @@ extension GitHubSearchViewController {
         let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubSearchViewController
         return view ?? GitHubSearchViewController()
     }
+
+    func inject(presenter: GitHubSearchPresenter) {
+        self.presenter = presenter
+    }
 }
 
 private extension GitHubSearchViewController {

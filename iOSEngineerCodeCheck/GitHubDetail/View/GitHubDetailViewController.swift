@@ -38,6 +38,10 @@ extension GitHubDetailViewController {
         let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubDetailViewController
         return view ?? GitHubDetailViewController()
     }
+
+    func inject(presenter: GitHubDetailPresenter) {
+        self.presenter = presenter
+    }
 }
 
 extension GitHubDetailViewController: GitHubDetailView {

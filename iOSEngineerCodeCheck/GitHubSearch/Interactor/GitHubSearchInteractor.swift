@@ -13,6 +13,12 @@ final class GitHubSearchInteractor {
     let apiManager = ApiManager()
 }
 
+extension GitHubSearchInteractor {
+    func inject(presenter: GitHubSearchPresenter) {
+        self.presenter = presenter
+    }
+}
+
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, orderType: Order) {
