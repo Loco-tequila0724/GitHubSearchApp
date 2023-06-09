@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIImage
 
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
@@ -28,14 +29,29 @@ final class GitHubDetailPresenter {
 
 extension GitHubDetailPresenter: GitHubDetailPresentation {
     func viewDidLoad() {
-        view?.configure(
-            item: gitHubDetailViewItem,
-            avatarUrl: item.owner.avatarUrl
-        )
+        view?.configure(item: gitHubDetailViewItem)
+
+        Task { @MainActor in
+            let image = await makeAvatarImage(url: item.owner.avatarUrl)
+            view?.setAvatarImage(image: image)
+        }
     }
 
     func safariButtoDidPush() {
         guard let url = URL(string: item.owner.htmlUrl) else { return }
         view?.showGitHubSite(url: url)
+    }
+}
+
+private extension GitHubDetailPresenter {
+    func makeAvatarImage(url: URL) async -> UIImage {
+        return await withCheckedContinuation { continuation in
+            Task {
+                let imageData: Data? = try Data(contentsOf: url)
+                guard let imageData else { return }
+                let image = UIImage(data: imageData)!
+                continuation.resume(returning: image)
+            }
+        }
     }
 }
