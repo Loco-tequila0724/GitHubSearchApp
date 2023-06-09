@@ -19,10 +19,10 @@ GitHubのリポジトリを検索するアプリです。
 
 ・iPad非対応  
 ・ダークモード対応  
-・画面の回転対応
+・画面の回転対応  
 ・ステータスバー lightモードで固定  
 ・ローカライズ(未)  
-・SwiftLint 導入 CocoaPods使用
+・SwiftLint 導入 CocoaPods使用  
 ・ライブラリの利用： 無し
 
 <br>
