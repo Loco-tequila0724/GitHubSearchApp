@@ -53,7 +53,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         word = ""
         reset()
         view?.resetDisplay()
-        interactor.apiManager.task?.cancel()
+        interactor.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
@@ -81,7 +81,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
-    func didFetchResult(result: Result<RepositoryItem, Error>) {
+    func didFetchResult(result: Result<RepositoryItems, Error>) {
         view?.stopLoading()
         switch result {
         case .success(let item):
@@ -135,9 +135,8 @@ private extension GitHubSearchPresenter {
     }
 
     ///  APIから取得したデータを各リポジトリへセット
-    func setSearchOrderItem(item: RepositoryItem) {
-        let items = item.items!
-        self.items = items
+    func setSearchOrderItem(item: RepositoryItems) {
+        self.items = item.items
     }
 
     /// Starソート順のタイプとボタンの見た目を変更する
@@ -148,8 +147,6 @@ private extension GitHubSearchPresenter {
 
     /// もしリポジトリデータが空だった場合、APIからデータを取得する。データがすでにある場合はそれを使用する。
     func fetchOrSetSearchOrderItem() {
-        let isEmptyWord = word.isEmpty
-
         items = []
         view?.startLoading()
         interactor.fetch(word: word, orderType: orderType)

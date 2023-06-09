@@ -11,11 +11,11 @@ import Foundation
 protocol ApiManagerProtocol {
     var decoder: JSONDecoder { get }
     var task: Task<(), Never>? { get }
-    func fetch(url: URL?) async -> Result<RepositoryItem, Error>
+    func fetch(url: URL?) async -> Result<RepositoryItems, Error>
     func makeURL(word: String, orderType: Order) -> URL?
     func makeRequest(url: URL?) throws -> URLRequest
     func httpData(request: URLRequest) async throws -> Data
-    func convert(request: URLRequest) async throws -> RepositoryItem
+    func convert(request: URLRequest) async throws -> RepositoryItems
 }
 
 // MARK: - GitHub API通信で使用する -
@@ -27,7 +27,7 @@ final class ApiManager {
 // MARK: - API通信を行なう-
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
-    func fetch(word: String, orderType: Order) async -> Result<RepositoryItem, Error> {
+    func fetch(word: String, orderType: Order) async -> Result<RepositoryItems, Error> {
         return await withCheckedContinuation { configuration in
             task = Task {
                 do {
@@ -119,14 +119,14 @@ extension ApiManager {
         return data
     }
 
-    func convert(request: URLRequest) async throws -> RepositoryItem {
+    func convert(request: URLRequest) async throws -> RepositoryItems {
         let data = try await httpData(request: request)
 
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        let repositoryItem = try decoder.decode(RepositoryItem.self, from: data)
+        let repositoryItem = try decoder.decode(RepositoryItems.self, from: data)
 
-        // リポジトリデータがnilまたは、中身が空ならエラーを返す
-        guard let items = repositoryItem.items, !(items.isEmpty) else {
+        // リポジトリデータが空ならエラーを返す
+        guard !(repositoryItem.items.isEmpty) else {
             throw ApiError.notFound
         }
 
