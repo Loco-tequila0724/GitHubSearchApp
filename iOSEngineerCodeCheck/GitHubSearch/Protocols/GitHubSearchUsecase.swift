@@ -38,10 +38,14 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func changeOrder()
 
     func item(at index: Int) -> GitHubSearchViewItem
+
+    func fetchAvatarImages(items: [Item]?) async
 }
 
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
     /// 取得したGitHubデータの結果をViewへ通知
     func didFetchResult(result: Result<RepositoryItems, Error>)
+
+    func didFetchAvatarImage(at: Int)
 }

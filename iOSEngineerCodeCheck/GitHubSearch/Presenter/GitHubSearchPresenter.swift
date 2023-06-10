@@ -74,7 +74,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         switch result {
         case .success(let item):
             Task.detached { [weak self] in
-                await self?.fetchAvatarImages(items: item.items)
+                await self?.interactor.fetchAvatarImages(items: item.items)
             }
             interactor.setSearchOrderItem(item: item)
             view?.tableViewReload()
@@ -82,43 +82,13 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             setAppearError(error: error)
         }
     }
+
+    func didFetchAvatarImage(at index: Int) {
+        view?.reloadRow(at: index)
+    }
 }
 
 private extension GitHubSearchPresenter {
-    /// 画像の取得が完了したら、そのセルだけリロード。.. ここ読むの辛いな〜...
-    func fetchAvatarImages(items: [Item]?) async {
-        guard let items else { return }
-
-        await withTaskGroup(of: Void.self) { group in
-            for item in items {
-                group.addTask { [weak self] in
-                    guard let strongSelf = self else { return }
-                    do {
-                        try await Task { @MainActor in
-                            // 画像を生成する
-                            let image = try await strongSelf.interactor.imageLoader.load(url: item.owner.avatarUrl)
-                            strongSelf.interactor.avatarImages[item.id] = image
-
-                            // 画像元のセルの順番(インデックス番号)を調べリロードする。
-                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                strongSelf.view?.reloadRow(at: index)
-                            }
-                        }.value
-                    } catch {
-                        // エラーだった場合は、ダミーの画像が入る
-                        DispatchQueue.main.async { [weak self] in
-                            guard let strongSelf = self else { return }
-                            strongSelf.interactor.avatarImages[item.id] = UIImage(named: "Untitled")!
-                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                strongSelf.view?.reloadRow(at: index)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
     /// API通信でエラーが返ってきた場合の処理
     func setAppearError(error: Error) {
         if error is ApiError {
