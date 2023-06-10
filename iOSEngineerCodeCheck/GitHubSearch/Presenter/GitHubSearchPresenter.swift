@@ -15,7 +15,6 @@ final class GitHubSearchPresenter {
     private var router: GitHubSearchWireFrame
     private let imageLoader = ImageLoader()
     private var orderType: Order = .default
-    private var word: String = ""
 
     init(
         view: GitHubSearchView? = nil,
@@ -39,7 +38,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
     func searchButtonDidPush(word: String) {
         interactor.reset()
-        self.word = word
+        interactor.word = word
         view?.resetDisplay()
         view?.startLoading()
         interactor.fetch(word: word, orderType: orderType)
@@ -47,7 +46,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
-        word = ""
+        interactor.word = ""
         interactor.reset()
         view?.resetDisplay()
         interactor.cancel()
@@ -138,7 +137,7 @@ private extension GitHubSearchPresenter {
     func fetchOrSetSearchOrderItem() {
         interactor.reset()
         view?.startLoading()
-        interactor.fetch(word: word, orderType: orderType)
+        interactor.fetch(word: interactor.word, orderType: orderType)
     }
 
     /// API通信でエラーが返ってきた場合の処理

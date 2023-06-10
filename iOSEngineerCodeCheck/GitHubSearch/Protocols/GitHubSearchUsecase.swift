@@ -24,6 +24,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func setSearchOrderItem(item: RepositoryItems)
 
     var avatarImages: [Int: UIImage] { get set }
+
+    var word: String { get set }
 }
 
 // Interactor アウトプット
