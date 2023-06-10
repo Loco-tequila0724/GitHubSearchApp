@@ -18,8 +18,6 @@ final class GitHubSearchPresenter {
     private var word: String = ""
     private var avatarImages: [Int: UIImage] = [:]
 
-    private var items: [Item] = []
-
     init(
         view: GitHubSearchView? = nil,
         interactor: GitHubSearchInputUsecase,
@@ -32,7 +30,7 @@ final class GitHubSearchPresenter {
 // MARK: - GitHubSearchPresentationプロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchPresentation {
     var numberOfRow: Int {
-        items.count
+        interactor.items.count
     }
 
     func viewDidLoad() {
@@ -41,7 +39,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
     func searchButtonDidPush(word: String) {
-        reset()
+        interactor.reset()
         self.word = word
         view?.resetDisplay()
         view?.startLoading()
@@ -51,14 +49,14 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
         word = ""
-        reset()
+        interactor.reset()
         view?.resetDisplay()
         interactor.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
     func didSelectRow(at index: Int) {
-        let item = items[index]
+        let item = interactor.items[index]
         router.showGitHubDetailViewController(item: item)
     }
 
@@ -70,7 +68,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func item(at index: Int) -> GitHubSearchViewItem {
-        let item = items[index]
+        let item = interactor.items[index]
         let image = avatarImages[item.id]
         let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
 
@@ -88,7 +86,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
             Task.detached { [weak self] in
                 await self?.fetchAvatarImages(items: item.items)
             }
-            setSearchOrderItem(item: item)
+            interactor.setSearchOrderItem(item: item)
             view?.tableViewReload()
         case .failure(let error):
             setAppearError(error: error)
@@ -129,25 +127,15 @@ private extension GitHubSearchPresenter {
         }
     }
 
-    /// 保管しているリポジトリのデータをリセット
-    func reset() {
-        items = []
-    }
-
-    ///  APIから取得したデータを各リポジトリへセット
-    func setSearchOrderItem(item: RepositoryItems) {
-        self.items = item.items
-    }
-
     /// Starソート順のタイプとボタンの見た目を変更する
     func changeStarOrder() {
         self.orderType = orderType.next
-        view?.didChangeStarOrder(searchItem: items, order: orderType)
+        view?.didChangeStarOrder(searchItem: interactor.items, order: orderType)
     }
 
     /// もしリポジトリデータが空だった場合、APIからデータを取得する。データがすでにある場合はそれを使用する。
     func fetchOrSetSearchOrderItem() {
-        items = []
+        interactor.reset()
         view?.startLoading()
         interactor.fetch(word: word, orderType: orderType)
     }

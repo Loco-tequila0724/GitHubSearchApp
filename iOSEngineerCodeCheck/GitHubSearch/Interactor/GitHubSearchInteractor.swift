@@ -11,6 +11,8 @@ import Foundation
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
     let cachedRepository = GitHubRepositoryListCachedRepository()
+
+    private(set) var items: [Item] = []
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
@@ -24,5 +26,15 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
 
     func cancel() {
         cachedRepository.cancel()
+    }
+
+    /// 保管しているリポジトリのデータをリセット
+    func reset() {
+        items = []
+    }
+
+    ///  APIから取得したデータを各リポジトリへセット
+    func setSearchOrderItem(item: RepositoryItems) {
+        self.items = item.items
     }
 }

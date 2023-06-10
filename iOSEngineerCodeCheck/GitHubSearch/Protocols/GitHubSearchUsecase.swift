@@ -15,6 +15,12 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func fetch(word: String, orderType: Order)
 
     func cancel()
+
+    var items: [Item] { get }
+
+    func reset()
+
+    func setSearchOrderItem(item: RepositoryItems)
 }
 
 // Interactor アウトプット
