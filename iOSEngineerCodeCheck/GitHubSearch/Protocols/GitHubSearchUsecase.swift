@@ -23,13 +23,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
 
     func setSearchOrderItem(item: RepositoryItems)
 
-    var avatarImages: [Int: UIImage] { get set }
-
-    var word: String { get set }
-
-    var orderType: Order { get set }
-
-    var imageLoader: ImageLoader { get }
+    var orderType: Order { get }
 
     func search(word: String)
 

@@ -11,13 +11,13 @@ import UIKit.UIImage // importしなくてもいいようにしたい
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
-    let cachedRepository = GitHubRepositoryListCachedRepository()
+    private let cachedRepository = GitHubRepositoryListCachedRepository()
 
     private(set) var items: [Item] = []
-    var avatarImages: [Int: UIImage] = [:]
-    var word: String = ""
-    var orderType: Order = .default
-    let imageLoader = ImageLoader()
+    private var avatarImages: [Int: UIImage] = [:]
+    private var word: String = ""
+    private(set) var orderType: Order = .default
+    private let imageLoader = ImageLoader()
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
