@@ -11,8 +11,8 @@ import UIKit.UIImage
 
 final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
-    private var interactor: GitHubSearchInputUsecase
-    private var router: GitHubSearchWireFrame
+    private let interactor: GitHubSearchInputUsecase
+    private let router: GitHubSearchWireFrame
     private let imageLoader = ImageLoader()
     private var order: Order = .default
     private var items = ItemsRepository()
