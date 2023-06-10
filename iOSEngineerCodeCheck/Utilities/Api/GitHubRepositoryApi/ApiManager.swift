@@ -125,8 +125,8 @@ extension ApiManager {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         let repositoryItem = try decoder.decode(RepositoryItems.self, from: data)
 
-        // リポジトリデータがnilまたは、中身が空ならエラーを返す
-        guard let items = repositoryItem.items, !(items.isEmpty) else {
+        // 中身が空ならエラーを返す
+        guard !(repositoryItem.items.isEmpty) else {
             throw ApiError.notFound
         }
 

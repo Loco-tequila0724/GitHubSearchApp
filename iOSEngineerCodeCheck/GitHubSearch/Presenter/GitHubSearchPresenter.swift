@@ -53,7 +53,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         word = ""
         reset()
         view?.resetDisplay()
-        interactor.apiManager.task?.cancel()
+        interactor.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
@@ -136,12 +136,18 @@ private extension GitHubSearchPresenter {
 
     ///  APIから取得したデータを各リポジトリへセット
     func setSearchOrderItem(item: RepositoryItems) {
-        let items = item.items!
-
-        self.items.setItems(
-            item: items,
-            order: order
-        )
+        let items = item.items
+        switch order {
+        case .`default`:
+            self.items.current = items
+            self.items.`default` = items
+        case .desc:
+            self.items.current = items
+            self.items.desc = items
+        case .asc:
+            self.items.current = items
+            self.items.asc = items
+        }
     }
 
     /// Starソート順のタイプとボタンの見た目を変更する

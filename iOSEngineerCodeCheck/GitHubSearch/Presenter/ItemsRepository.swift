@@ -21,20 +21,6 @@ struct ItemsRepository {
         self.asc = []
     }
 
-    mutating func setItems(item: [Item], order: Order) {
-        switch order {
-        case .`default`:
-            `default` = item
-            current = item
-        case .desc:
-            desc = item
-            current = item
-        case .asc:
-            asc = item
-            current = item
-        }
-    }
-
     mutating func allReset() {
         current = []
         `default` = []

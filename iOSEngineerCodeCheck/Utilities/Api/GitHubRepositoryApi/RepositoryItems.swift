@@ -9,7 +9,7 @@
 import Foundation
 
 struct RepositoryItems: Decodable {
-    var items: [Item]?
+    var items: [Item]
 }
 // MARK: - GitHub リポジトリデータ構造 -
 struct Item: Decodable {

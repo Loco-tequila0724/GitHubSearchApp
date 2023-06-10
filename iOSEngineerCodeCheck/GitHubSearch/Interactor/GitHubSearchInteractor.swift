@@ -10,7 +10,7 @@ import Foundation
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
-    let apiManager = ApiManager()
+    let cachedRepository = GitHubRepositoryListCachedRepository()
 }
 
 extension GitHubSearchInteractor {
@@ -23,8 +23,12 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, order: Order) {
         Task {
-            let result = await apiManager.fetch(word: word, orderType: order)
+            let result = await cachedRepository.fetch(word: word, orderType: order)
             presenter?.didFetchResult(result: result)
         }
+    }
+
+    func cancel() {
+        cachedRepository.cancel()
     }
 }
