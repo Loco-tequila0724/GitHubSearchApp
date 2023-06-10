@@ -16,6 +16,7 @@ final class GitHubSearchInteractor {
     private(set) var items: [Item] = []
     var avatarImages: [Int: UIImage] = [:]
     var word: String = ""
+    var orderType: Order = .default
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {

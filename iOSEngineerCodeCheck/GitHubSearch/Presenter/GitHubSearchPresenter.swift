@@ -14,7 +14,6 @@ final class GitHubSearchPresenter {
     private var interactor: GitHubSearchInputUsecase
     private var router: GitHubSearchWireFrame
     private let imageLoader = ImageLoader()
-    private var orderType: Order = .default
 
     init(
         view: GitHubSearchView? = nil,
@@ -41,7 +40,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         interactor.word = word
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(word: word, orderType: orderType)
+        interactor.fetch(word: word, orderType: interactor.orderType)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
@@ -129,15 +128,15 @@ private extension GitHubSearchPresenter {
 
     /// Starソート順のタイプとボタンの見た目を変更する
     func changeStarOrder() {
-        self.orderType = orderType.next
-        view?.didChangeStarOrder(searchItem: interactor.items, order: orderType)
+        interactor.orderType = interactor.orderType.next
+        view?.didChangeStarOrder(searchItem: interactor.items, order: interactor.orderType)
     }
 
     /// もしリポジトリデータが空だった場合、APIからデータを取得する。データがすでにある場合はそれを使用する。
     func fetchOrSetSearchOrderItem() {
         interactor.reset()
         view?.startLoading()
-        interactor.fetch(word: interactor.word, orderType: orderType)
+        interactor.fetch(word: interactor.word, orderType: interactor.orderType)
     }
 
     /// API通信でエラーが返ってきた場合の処理
