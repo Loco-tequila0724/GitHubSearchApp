@@ -7,12 +7,14 @@
 //
 
 import Foundation
+import UIKit.UIImage // importしなくてもいいようにしたい
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
     let cachedRepository = GitHubRepositoryListCachedRepository()
 
     private(set) var items: [Item] = []
+    var avatarImages: [Int: UIImage] = [:]
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {

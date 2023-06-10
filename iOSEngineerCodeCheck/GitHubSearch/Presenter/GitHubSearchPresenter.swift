@@ -16,7 +16,6 @@ final class GitHubSearchPresenter {
     private let imageLoader = ImageLoader()
     private var orderType: Order = .default
     private var word: String = ""
-    private var avatarImages: [Int: UIImage] = [:]
 
     init(
         view: GitHubSearchView? = nil,
@@ -69,7 +68,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     func item(at index: Int) -> GitHubSearchViewItem {
         let item = interactor.items[index]
-        let image = avatarImages[item.id]
+        let image = interactor.avatarImages[item.id]
         let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
 
         return gitHubSearchViewItem
@@ -101,24 +100,26 @@ private extension GitHubSearchPresenter {
 
         await withTaskGroup(of: Void.self) { group in
             for item in items {
-                group.addTask {
+                group.addTask { [weak self] in
+                    guard let strongSelf = self else { return }
                     do {
                         try await Task { @MainActor in
                             // 画像を生成する
-                            let image = try await self.imageLoader.load(url: item.owner.avatarUrl)
-                            self.avatarImages[item.id] = image
+                            let image = try await strongSelf.imageLoader.load(url: item.owner.avatarUrl)
+                            strongSelf.interactor.avatarImages[item.id] = image
 
                             // 画像元のセルの順番(インデックス番号)を調べリロードする。
                             if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                self.view?.reloadRow(at: index)
+                                strongSelf.view?.reloadRow(at: index)
                             }
                         }.value
                     } catch {
                         // エラーだった場合は、ダミーの画像が入る
-                        DispatchQueue.main.async {
-                            self.avatarImages[item.id] = UIImage(named: "Untitled")!
+                        DispatchQueue.main.async { [weak self] in
+                            guard let strongSelf = self else { return }
+                            strongSelf.interactor.avatarImages[item.id] = UIImage(named: "Untitled")!
                             if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                self.view?.reloadRow(at: index)
+                                strongSelf.view?.reloadRow(at: index)
                             }
                         }
                     }

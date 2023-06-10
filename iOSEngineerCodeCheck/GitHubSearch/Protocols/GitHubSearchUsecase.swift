@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit.UIImage // importしなくてもいいようにしたい
 
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
@@ -21,6 +22,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func reset()
 
     func setSearchOrderItem(item: RepositoryItems)
+
+    var avatarImages: [Int: UIImage] { get set }
 }
 
 // Interactor アウトプット
