@@ -12,16 +12,8 @@ import UIKit.UIImage // importしなくてもいいようにしたい
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
-    /// API通信を行い、GitHubのデータをデータベースから取得
-    func fetch(word: String, orderType: Order)
-
-    func cancel()
 
     var items: [Item] { get }
-
-    func reset()
-
-    func setSearchOrderItem(item: RepositoryItems)
 
     var orderType: Order { get }
 
@@ -32,8 +24,6 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func changeOrder()
 
     func item(at index: Int) -> GitHubSearchViewItem
-
-    func fetchAvatarImages(items: [Item]?) async
 }
 
 // Interactor アウトプット

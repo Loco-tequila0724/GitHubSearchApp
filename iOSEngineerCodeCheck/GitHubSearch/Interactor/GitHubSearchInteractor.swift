@@ -22,24 +22,24 @@ final class GitHubSearchInteractor {
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
-    func fetch(word: String, orderType: Order) {
+    private func fetch(word: String, orderType: Order) {
         Task {
             let result = await cachedRepository.fetch(word: word, orderType: orderType)
             didFetchResult(result: result)
         }
     }
 
-    func cancel() {
+    private func cancel() {
         cachedRepository.cancel()
     }
 
     /// 保管しているリポジトリのデータをリセット
-    func reset() {
+    private func reset() {
         items = []
     }
 
     ///  APIから取得したデータを各リポジトリへセット
-    func setSearchOrderItem(item: RepositoryItems) {
+    private func setSearchOrderItem(item: RepositoryItems) {
         self.items = item.items
     }
 
@@ -70,7 +70,7 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     }
 
     /// 画像の取得が完了したら、そのセルだけリロード。.. ここ読むの辛いな〜...
-    func fetchAvatarImages(items: [Item]?) async {
+    private func fetchAvatarImages(items: [Item]?) async {
         guard let items else { return }
 
         await withTaskGroup(of: Void.self) { group in
