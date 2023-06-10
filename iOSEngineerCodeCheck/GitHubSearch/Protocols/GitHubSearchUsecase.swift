@@ -34,6 +34,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func search(word: String)
 
     func cancelFetching()
+
+    func changeOrder()
 }
 
 // Interactor アウトプット

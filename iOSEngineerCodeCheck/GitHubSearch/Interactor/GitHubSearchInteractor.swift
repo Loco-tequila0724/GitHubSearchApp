@@ -54,4 +54,24 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
         reset()
         cancel()
     }
+
+    func changeOrder() {
+        orderType = orderType.next
+        reset()
+        fetch(word: word, orderType: orderType)
+    }
+}
+
+private extension Order {
+    // 他のInteractorでは異なる表示順にしたくなるかもなので、private extensionとした
+    var next: Order {
+        switch self {
+        case .default:
+            return .desc
+        case .desc:
+            return .asc
+        case .asc:
+            return .default
+        }
+    }
 }

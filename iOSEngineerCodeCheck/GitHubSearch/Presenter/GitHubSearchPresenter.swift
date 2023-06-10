@@ -54,8 +54,10 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
     func starOderButtonDidPush() {
-        changeStarOrder()
-        fetchOrSetSearchOrderItem()
+        interactor.changeOrder()
+
+        view?.didChangeStarOrder(searchItem: interactor.items, order: interactor.orderType)
+        view?.startLoading()
         view?.tableViewReload()
     }
 
@@ -121,19 +123,6 @@ private extension GitHubSearchPresenter {
         }
     }
 
-    /// Starソート順のタイプとボタンの見た目を変更する
-    func changeStarOrder() {
-        interactor.orderType = interactor.orderType.next
-        view?.didChangeStarOrder(searchItem: interactor.items, order: interactor.orderType)
-    }
-
-    /// もしリポジトリデータが空だった場合、APIからデータを取得する。データがすでにある場合はそれを使用する。
-    func fetchOrSetSearchOrderItem() {
-        interactor.reset()
-        view?.startLoading()
-        interactor.fetch(word: interactor.word, orderType: interactor.orderType)
-    }
-
     /// API通信でエラーが返ってきた場合の処理
     func setAppearError(error: Error) {
         if error is ApiError {
@@ -147,20 +136,6 @@ private extension GitHubSearchPresenter {
         } else {
             //  標準のURLSessionのエラーを返す
             view?.appearErrorAlert(message: error.localizedDescription)
-        }
-    }
-}
-
-private extension Order {
-    // 他の画面では異なる表示順にしたくなるかもなので、private extensionとした
-    var next: Order {
-        switch self {
-        case .default:
-            return .desc
-        case .desc:
-            return .asc
-        case .asc:
-            return .default
         }
     }
 }
