@@ -35,11 +35,9 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// 検索ボタンのタップを検知。 GitHubデータのリセット。ローディングの開始。GitHubデータの取得を通知。
     func searchButtonDidPush(word: String) {
-        interactor.reset()
-        interactor.word = word
+        interactor.search(word: word)
         view?.resetDisplay()
         view?.startLoading()
-        interactor.fetch(word: word, orderType: interactor.orderType)
     }
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル

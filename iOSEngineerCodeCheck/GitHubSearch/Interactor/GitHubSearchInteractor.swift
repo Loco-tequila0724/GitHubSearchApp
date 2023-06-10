@@ -42,4 +42,10 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     func setSearchOrderItem(item: RepositoryItems) {
         self.items = item.items
     }
+
+    func search(word: String) {
+        reset()
+        self.word = word
+        fetch(word: word, orderType: orderType)
+    }
 }

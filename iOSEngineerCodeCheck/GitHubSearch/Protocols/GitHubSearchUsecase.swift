@@ -30,6 +30,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var orderType: Order { get set }
 
     var imageLoader: ImageLoader { get }
+
+    func search(word: String)
 }
 
 // Interactor アウトプット
