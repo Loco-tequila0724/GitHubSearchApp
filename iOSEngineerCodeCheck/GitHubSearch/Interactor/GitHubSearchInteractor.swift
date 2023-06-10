@@ -25,7 +25,7 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     func fetch(word: String, orderType: Order) {
         Task {
             let result = await cachedRepository.fetch(word: word, orderType: orderType)
-            presenter?.didFetchResult(result: result)
+            didFetchResult(result: result)
         }
     }
 
@@ -103,6 +103,19 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
         }
     }
 
+    /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
+    func didFetchResult(result: Result<RepositoryItems, Error>) {
+        switch result {
+        case .success(let item):
+            Task.detached { [weak self] in
+                await self?.fetchAvatarImages(items: item.items)
+            }
+            setSearchOrderItem(item: item)
+            presenter?.didFetchSuccess()
+        case .failure(let error):
+            presenter?.didFetchError(error: error)
+        }
+    }
 }
 
 private extension Order {

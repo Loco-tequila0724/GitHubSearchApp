@@ -68,23 +68,18 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
-    func didFetchResult(result: Result<RepositoryItems, Error>) {
-        view?.stopLoading()
-        switch result {
-        case .success(let item):
-            Task.detached { [weak self] in
-                await self?.interactor.fetchAvatarImages(items: item.items)
-            }
-            interactor.setSearchOrderItem(item: item)
-            view?.tableViewReload()
-        case .failure(let error):
-            setAppearError(error: error)
-        }
-    }
-
     func didFetchAvatarImage(at index: Int) {
         view?.reloadRow(at: index)
+    }
+
+    func didFetchSuccess() {
+        view?.stopLoading()
+        view?.tableViewReload()
+    }
+
+    func didFetchError(error: Error) {
+        view?.stopLoading()
+        setAppearError(error: error)
     }
 }
 
