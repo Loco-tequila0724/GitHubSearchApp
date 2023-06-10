@@ -14,7 +14,6 @@
 		3882C69A2A31D6B100FF5B9A /* GitHubDetailViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3882C6992A31D6B100FF5B9A /* GitHubDetailViewItem.swift */; };
 		388949C92A17E57100307A11 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388949C82A17E57100307A11 /* Order.swift */; };
 		388949CB2A17E5F500307A11 /* ItemsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 388949CA2A17E5F500307A11 /* ItemsRepository.swift */; };
-		38D37C632A1650B0005EA7C6 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 38D37C622A1650B0005EA7C6 /* .swiftlint.yml */; };
 		38D37C652A168715005EA7C6 /* GitHubSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D37C642A168715005EA7C6 /* GitHubSearchView.swift */; };
 		38D37C692A16885A005EA7C6 /* GitHubSearchUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */; };
 		38D37C6B2A16886E005EA7C6 /* GitHubSearchWireFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D37C6A2A16886E005EA7C6 /* GitHubSearchWireFrame.swift */; };
@@ -72,7 +71,6 @@
 		3882C6992A31D6B100FF5B9A /* GitHubDetailViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubDetailViewItem.swift; sourceTree = "<group>"; };
 		388949C82A17E57100307A11 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
 		388949CA2A17E5F500307A11 /* ItemsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemsRepository.swift; sourceTree = "<group>"; };
-		38D37C622A1650B0005EA7C6 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		38D37C642A168715005EA7C6 /* GitHubSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchView.swift; sourceTree = "<group>"; };
 		38D37C682A16885A005EA7C6 /* GitHubSearchUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchUsecase.swift; sourceTree = "<group>"; };
 		38D37C6A2A16886E005EA7C6 /* GitHubSearchWireFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitHubSearchWireFrame.swift; sourceTree = "<group>"; };
@@ -349,7 +347,6 @@
 		BFD945D2244DC5E80012785A = {
 			isa = PBXGroup;
 			children = (
-				38D37C622A1650B0005EA7C6 /* .swiftlint.yml */,
 				BFD945DD244DC5E80012785A /* iOSEngineerCodeCheck */,
 				BFD945F4244DC5EB0012785A /* iOSEngineerCodeCheckTests */,
 				BFD945FF244DC5EB0012785A /* iOSEngineerCodeCheckUITests */,
@@ -409,10 +406,10 @@
 			buildConfigurationList = BFD94605244DC5EC0012785A /* Build configuration list for PBXNativeTarget "iOSEngineerCodeCheck" */;
 			buildPhases = (
 				518B19E74D413CB325ED29CF /* [CP] Check Pods Manifest.lock */,
+				38F34E5E29F8024300120671 /* Run SwiftLint */,
 				BFD945D7244DC5E80012785A /* Sources */,
 				BFD945D8244DC5E80012785A /* Frameworks */,
 				BFD945D9244DC5E80012785A /* Resources */,
-				38F34E5E29F8024300120671 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -510,7 +507,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38D37C632A1650B0005EA7C6 /* .swiftlint.yml in Resources */,
 				BFD945EB244DC5EB0012785A /* LaunchScreen.storyboard in Resources */,
 				38F34E8629F9D2EC00120671 /* GitHubDetail.storyboard in Resources */,
 				BFD945E8244DC5EB0012785A /* Assets.xcassets in Resources */,
@@ -557,7 +553,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		38F34E5E29F8024300120671 /* Run Script */ = {
+		38F34E5E29F8024300120671 /* Run SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
@@ -567,7 +563,7 @@
 			);
 			inputPaths = (
 			);
-			name = "Run Script";
+			name = "Run SwiftLint";
 			outputFileListPaths = (
 			);
 			outputPaths = (
