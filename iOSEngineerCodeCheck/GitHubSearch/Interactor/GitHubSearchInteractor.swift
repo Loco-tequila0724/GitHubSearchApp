@@ -17,6 +17,7 @@ final class GitHubSearchInteractor {
     var avatarImages: [Int: UIImage] = [:]
     var word: String = ""
     var orderType: Order = .default
+    let imageLoader = ImageLoader()
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {

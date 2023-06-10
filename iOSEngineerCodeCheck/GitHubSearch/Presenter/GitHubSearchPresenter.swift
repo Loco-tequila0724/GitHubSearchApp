@@ -13,7 +13,6 @@ final class GitHubSearchPresenter {
     weak var view: GitHubSearchView?
     private var interactor: GitHubSearchInputUsecase
     private var router: GitHubSearchWireFrame
-    private let imageLoader = ImageLoader()
 
     init(
         view: GitHubSearchView? = nil,
@@ -103,7 +102,7 @@ private extension GitHubSearchPresenter {
                     do {
                         try await Task { @MainActor in
                             // 画像を生成する
-                            let image = try await strongSelf.imageLoader.load(url: item.owner.avatarUrl)
+                            let image = try await strongSelf.interactor.imageLoader.load(url: item.owner.avatarUrl)
                             strongSelf.interactor.avatarImages[item.id] = image
 
                             // 画像元のセルの順番(インデックス番号)を調べリロードする。

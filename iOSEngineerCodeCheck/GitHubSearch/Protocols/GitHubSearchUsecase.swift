@@ -28,6 +28,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var word: String { get set }
 
     var orderType: Order { get set }
+
+    var imageLoader: ImageLoader { get }
 }
 
 // Interactor アウトプット
