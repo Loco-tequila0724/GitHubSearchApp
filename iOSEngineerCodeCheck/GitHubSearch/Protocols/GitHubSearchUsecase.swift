@@ -36,6 +36,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func cancelFetching()
 
     func changeOrder()
+
+    func item(at index: Int) -> GitHubSearchViewItem
 }
 
 // Interactor アウトプット

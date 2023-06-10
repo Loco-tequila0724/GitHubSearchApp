@@ -62,11 +62,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func item(at index: Int) -> GitHubSearchViewItem {
-        let item = interactor.items[index]
-        let image = interactor.avatarImages[item.id]
-        let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
-
-        return gitHubSearchViewItem
+        interactor.item(at: index)
     }
 }
 

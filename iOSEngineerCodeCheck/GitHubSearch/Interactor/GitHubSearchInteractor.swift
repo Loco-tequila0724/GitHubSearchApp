@@ -60,6 +60,14 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
         reset()
         fetch(word: word, orderType: orderType)
     }
+
+    func item(at index: Int) -> GitHubSearchViewItem {
+        let item = items[index]
+        let image = avatarImages[item.id]
+        let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
+
+        return gitHubSearchViewItem
+    }
 }
 
 private extension Order {
