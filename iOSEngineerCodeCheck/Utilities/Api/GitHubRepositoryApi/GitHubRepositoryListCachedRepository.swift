@@ -9,12 +9,12 @@
 import Foundation
 
 final class GitHubRepositoryListCachedRepository {
-    private var cache: [Order: RepositoryItem] = [:]
+    private var cache: [Order: RepositoryItems] = [:]
     private let apiManager = ApiManager()
 }
 
 extension GitHubRepositoryListCachedRepository {
-    func fetch(word: String, orderType: Order) async -> Result<RepositoryItem, Error> {
+    func fetch(word: String, orderType: Order) async -> Result<RepositoryItems, Error> {
         // キャッシュがあれば、RepositoryItemを返す。なければ取得しにいく
         if let cachedItems = cache[orderType] {
             return .success(cachedItems)

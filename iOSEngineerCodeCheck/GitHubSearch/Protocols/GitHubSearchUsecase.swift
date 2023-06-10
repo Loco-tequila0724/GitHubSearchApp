@@ -20,5 +20,5 @@ protocol GitHubSearchInputUsecase: AnyObject {
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
     /// 取得したGitHubデータの結果をViewへ通知
-    func didFetchResult(result: Result<RepositoryItem, Error>)
+    func didFetchResult(result: Result<RepositoryItems, Error>)
 }

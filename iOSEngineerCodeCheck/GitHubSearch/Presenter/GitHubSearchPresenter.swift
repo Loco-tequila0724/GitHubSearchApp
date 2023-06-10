@@ -81,7 +81,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 // MARK: - GitHubSearchOutputUsecase プロトコルに関する -
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
     /// GitHubリポジトリデータを各リポジトリ (デフォルト, 降順, 昇順) に保管しテーブルビューへ表示。
-    func didFetchResult(result: Result<RepositoryItem, Error>) {
+    func didFetchResult(result: Result<RepositoryItems, Error>) {
         view?.stopLoading()
         switch result {
         case .success(let item):
@@ -135,7 +135,7 @@ private extension GitHubSearchPresenter {
     }
 
     ///  APIから取得したデータを各リポジトリへセット
-    func setSearchOrderItem(item: RepositoryItem) {
+    func setSearchOrderItem(item: RepositoryItems) {
         let items = item.items!
 
         self.items.setItems(
