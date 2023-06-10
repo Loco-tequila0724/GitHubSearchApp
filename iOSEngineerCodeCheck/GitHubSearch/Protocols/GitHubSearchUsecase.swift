@@ -32,6 +32,8 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var imageLoader: ImageLoader { get }
 
     func search(word: String)
+
+    func cancelFetching()
 }
 
 // Interactor アウトプット

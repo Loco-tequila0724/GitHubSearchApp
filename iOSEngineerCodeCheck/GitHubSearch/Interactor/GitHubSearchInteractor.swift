@@ -48,4 +48,10 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
         self.word = word
         fetch(word: word, orderType: orderType)
     }
+
+    func cancelFetching() {
+        word = ""
+        reset()
+        cancel()
+    }
 }

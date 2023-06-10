@@ -42,10 +42,8 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 
     /// テキスト変更を検知。GitHubデータと画面の状態をリセット。タスクのキャンセル
     func searchTextDidChange() {
-        interactor.word = ""
-        interactor.reset()
+        interactor.cancelFetching()
         view?.resetDisplay()
-        interactor.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。
