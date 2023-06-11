@@ -12,5 +12,8 @@ import Foundation
 enum Order {
     case desc
     case asc
-    case `default`
+}
+
+extension Order {
+    static var `default`: Self { .asc }
 }
