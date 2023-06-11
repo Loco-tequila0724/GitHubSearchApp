@@ -106,19 +106,17 @@ private extension GitHubSearchInteractor {
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, order: Order) {
-        Task {
-            task = Task {
-                let result = await cachedRepository.fetch(word: word, order: order)
-                switch result {
-                case .success(let items):
-                    Task.detached { [weak self] in
-                        await self?.fetchAvatarImages(items: items)
-                    }
-                    self.items = items
-                    presenter?.didFetchSuccess()
-                case .failure(let error):
-                    presenter?.didFetchError(error: error)
+        task = Task {
+            let result = await cachedRepository.fetch(word: word, order: order)
+            switch result {
+            case .success(let items):
+                Task.detached { [weak self] in
+                    await self?.fetchAvatarImages(items: items)
                 }
+                self.items = items
+                presenter?.didFetchSuccess()
+            case .failure(let error):
+                presenter?.didFetchError(error: error)
             }
         }
     }
