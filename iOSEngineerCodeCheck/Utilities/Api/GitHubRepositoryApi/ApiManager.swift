@@ -15,34 +15,28 @@ protocol ApiManagerProtocol {
 // MARK: - GitHub API通信で使用する -
 final class ApiManager: ApiManagerProtocol {
     private var decoder: JSONDecoder = JSONDecoder()
-    private (set) var task: Task<(), Never>?
 }
 
 // MARK: - API通信を行なう-
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
     func fetch(word: String, orderType: Order?) async -> Result<RepositoryItem, Error> {
-        return await withCheckedContinuation { configuration in
-            task = Task {
-                do {
-                    let url = makeURL(word: word, orderType: orderType)
-                    let repositoryItem = try await convert(request: makeRequest(url: url))
-                    configuration.resume(returning: .success(repositoryItem))
-                } catch let error {
-                    /// タスクがキャンセルたら、キャンセルエラーを返す。
-                    guard !Task.isCancelled else {
-                        configuration.resume(returning: .failure(ApiError.cancel))
-                        return
-                    }
+        do {
+            let url = makeURL(word: word, orderType: orderType)
+            let result = try await convert(request: makeRequest(url: url))
+            return .success(result)
+        } catch let error {
+            /// タスクがキャンセルたら、キャンセルエラーを返す。
+            guard !Task.isCancelled else {
+                return .failure(ApiError.cancel)
+            }
 
-                    /// 独自に定義したエラーを返す
-                    if let apiError = error as? ApiError {
-                        configuration.resume(returning: .failure(apiError))
-                    } else {
-                        /// 標準のURLSessionのエラーを返す
-                        configuration.resume(returning: .failure(error))
-                    }
-                }
+            /// 独自に定義したエラーを返す
+            if let apiError = error as? ApiError {
+                return .failure(apiError)
+            } else {
+                /// 標準のURLSessionのエラーを返す
+                return .failure(error)
             }
         }
     }

@@ -11,8 +11,8 @@ import Foundation
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
-    /// gitHubApiにアクセスする
-    var apiManager: ApiManager { get }
+    var task: Task<(), Never>? { get }
+
     /// API通信を行い、GitHubのデータをデータベースから取得
     func fetch(word: String, orderType: Order)
 }

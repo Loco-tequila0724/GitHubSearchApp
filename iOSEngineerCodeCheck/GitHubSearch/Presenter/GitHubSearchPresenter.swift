@@ -52,7 +52,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         word = ""
         reset()
         view?.resetDisplay()
-        interactor.apiManager.task?.cancel()
+        interactor.task?.cancel()
     }
 
     /// セルタップの検知。DetailVCへ画面遷移通知。

@@ -10,13 +10,15 @@ import Foundation
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
-    let apiManager = ApiManager()
+    private(set) var task: Task<(), Never>?
+
+    private let apiManager = ApiManager()
 }
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, orderType: Order) {
-        Task {
+        task = Task {
             let result = await apiManager.fetch(word: word, orderType: orderType)
             presenter?.didFetchResult(result: result)
         }
