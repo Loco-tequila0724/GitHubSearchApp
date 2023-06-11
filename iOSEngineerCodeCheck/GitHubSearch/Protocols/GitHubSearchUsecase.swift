@@ -15,7 +15,6 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var nextOrder: Order { get }
     func currentItem(at index: Int) -> Item
     func viewItem(at index: Int) -> GitHubSearchViewItem
-    func cancel()
     func cancelFetchingAndResetRepository()
     func search(word: String)
     func fetch(word: String, order: Order)

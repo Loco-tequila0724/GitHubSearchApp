@@ -20,10 +20,6 @@ final class GitHubSearchInteractor {
 }
 
 extension GitHubSearchInteractor {
-    func inject(presenter: GitHubSearchPresenter) {
-        self.presenter = presenter
-    }
-
     var itemsCount: Int {
         items.current.count
     }
@@ -31,6 +27,10 @@ extension GitHubSearchInteractor {
     var nextOrder: Order {
         order = order.next
         return order
+    }
+
+    func inject(presenter: GitHubSearchPresenter) {
+        self.presenter = presenter
     }
 
     func currentItem(at index: Int) -> Item {
@@ -54,19 +54,6 @@ extension GitHubSearchInteractor {
         items.allReset()
         word = ""
         cancel()
-    }
-
-    func didFetchResult(result: Result<RepositoryItems, Error>) {
-        switch result {
-        case .success(let item):
-            Task.detached { [weak self] in
-                await self?.fetchAvatarImages(items: item.items)
-            }
-            setSearchOrderItem(item: item)
-            presenter?.didFetchSuccess()
-        case .failure(let error):
-            presenter?.didFetchError(error: error)
-        }
     }
 
     /// Starソート順のタイプとボタンの見た目を変更する
@@ -103,6 +90,10 @@ extension GitHubSearchInteractor {
 }
 
 private extension GitHubSearchInteractor {
+    func cancel() {
+        cachedRepository.cancel()
+    }
+
     func setSearchOrderItem(item: RepositoryItems) {
         let items = item.items
         switch order {
@@ -115,6 +106,19 @@ private extension GitHubSearchInteractor {
         case .asc:
             self.items.current = items
             self.items.asc = items
+        }
+    }
+
+    func didFetchResult(result: Result<RepositoryItems, Error>) {
+        switch result {
+        case .success(let item):
+            Task.detached { [weak self] in
+                await self?.fetchAvatarImages(items: item.items)
+            }
+            setSearchOrderItem(item: item)
+            presenter?.didFetchSuccess()
+        case .failure(let error):
+            presenter?.didFetchError(error: error)
         }
     }
 
@@ -159,10 +163,6 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
             let result = await cachedRepository.fetch(word: word, orderType: order)
             didFetchResult(result: result)
         }
-    }
-
-    func cancel() {
-        cachedRepository.cancel()
     }
 }
 
