@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - API通信のエラー類 -
-enum ApiError: Error, LocalizedError {
+enum ApiError: LocalizedError {
     case notFound // リクエストされたリソースが見つからなかった場合に返される。
     case invalidData // サーバーから受信したデータが正しく解析できない場合に返される。
     case serverError // サーバー側で何らかの問題が発生し、リクエストを処理できない場合に返される。
