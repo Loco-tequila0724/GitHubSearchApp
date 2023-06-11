@@ -14,6 +14,8 @@ protocol GitHubSearchPresentation: AnyObject {
 
     var numberOfRow: Int { get }
 
+    func item(at index: Int) -> GitHubSearchViewItem
+
     func viewDidLoad()
     /// サーチボタンのタップ通知
     func searchButtonDidPush(word: String)
@@ -23,6 +25,4 @@ protocol GitHubSearchPresentation: AnyObject {
     func didSelectRow(at index: Int)
     /// お気に入り順のボタンタップを通知
     func starOderButtonDidPush()
-
-    func item(at index: Int) -> GitHubSearchViewItem
 }
