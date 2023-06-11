@@ -14,34 +14,21 @@ protocol ApiManagerProtocol {
 // MARK: - GitHub API通信で使用する -
 final class ApiManager: ApiManagerProtocol {
     private var decoder: JSONDecoder = JSONDecoder()
-    private (set) var task: Task<(), Never>?
 }
 
 // MARK: - API通信を行なう-
 extension ApiManager {
     /// GitHub APIから取得した結果を返す。
     func fetch(word: String, orderType: Order) async -> Result<RepositoryItems, Error> {
-        return await withCheckedContinuation { continuation in
-            task = Task {
-                do {
-                    let url = makeURL(word: word, orderType: orderType)
-                    let repositoryItem = try await convert(request: makeRequest(url: url))
-                    continuation.resume(returning: .success(repositoryItem))
-                } catch {
-                    /// タスクがキャンセルたら、キャンセルエラーを返す。
-                    guard !Task.isCancelled else {
-                        continuation.resume(returning: .failure(ApiError.cancel))
-                        return
-                    }
-
-                    /// 独自に定義したエラーを返す
-                    if let apiError = error as? ApiError {
-                        continuation.resume(returning: .failure(apiError))
-                    } else {
-                        /// 標準のURLSessionのエラーを返す
-                        continuation.resume(returning: .failure(error))
-                    }
-                }
+        do {
+            let url = makeURL(word: word, orderType: orderType)
+            let result = try await convert(request: makeRequest(url: url))
+            return .success(result)
+        } catch {
+            if let apiError = error as? ApiError {
+                return .failure(apiError)
+            } else {
+                return .failure(error)
             }
         }
     }

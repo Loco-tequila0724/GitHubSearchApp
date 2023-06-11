@@ -27,10 +27,6 @@ extension GitHubRepositoryListCachedRepository {
         return result
     }
 
-    func cancel() {
-        apiManager.task?.cancel()
-    }
-
     func reset() {
         items.allReset()
     }
