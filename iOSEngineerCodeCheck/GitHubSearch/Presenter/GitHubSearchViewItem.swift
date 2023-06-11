@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit.UIImage
+import class UIKit.UIImage
 
 /// テーブルビューセルへ表示するデータ構造
 struct GitHubSearchViewItem {

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import UIKit.UIImage
+import class UIKit.UIImage
 
 final class GitHubDetailPresenter {
     weak var view: GitHubDetailView?
