@@ -10,7 +10,7 @@ import Foundation
 
 extension Int {
     /// カンマ区切りの数字に変換する
-    func decimal() -> String {
+    func to1000SeparatedString() -> String {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
         let decimalNumber = formatter.string(from: self as NSNumber) ?? ""

@@ -40,7 +40,7 @@ extension GitHubSearchInteractor {
     func viewItem(at index: Int) -> GitHubSearchViewItem {
         let item = items[index]
         let image = avatarImages[item.id]
-        let viewItem = GitHubSearchViewItem(item: item, image: image?.resize())
+        let viewItem = GitHubSearchViewItem(item: item, image: image?.compress())
         return viewItem
     }
 

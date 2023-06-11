@@ -24,14 +24,14 @@ final class ImageLoader: ImageLoaderProtocol {
 extension ImageLoader {
     /// GitHub APIから画像データの取得
     func load(url: URL?) async throws -> UIImage {
-        return try await withCheckedThrowingContinuation { configuration in
+        return try await withCheckedThrowingContinuation { continuation in
             Task {
                 do {
                     let request = try makeRequest(url: url)
                     let image = try await convert(request: request)
-                    configuration.resume(returning: image)
+                    continuation.resume(returning: image)
                 } catch let error {
-                    configuration.resume(throwing: error)
+                    continuation.resume(throwing: error)
                 }
             }
         }
