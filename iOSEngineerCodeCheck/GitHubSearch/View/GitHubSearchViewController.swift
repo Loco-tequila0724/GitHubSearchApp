@@ -48,6 +48,10 @@ extension GitHubSearchViewController {
         let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubSearchViewController
         return view ?? GitHubSearchViewController()
     }
+
+    func inject(presenter: GitHubSearchPresenter) {
+        self.presenter = presenter
+    }
 }
 
 private extension GitHubSearchViewController {
@@ -131,9 +135,9 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(searchItem: OrderSearchItem) {
-        starOderButton.setTitle(searchItem.text, for: .normal)
-        starOderButton.backgroundColor = searchItem.color
+    func didChangeStarOrder(order: Order) {
+        starOderButton.setTitle(order.text, for: .normal)
+        starOderButton.backgroundColor = order.backGroundColor
     }
 }
 
@@ -191,6 +195,25 @@ extension GitHubSearchViewController: UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 85
+        let cellHeight: CGFloat = 85
+        return cellHeight
+    }
+}
+
+private extension Order {
+    var text: String {
+        switch self {
+        case .`default`: return "デフォルト"
+        case .desc: return "☆ Star数 ⍋"
+        case .asc: return "☆ Star数 ⍒"
+        }
+    }
+
+    var backGroundColor: UIColor {
+        switch self {
+        case .`default`: return .lightGray
+        case .desc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        case .asc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        }
     }
 }

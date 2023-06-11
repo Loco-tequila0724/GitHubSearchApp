@@ -38,24 +38,31 @@ extension GitHubDetailViewController {
         let view = storyboard.instantiateViewController(withIdentifier: storyboardID) as? GitHubDetailViewController
         return view ?? GitHubDetailViewController()
     }
+
+    func inject(presenter: GitHubDetailPresenter) {
+        self.presenter = presenter
+    }
 }
 
 extension GitHubDetailViewController: GitHubDetailView {
     /// 初期画面の構成
-    func configure(item: GitHubDetailViewItem, avatarUrl: URL) {
+    func configure(item: GitHubDetailViewItem) {
         setupNavigationBar(
             title: "リポジトリ",
             buttonImage: UIImage(systemName: "safari")!,
             rightBarButtonAction: #selector(safari(_:))
         )
 
-        imageView.loadImageAsynchronous(url: avatarUrl)
         fullNameLabel.text = item.fullName
         languageLabel.text = item.language
         starsLabel.text = item.stars
         watchersLabel.text = item.watchers
         forksLabel.text = item.forks
         issuesLabel.text = item.issues
+    }
+
+    func setAvatarImage(image: UIImage) {
+        imageView.image = image
     }
 
     @objc func safari (_ sender: UIBarButtonItem) {

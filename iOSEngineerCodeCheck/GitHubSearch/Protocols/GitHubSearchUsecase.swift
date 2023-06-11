@@ -11,14 +11,20 @@ import Foundation
 // Interactor インプット
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
-    /// gitHubApiにアクセスする
-    var apiManager: ApiManager { get }
-    /// API通信を行い、GitHubのデータをデータベースから取得
-    func fetch(word: String, orderType: Order)
+    var itemsCount: Int { get }
+    var nextOrder: Order { get }
+    func currentItem(at index: Int) -> Item
+    func viewItem(at index: Int) -> GitHubSearchViewItem
+    func cancelFetchingAndResetRepository()
+    func search(word: String)
+    func fetch(word: String, order: Order)
+    func changeRepositoryItem()
 }
 
 // Interactor アウトプット
 protocol GitHubSearchOutputUsecase: AnyObject {
-    /// 取得したGitHubデータの結果をViewへ通知
-    func didFetchResult(result: Result<RepositoryItem, Error>)
+    func didFetchSuccess()
+    func didFetchError(error: Error)
+    func startLoading()
+    func viewReloadRow(at index: Int)
 }
