@@ -9,14 +9,11 @@
 import Foundation
 
 protocol ApiManagerProtocol {
-    var decoder: JSONDecoder { get }
-    var task: Task<(), Never>? { get }
-
-    func fetch(url: URL?) async -> Result<RepositoryItem, Error>
+    func fetch(word: String, orderType: Order) async -> Result<RepositoryItem, Error>
 }
 
 // MARK: - GitHub API通信で使用する -
-final class ApiManager {
+final class ApiManager: ApiManagerProtocol {
     private var decoder: JSONDecoder = JSONDecoder()
     private (set) var task: Task<(), Never>?
 }
