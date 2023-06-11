@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Star数ボタンに関する -
-enum Order {
+enum Order: String {
     case asc
     case desc
 }
