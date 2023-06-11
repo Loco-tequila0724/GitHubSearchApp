@@ -21,7 +21,7 @@ final class ImageLoader: ImageLoaderProtocol {
             let request = try makeRequest(url: url)
             let image = try await convert(request: request)
             return image
-        } catch let error {
+        } catch {
             throw error
         }
     }
