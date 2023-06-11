@@ -17,6 +17,7 @@ final class GitHubSearchInteractor {
     private var word: String = ""
     private var order: Order = .default
     private var avatarImages: [Int: UIImage] = [:]
+    private(set) var task: Task<(), Never>?
 }
 
 extension GitHubSearchInteractor {
@@ -40,7 +41,7 @@ extension GitHubSearchInteractor {
     func viewItem(at index: Int) -> GitHubSearchViewItem {
         let item = items[index]
         let image = avatarImages[item.id]
-        let viewItem = GitHubSearchViewItem(item: item, image: image?.resize())
+        let viewItem = GitHubSearchViewItem(item: item, image: image?.compress())
         return viewItem
     }
 
@@ -54,8 +55,8 @@ extension GitHubSearchInteractor {
     func cancelFetchingAndResetRepository() {
         word = ""
         items = []
+        task?.cancel()
         cachedRepository.reset()
-        cachedRepository.cancel()
     }
 
     func changeRepositoryItem() {
@@ -106,16 +107,18 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, order: Order) {
         Task {
-            let result = await cachedRepository.fetch(word: word, order: order)
-            switch result {
-            case .success(let items):
-                Task.detached { [weak self] in
-                    await self?.fetchAvatarImages(items: items)
+            task = Task {
+                let result = await cachedRepository.fetch(word: word, order: order)
+                switch result {
+                case .success(let items):
+                    Task.detached { [weak self] in
+                        await self?.fetchAvatarImages(items: items)
+                    }
+                    self.items = items
+                    presenter?.didFetchSuccess()
+                case .failure(let error):
+                    presenter?.didFetchError(error: error)
                 }
-                self.items = items
-                presenter?.didFetchSuccess()
-            case .failure(let error):
-                presenter?.didFetchError(error: error)
             }
         }
     }
@@ -125,8 +128,8 @@ private extension Order {
     var next: Order {
         switch self {
         case .`default`: return .desc
-        case .desc: return .asc
         case .asc: return .`default`
+        case .desc: return .asc
         }
     }
 }

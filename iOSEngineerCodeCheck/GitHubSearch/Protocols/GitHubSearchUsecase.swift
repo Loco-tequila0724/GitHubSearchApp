@@ -13,6 +13,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
     var itemsCount: Int { get }
     var nextOrder: Order { get }
+    var task: Task<(), Never>? { get }
     func currentItem(at index: Int) -> Item
     func viewItem(at index: Int) -> GitHubSearchViewItem
     func cancelFetchingAndResetRepository()

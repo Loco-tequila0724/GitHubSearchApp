@@ -27,10 +27,6 @@ extension GitHubRepositoryListCachedRepository {
         return result
     }
 
-    func cancel() {
-        apiManager.task?.cancel()
-    }
-
     func reset() {
         items.allReset()
     }
@@ -41,10 +37,10 @@ private extension GitHubRepositoryListCachedRepository {
         switch order {
         case .`default`:
             self.items.`default` = items
-        case .desc:
-            self.items.desc = items
         case .asc:
             self.items.asc = items
+        case .desc:
+            self.items.desc = items
         }
     }
 

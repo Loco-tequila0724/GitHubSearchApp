@@ -7,39 +7,28 @@
 //
 
 import Foundation
-import UIKit.UIImage
+import class UIKit.UIImage
 
 protocol ImageLoaderProtocol {
-    var session: URLSession { get }
     func load(url: URL?) async throws -> UIImage
-    func makeRequest(url: URL?) throws -> URLRequest
-    func httpData(request: URLRequest) async throws -> Data
-    func convert(request: URLRequest) async throws -> UIImage
 }
 
 /// 画像の取得処理に関する。
 final class ImageLoader: ImageLoaderProtocol {
-}
-
-extension ImageLoader {
     /// GitHub APIから画像データの取得
     func load(url: URL?) async throws -> UIImage {
-        return try await withCheckedThrowingContinuation { configuration in
-            Task {
-                do {
-                    let request = try makeRequest(url: url)
-                    let image = try await convert(request: request)
-                    configuration.resume(returning: image)
-                } catch let error {
-                    configuration.resume(throwing: error)
-                }
-            }
+        do {
+            let request = try makeRequest(url: url)
+            let image = try await convert(request: request)
+            return image
+        } catch let error {
+            throw error
         }
     }
 }
 
 /// 画像の取得に関する。
-extension ImageLoader {
+private extension ImageLoader {
     var session: URLSession {
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .returnCacheDataElseLoad

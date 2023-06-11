@@ -22,10 +22,10 @@ extension GitHubDetailViewItem {
         self.init(
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
-            stars: "\(item.stargazersCount.decimal())",
-            watchers: "\(item.watchersCount.decimal())",
-            forks: "\(item.forksCount.decimal())",
-            issues: "\(item.openIssuesCount.decimal())"
+            stars: "\(item.stargazersCount.to1000SeparatedString())",
+            watchers: "\(item.watchersCount.to1000SeparatedString())",
+            forks: "\(item.forksCount.to1000SeparatedString())",
+            issues: "\(item.openIssuesCount.to1000SeparatedString())"
         )
     }
 }
