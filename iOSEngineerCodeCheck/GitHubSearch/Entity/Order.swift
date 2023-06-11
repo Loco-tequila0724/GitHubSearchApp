@@ -11,6 +11,6 @@ import Foundation
 // MARK: - Star数ボタンに関する -
 enum Order {
     case `default`
-    case desc
     case asc
+    case desc
 }

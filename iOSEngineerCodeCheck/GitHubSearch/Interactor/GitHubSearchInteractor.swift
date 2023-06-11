@@ -125,8 +125,8 @@ private extension Order {
     var next: Order {
         switch self {
         case .`default`: return .desc
-        case .desc: return .asc
         case .asc: return .`default`
+        case .desc: return .asc
         }
     }
 }

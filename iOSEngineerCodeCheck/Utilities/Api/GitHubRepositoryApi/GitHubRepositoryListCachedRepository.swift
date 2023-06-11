@@ -41,10 +41,10 @@ private extension GitHubRepositoryListCachedRepository {
         switch order {
         case .`default`:
             self.items.`default` = items
-        case .desc:
-            self.items.desc = items
         case .asc:
             self.items.asc = items
+        case .desc:
+            self.items.desc = items
         }
     }
 

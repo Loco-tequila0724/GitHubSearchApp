@@ -10,26 +10,26 @@ import Foundation
 
 struct ItemsRepository {
     var `default`: [Item]
-    var desc: [Item]
     var asc: [Item]
+    var desc: [Item]
 
     init() {
         self.`default` = []
-        self.desc = []
         self.asc = []
+        self.desc = []
     }
 
     var toDictionary: [Order: [Item]] {
         return [
                 .default: `default`,
-                .desc: desc,
-                .asc: asc
+                .asc: asc,
+                .desc: desc
         ]
     }
 
     mutating func allReset() {
         `default` = []
-        desc = []
         asc = []
+        desc = []
     }
 }
