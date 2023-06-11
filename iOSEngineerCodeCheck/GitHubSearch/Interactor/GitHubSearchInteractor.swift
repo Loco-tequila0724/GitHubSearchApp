@@ -11,17 +11,17 @@ import class UIKit.UIImage
 
 final class GitHubSearchInteractor {
     weak var presenter: GitHubSearchOutputUsecase?
-    private let imageLoader = ImageLoader()
-    private var order: Order = .default
-    private var items = ItemsRepository()
-    private var word: String = ""
-    private var avatarImages: [Int: UIImage] = [:]
     private let cachedRepository = GitHubRepositoryListCachedRepository()
+    private let imageLoader = ImageLoader()
+    private var items: [Item] = []
+    private var word: String = ""
+    private var order: Order = .default
+    private var avatarImages: [Int: UIImage] = [:]
 }
 
 extension GitHubSearchInteractor {
     var itemsCount: Int {
-        items.current.count
+        items.count
     }
 
     var nextOrder: Order {
@@ -34,94 +34,40 @@ extension GitHubSearchInteractor {
     }
 
     func currentItem(at index: Int) -> Item {
-        items.current[index]
+        items[index]
     }
 
     func viewItem(at index: Int) -> GitHubSearchViewItem {
-        let item = items.current[index]
+        let item = items[index]
         let image = avatarImages[item.id]
         let viewItem = GitHubSearchViewItem(item: item, image: image?.resize())
         return viewItem
     }
 
     func search(word: String) {
-        items.allReset()
         self.word = word
+        items = []
+        cachedRepository.reset()
         fetch(word: word, order: order)
     }
 
     func cancelFetchingAndResetRepository() {
-        items.allReset()
         word = ""
-        cancel()
+        items = []
+        cachedRepository.reset()
+        cachedRepository.cancel()
     }
 
-    /// Starソート順のタイプとボタンの見た目を変更する
     func changeRepositoryItem() {
-        let isEmptyWord = word.isEmpty
-
-        switch order {
-        case .`default`:
-            if items.default.isEmpty && !isEmptyWord {
-                presenter?.startLoading()
-                items.current = []
-                fetch(word: word, order: order)
-            } else {
-                items.current = items.default
-            }
-        case .desc:
-            if items.desc.isEmpty && !isEmptyWord {
-                presenter?.startLoading()
-                items.current = []
-                fetch(word: word, order: order)
-            } else {
-                items.current = items.desc
-            }
-        case .asc:
-            if items.asc.isEmpty && !isEmptyWord {
-                presenter?.startLoading()
-                items.current = []
-                fetch(word: word, order: order)
-            } else {
-                items.current = items.asc
-            }
+        if !word.isEmpty {
+            items = []
+            presenter?.startLoading()
+            fetch(word: word, order: order)
         }
     }
 }
 
 private extension GitHubSearchInteractor {
-    func cancel() {
-        cachedRepository.cancel()
-    }
-
-    func setSearchOrderItem(item: RepositoryItems) {
-        let items = item.items
-        switch order {
-        case .`default`:
-            self.items.current = items
-            self.items.`default` = items
-        case .desc:
-            self.items.current = items
-            self.items.desc = items
-        case .asc:
-            self.items.current = items
-            self.items.asc = items
-        }
-    }
-
-    func didFetchResult(result: Result<RepositoryItems, Error>) {
-        switch result {
-        case .success(let item):
-            Task.detached { [weak self] in
-                await self?.fetchAvatarImages(items: item.items)
-            }
-            setSearchOrderItem(item: item)
-            presenter?.didFetchSuccess()
-        case .failure(let error):
-            presenter?.didFetchError(error: error)
-        }
-    }
-
     /// 画像の取得が完了したら、そのセルだけリロード。.. ここ読むの辛いな〜...
     func fetchAvatarImages(items: [Item]?) async {
         guard let items else { return }
@@ -160,8 +106,17 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, order: Order) {
         Task {
-            let result = await cachedRepository.fetch(word: word, orderType: order)
-            didFetchResult(result: result)
+            let result = await cachedRepository.fetch(word: word, order: order)
+            switch result {
+            case .success(let items):
+                Task.detached { [weak self] in
+                    await self?.fetchAvatarImages(items: items)
+                }
+                self.items = items
+                presenter?.didFetchSuccess()
+            case .failure(let error):
+                presenter?.didFetchError(error: error)
+            }
         }
     }
 }

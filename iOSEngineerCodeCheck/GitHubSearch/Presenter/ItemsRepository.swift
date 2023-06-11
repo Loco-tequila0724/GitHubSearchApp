@@ -9,20 +9,25 @@
 import Foundation
 
 struct ItemsRepository {
-    var current: [Item]
     var `default`: [Item]
     var desc: [Item]
     var asc: [Item]
 
     init() {
-        self.current = []
         self.`default` = []
         self.desc = []
         self.asc = []
     }
 
+    var toDictionary: [Order: [Item]] {
+        return [
+                .default: `default`,
+                .desc: desc,
+                .asc: asc
+        ]
+    }
+
     mutating func allReset() {
-        current = []
         `default` = []
         desc = []
         asc = []

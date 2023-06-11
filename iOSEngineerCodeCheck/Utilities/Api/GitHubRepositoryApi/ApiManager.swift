@@ -8,6 +8,7 @@
 
 import Foundation
 
+// テストコード書けなかったので使っていない
 protocol ApiManagerProtocol {
     var decoder: JSONDecoder { get }
     var task: Task<(), Never>? { get }

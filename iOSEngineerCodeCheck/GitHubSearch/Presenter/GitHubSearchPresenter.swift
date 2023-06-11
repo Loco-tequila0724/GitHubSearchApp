@@ -64,6 +64,10 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 }
 
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
+    func startLoading() {
+        view?.startLoading()
+    }
+
     func didFetchSuccess() {
         view?.stopLoading()
         view?.tableViewReload()
@@ -76,10 +80,6 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 
     func viewReloadRow(at index: Int) {
         view?.reloadRow(at: index)
-    }
-
-    func startLoading() {
-        view?.startLoading()
     }
 }
 
