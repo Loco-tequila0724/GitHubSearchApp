@@ -25,7 +25,7 @@ extension ApiManager {
             let url = makeURL(word: word, orderType: orderType)
             let result = try await convert(request: makeRequest(url: url))
             return .success(result)
-        } catch let error {
+        } catch {
             /// タスクがキャンセルたら、キャンセルエラーを返す。
             guard !Task.isCancelled else {
                 return .failure(ApiError.cancel)
