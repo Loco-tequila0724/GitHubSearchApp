@@ -45,13 +45,13 @@ extension GitHubDetailPresenter: GitHubDetailPresentation {
 
 private extension GitHubDetailPresenter {
     func makeAvatarImage(url: URL) async -> UIImage {
-        return await withCheckedContinuation { continuation in
-            Task {
-                let imageData: Data? = try Data(contentsOf: url)
-                guard let imageData else { return }
-                let image = UIImage(data: imageData)!
-                continuation.resume(returning: image)
-            }
+        do {
+            let imageData: Data? = try Data(contentsOf: url)
+            guard let imageData else { return UIImage(named: "Untitled")! }
+            let image = UIImage(data: imageData)!
+            return image
+        } catch {
+            return UIImage(named: "Untitled")!
         }
     }
 }
