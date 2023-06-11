@@ -10,8 +10,9 @@ import UIKit.UIImage
 
 extension UIImage {
     /// 画像サイズを圧縮
-    func resize() -> UIImage {
-        let size = CGSize(width: self.size.width * 0.2, height: self.size.height * 0.2)
+    func compress(byRatio compressionRatio: CGFloat = 0.2) -> UIImage {
+        let size = CGSize(width: self.size.width * compressionRatio,
+                          height: self.size.height * compressionRatio)
 
         return UIGraphicsImageRenderer(size: size).image { _ in
             draw(in: CGRect(origin: .zero, size: size))

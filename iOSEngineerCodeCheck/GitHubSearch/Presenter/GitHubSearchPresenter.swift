@@ -71,7 +71,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     func item(at index: Int) -> GitHubSearchViewItem {
         let item = order.current.items[index]
         let image = avatarImages[item.id]
-        let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.resize())
+        let gitHubSearchViewItem = GitHubSearchViewItem(item: item, image: image?.compress())
 
         return gitHubSearchViewItem
     }
