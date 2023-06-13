@@ -9,7 +9,7 @@
 import Foundation
 
 protocol ApiManagerProtocol {
-    func fetch(word: String, orderType: Order) async -> Result<RepositoryItems, Error>
+    func fetch(word: String, order: Order) async throws -> RepositoryItems
 }
 // MARK: - GitHub API通信で使用する -
 final class ApiManager: ApiManagerProtocol {
@@ -18,25 +18,17 @@ final class ApiManager: ApiManagerProtocol {
 
 // MARK: - API通信を行なう-
 extension ApiManager {
-    /// GitHub APIから取得した結果を返す。
-    func fetch(word: String, orderType: Order) async -> Result<RepositoryItems, Error> {
-        do {
-            let url = makeURL(word: word, orderType: orderType)
-            let result = try await convert(request: makeRequest(url: url))
-            return .success(result)
-        } catch {
-            if let apiError = error as? ApiError {
-                return .failure(apiError)
-            } else {
-                return .failure(error)
-            }
-        }
+    func fetch(word: String, order: Order) async throws -> RepositoryItems {
+        let url = makeURL(word: word, order: order)
+        let result = try await convert(request: makeRequest(url: url))
+
+        return result
     }
 }
 
 // MARK: - API通信を行なうための部品類 -
 private extension ApiManager {
-    func makeURL(word: String, orderType: Order) -> URL? {
+    func makeURL(word: String, order: Order) -> URL? {
         var components = URLComponents()
         components.scheme = "https"
         components.host = "api.github.com"
@@ -46,12 +38,7 @@ private extension ApiManager {
                 .init(name: "per_page", value: "50")
         ]
 
-        if orderType == .asc || orderType == .desc {
-            components.queryItems?.append(contentsOf: [
-                    .init(name: "sort", value: "stars"),
-                    .init(name: "order", value: orderType.description)
-                ])
-        }
+        components.queryItems?.append(contentsOf: order.queryItems)
 
         return components.url
     }
@@ -90,5 +77,24 @@ private extension ApiManager {
         }
 
         return repositoryItem
+    }
+}
+
+private extension Order {
+    var queryItems: [URLQueryItem] {
+        switch self {
+        case .asc:
+            return [
+                URLQueryItem(name: "sort", value: "stars"),
+                URLQueryItem(name: "order", value: "asc")
+            ]
+        case .desc:
+            return [
+                URLQueryItem(name: "sort", value: "stars"),
+                URLQueryItem(name: "order", value: "desc")
+            ]
+        case .`default`:
+            return []
+        }
     }
 }

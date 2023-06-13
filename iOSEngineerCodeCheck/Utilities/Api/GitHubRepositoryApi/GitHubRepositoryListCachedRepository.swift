@@ -21,10 +21,18 @@ extension GitHubRepositoryListCachedRepository {
         // キャッシュを返す
         guard cache.isEmpty else { return .success(cache) }
 
-        // キャシュを取得しに行き、成功ならリポジトリへセット。
-        let fetchItem = await apiManager.fetch(word: word, orderType: order)
-        let result = await convertAndSetItems(result: fetchItem, order: order)
-        return result
+        do {
+            // キャシュを取得しに行き、成功ならリポジトリへセット。
+            let item = try await apiManager.fetch(word: word, order: order)
+            setRepositoryItem(order: order, items: item.items)
+            return .success(item.items)
+        } catch {
+            if let apiError = error as? ApiError {
+                return .failure(apiError)
+            } else {
+                return .failure(error)
+            }
+        }
     }
 
     func reset() {
@@ -33,6 +41,7 @@ extension GitHubRepositoryListCachedRepository {
 }
 
 private extension GitHubRepositoryListCachedRepository {
+    ///
     func setRepositoryItem(order: Order, items: [Item]) {
         switch order {
         case .`default`:
@@ -41,16 +50,6 @@ private extension GitHubRepositoryListCachedRepository {
             self.items.asc = items
         case .desc:
             self.items.desc = items
-        }
-    }
-
-    func convertAndSetItems(result: Result<RepositoryItems, Error>, order: Order) async -> Result<[Item], Error> {
-        switch result {
-        case .success(let item):
-            setRepositoryItem(order: order, items: item.items)
-            return .success(item.items)
-        case .failure(let error):
-            return .failure(error)
         }
     }
 }

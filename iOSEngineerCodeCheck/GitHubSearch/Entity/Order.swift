@@ -9,12 +9,8 @@
 import Foundation
 
 // MARK: - Star数ボタンに関する -
-enum Order: String, CustomStringConvertible {
+enum Order {
     case `default`
     case asc
     case desc
-
-    var description: String {
-        self.rawValue
-    }
 }
