@@ -44,7 +44,7 @@ private extension ApiManager {
     }
 
     func makeRequest(url: URL?) throws -> URLRequest { // swiftlint:disable:this all
-        guard let url else { throw ApiError.notFound }
+        guard let url else { throw APIError.notFound }
         let request = URLRequest(url: url)
 
         return request
@@ -55,11 +55,11 @@ private extension ApiManager {
         let httpResponse = response as? HTTPURLResponse
         //  短時間で検索されすぎると上限に掛かりこのエラーが返る
         if httpResponse?.statusCode == 403 {
-            throw ApiError.forbidden
+            throw APIError.forbidden
         }
         // リクエスト成功しなかったらエラーを返す
         guard httpResponse?.statusCode == 200 else {
-            throw ApiError.serverError
+            throw APIError.serverError
         }
 
         return data
@@ -73,7 +73,7 @@ private extension ApiManager {
 
         // 中身が空ならエラーを返す
         guard !(repositoryItem.items.isEmpty) else {
-            throw ApiError.notFound
+            throw APIError.notFound
         }
 
         return repositoryItem

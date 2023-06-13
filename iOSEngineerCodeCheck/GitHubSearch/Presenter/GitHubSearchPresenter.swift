@@ -86,8 +86,8 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
 private extension GitHubSearchPresenter {
     /// API通信でエラーが返ってきた場合の処理
     func setAppearError(error: Error) {
-        if error is ApiError {
-            guard let apiError = error as? ApiError else { return }
+        if error is APIError {
+            guard let apiError = error as? APIError else { return }
             // 独自で定義したエラーを通知
             switch apiError {
             case .cancel: return

@@ -37,7 +37,7 @@ private extension ImageLoader {
     }
 
     func makeRequest(url: URL?) throws -> URLRequest {
-        guard let url else { throw ApiError.invalidData }
+        guard let url else { throw APIError.invalidData }
         let request = URLRequest(url: url)
         return request
     }
@@ -46,7 +46,7 @@ private extension ImageLoader {
         let (data, response) = try await session.data(for: request)
         guard let httpURLResponse = response as? HTTPURLResponse,
             httpURLResponse.statusCode == 200 else {
-            throw ApiError.serverError
+            throw APIError.serverError
         }
         return data
     }
