@@ -27,11 +27,7 @@ extension GitHubRepositoryListCachedRepository {
             setRepositoryItem(order: order, items: item.items)
             return .success(item.items)
         } catch {
-            if let apiError = error as? ApiError {
-                return .failure(apiError)
-            } else {
-                return .failure(error)
-            }
+            return .failure(error)
         }
     }
 
