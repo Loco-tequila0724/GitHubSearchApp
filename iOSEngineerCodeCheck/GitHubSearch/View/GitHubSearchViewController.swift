@@ -76,32 +76,32 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// 画面の状態をリセットする
     func resetDisplay() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = false
-            self?.frontView.isHidden = true
-            self?.indicatorView.isHidden = true
-            self?.notFoundLabel.text = nil
-            self?.tableView.reloadData()
+        DispatchQueue.main.async { [self] in
+            isLoading = false
+            frontView.isHidden = true
+            indicatorView.isHidden = true
+            notFoundLabel.text = nil
+            tableView.reloadData()
         }
     }
 
     /// ローディング中を表示
     func startLoading() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = true
-            self?.indicatorView.startAnimating()
-            self?.frontView.isHidden = false
-            self?.indicatorView.isHidden = false
+        DispatchQueue.main.async { [self] in
+            frontView.isHidden = false
+            indicatorView.isHidden = false
+            indicatorView.startAnimating()
+            tableView.reloadData()
         }
     }
 
     /// ローディング画面を停止
     func stopLoading() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = false
-            self?.indicatorView.stopAnimating()
-            self?.frontView.isHidden = true
-            self?.indicatorView.isHidden = true
+        DispatchQueue.main.async { [self] in
+            isLoading = false
+            indicatorView.stopAnimating()
+            frontView.isHidden = true
+            indicatorView.isHidden = true
         }
     }
 
@@ -112,16 +112,16 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.frontView.isHidden = false
-            self?.indicatorView.isHidden = true
-            self?.notFoundLabel.text = message
+        DispatchQueue.main.async { [self] in
+            frontView.isHidden = false
+            indicatorView.isHidden = true
+            notFoundLabel.text = message
         }
     }
 
     func tableViewReload() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
+        DispatchQueue.main.async { [self] in
+            tableView.reloadData()
         }
     }
 
