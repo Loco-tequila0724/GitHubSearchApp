@@ -10,8 +10,8 @@ import Foundation
 // ここ読むの辛いかも...
 
 final class GitHubRepositoryListCachedRepository {
-    private let apiManager = ApiManager()
     private var items = ItemsRepository()
+    private let apiClient = GitHubAPIClient()
 }
 
 extension GitHubRepositoryListCachedRepository {
@@ -22,8 +22,9 @@ extension GitHubRepositoryListCachedRepository {
         guard cache.isEmpty else { return .success(cache) }
 
         do {
-            // キャシュを取得しに行き、成功ならリポジトリへセット。
-            let item = try await apiManager.fetch(word: word, order: order)
+            let request = try GitHubAPIRequest(word: word, order: order).makeURLRequest()
+            let data = try await apiClient.httpData(request: request)
+            let item = try await apiClient.response(httpData: data)
             setRepositoryItem(order: order, items: item.items)
             return .success(item.items)
         } catch {
@@ -37,7 +38,6 @@ extension GitHubRepositoryListCachedRepository {
 }
 
 private extension GitHubRepositoryListCachedRepository {
-    ///
     func setRepositoryItem(order: Order, items: [Item]) {
         switch order {
         case .`default`:
