@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - データをプロトコルに全部書かないといけないのか謎 -
 protocol APIRequest {
     var word: String { get }
     var order: Order { get }

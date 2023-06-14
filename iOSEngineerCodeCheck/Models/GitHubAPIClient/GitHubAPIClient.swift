@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - ここもstructで良いのか？ classとstructの使い分けの理解が危うい-
 struct GitHubAPIClient {
     typealias Response = RepositoryItems
 
@@ -16,15 +17,15 @@ struct GitHubAPIClient {
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         return decoder
     }
-}
 
-extension GitHubAPIClient {
-    var session: URLSession {
+    private var session: URLSession {
         let configuration = URLSessionConfiguration.default
         let session = URLSession(configuration: configuration)
         return session
     }
+}
 
+extension GitHubAPIClient {
     func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
         let httpResponse = response as? HTTPURLResponse
