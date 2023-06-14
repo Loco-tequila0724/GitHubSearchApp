@@ -40,7 +40,7 @@ extension GitHubSearchInteractor {
 
     func viewItem(at index: Int) -> GitHubSearchViewItem {
         let item = items[index]
-        let image = avatarImages[item.id]
+        let image = avatarImages[item.id.rawValue]
         let viewItem = GitHubSearchViewItem(item: item, image: image?.compress())
         return viewItem
     }
@@ -81,7 +81,7 @@ private extension GitHubSearchInteractor {
                         try await Task { @MainActor in
                             // 画像を生成する
                             let image = try await self.imageLoader.load(url: item.owner.avatarUrl)
-                            self.avatarImages[item.id] = image
+                            self.avatarImages[item.id.rawValue] = image
 
                             // 画像元のセルの順番(インデックス番号)を調べリロードする。
                             if let index = items.firstIndex(where: { $0.id == item.id }) {
@@ -91,7 +91,7 @@ private extension GitHubSearchInteractor {
                     } catch {
                         // エラーだった場合は、ダミーの画像が入る
                         DispatchQueue.main.async {
-                            self.avatarImages[item.id] = UIImage(named: "Untitled")!
+                            self.avatarImages[item.id.rawValue] = UIImage(named: "Untitled")!
                             if let index = items.firstIndex(where: { $0.id == item.id }) {
                                 self.presenter?.viewReloadRow(at: index)
                             }
