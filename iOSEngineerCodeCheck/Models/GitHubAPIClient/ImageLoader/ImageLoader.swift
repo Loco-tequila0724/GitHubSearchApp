@@ -37,18 +37,22 @@ private extension ImageLoader {
     }
 
     func makeRequest(url: URL?) throws -> URLRequest {
-        guard let url else { throw ApiError.invalidData }
+        guard let url else { throw APIError.invalidData }
         let request = URLRequest(url: url)
         return request
     }
 
     func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
+        try checkResponseStatus(response: response)
+        return data
+    }
+
+    func checkResponseStatus(response: URLResponse) throws {
         guard let httpURLResponse = response as? HTTPURLResponse,
             httpURLResponse.statusCode == 200 else {
-            throw ApiError.serverError
+            throw APIError.serverError
         }
-        return data
     }
 
     func convert(request: URLRequest) async throws -> UIImage {

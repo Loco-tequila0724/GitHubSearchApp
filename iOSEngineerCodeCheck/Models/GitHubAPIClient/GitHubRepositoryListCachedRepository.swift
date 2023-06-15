@@ -10,8 +10,8 @@ import Foundation
 // ここ読むの辛いかも...
 
 final class GitHubRepositoryListCachedRepository {
-    private let apiManager = ApiManager()
     private var items = ItemsRepository()
+    private let apiClient = GitHubAPIClient()
 }
 
 extension GitHubRepositoryListCachedRepository {
@@ -21,10 +21,15 @@ extension GitHubRepositoryListCachedRepository {
         // キャッシュを返す
         guard cache.isEmpty else { return .success(cache) }
 
-        // キャシュを取得しに行き、成功ならリポジトリへセット。
-        let fetchItem = await apiManager.fetch(word: word, orderType: order)
-        let result = await convertAndSetItems(result: fetchItem, order: order)
-        return result
+        do {
+            let request = try GitHubAPIRequest(word: word, order: order).makeURLRequest()
+            let data = try await apiClient.validate(request: request)
+            let item = try await apiClient.response(httpData: data)
+            setRepositoryItem(order: order, items: item.items)
+            return .success(item.items)
+        } catch {
+            return .failure(error)
+        }
     }
 
     func reset() {
@@ -41,16 +46,6 @@ private extension GitHubRepositoryListCachedRepository {
             self.items.asc = items
         case .desc:
             self.items.desc = items
-        }
-    }
-
-    func convertAndSetItems(result: Result<RepositoryItems, Error>, order: Order) async -> Result<[Item], Error> {
-        switch result {
-        case .success(let item):
-            setRepositoryItem(order: order, items: item.items)
-            return .success(item.items)
-        case .failure(let error):
-            return .failure(error)
         }
     }
 }

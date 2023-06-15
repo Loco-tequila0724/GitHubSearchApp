@@ -17,7 +17,7 @@ final class GitHubDetailPresenter {
 
     init(
         item: Item,
-        view: GitHubDetailView? = nil,
+        view: GitHubDetailView,
         router: GitHubDetailRouter,
         gitHubDetailViewItem: GitHubDetailViewItem) {
         self.item = item

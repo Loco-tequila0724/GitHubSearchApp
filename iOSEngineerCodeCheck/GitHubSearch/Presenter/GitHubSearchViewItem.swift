@@ -21,7 +21,7 @@ struct GitHubSearchViewItem {
 extension GitHubSearchViewItem {
     init(item: Item, image: UIImage?) {
         self.init(
-            id: item.id,
+            id: item.id.rawValue,
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
             stars: "☆ \(item.stargazersCount.to1000SeparatedString())",

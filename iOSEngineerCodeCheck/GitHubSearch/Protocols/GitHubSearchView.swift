@@ -11,11 +11,11 @@ import Foundation
 // View
 protocol GitHubSearchView: AnyObject {
     var presenter: GitHubSearchPresentation! { get }
-    func configure()
+    func setUp()
     func startLoading()
     func stopLoading()
     func tableViewReload()
-    func reloadRow(at index: Int)
+    func configure(item: GitHubSearchViewItem, at index: Int)
     func resetDisplay()
     func appearErrorAlert(message: String)
     func appearNotFound(message: String)

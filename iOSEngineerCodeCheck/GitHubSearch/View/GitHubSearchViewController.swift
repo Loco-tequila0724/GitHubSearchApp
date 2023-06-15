@@ -64,7 +64,7 @@ private extension GitHubSearchViewController {
 // MARK: - GitHubSearchViewプロトコルに関する -
 extension GitHubSearchViewController: GitHubSearchView {
     /// 初期画面の構成
-    func configure() {
+    func setUp() {
         searchBar.placeholder = "GitHub リポジトリを検索"
         searchBar.delegate = self
         tableView.dataSource = self
@@ -73,35 +73,41 @@ extension GitHubSearchViewController: GitHubSearchView {
         frontView.isHidden = true
         setupNavigationBar(title: "ホーム")
     }
+    /// 画像の取得が完了したらこのセルだけ更新する。
+    func configure(item: GitHubSearchViewItem, at index: Int) {
+        if let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? GitHubSearchTableViewCell {
+            cell.configure(item: item)
+        }
+    }
 
     /// 画面の状態をリセットする
     func resetDisplay() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = false
-            self?.frontView.isHidden = true
-            self?.indicatorView.isHidden = true
-            self?.notFoundLabel.text = nil
-            self?.tableView.reloadData()
+        DispatchQueue.main.async { [self] in
+            isLoading = false
+            frontView.isHidden = true
+            indicatorView.isHidden = true
+            notFoundLabel.text = nil
+            tableView.reloadData()
         }
     }
 
     /// ローディング中を表示
     func startLoading() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = true
-            self?.indicatorView.startAnimating()
-            self?.frontView.isHidden = false
-            self?.indicatorView.isHidden = false
+        DispatchQueue.main.async { [self] in
+            frontView.isHidden = false
+            indicatorView.isHidden = false
+            indicatorView.startAnimating()
+            tableView.reloadData()
         }
     }
 
     /// ローディング画面を停止
     func stopLoading() {
-        DispatchQueue.main.async { [weak self] in
-            self?.isLoading = false
-            self?.indicatorView.stopAnimating()
-            self?.frontView.isHidden = true
-            self?.indicatorView.isHidden = true
+        DispatchQueue.main.async { [self] in
+            isLoading = false
+            indicatorView.stopAnimating()
+            frontView.isHidden = true
+            indicatorView.isHidden = true
         }
     }
 
@@ -112,25 +118,16 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(message: String) {
-        DispatchQueue.main.async { [weak self] in
-            self?.frontView.isHidden = false
-            self?.indicatorView.isHidden = true
-            self?.notFoundLabel.text = message
+        DispatchQueue.main.async { [self] in
+            frontView.isHidden = false
+            indicatorView.isHidden = true
+            notFoundLabel.text = message
         }
     }
 
     func tableViewReload() {
-        DispatchQueue.main.async { [weak self] in
-            self?.tableView.reloadData()
-        }
-    }
-
-    func reloadRow(at index: Int) {
-        tableView.performBatchUpdates {
-            guard index < tableView.numberOfRows(inSection: 0) else {
-                return
-            }
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
+        DispatchQueue.main.async { [self] in
+            tableView.reloadData()
         }
     }
 
@@ -185,6 +182,11 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
         cell.configure(item: item)
         return cell
+    }
+
+    /// UITableViewのセルが表示される直前に呼び出される。
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        presenter.willDisplay(at: indexPath.row)
     }
 }
 
