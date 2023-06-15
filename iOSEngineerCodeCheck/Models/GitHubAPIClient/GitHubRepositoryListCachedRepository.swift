@@ -23,7 +23,7 @@ extension GitHubRepositoryListCachedRepository {
 
         do {
             let request = try GitHubAPIRequest(word: word, order: order).makeURLRequest()
-            let data = try await apiClient.httpData(request: request)
+            let data = try await apiClient.validate(request: request)
             let item = try await apiClient.response(httpData: data)
             setRepositoryItem(order: order, items: item.items)
             return .success(item.items)

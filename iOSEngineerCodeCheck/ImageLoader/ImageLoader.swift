@@ -44,15 +44,11 @@ private extension ImageLoader {
 
     func httpData(request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
-        try checkResponseStatus(response: response)
-        return data
-    }
-
-    func checkResponseStatus(response: URLResponse) throws {
         guard let httpURLResponse = response as? HTTPURLResponse,
             httpURLResponse.statusCode == 200 else {
             throw APIError.serverError
         }
+        return data
     }
 
     func convert(request: URLRequest) async throws -> UIImage {

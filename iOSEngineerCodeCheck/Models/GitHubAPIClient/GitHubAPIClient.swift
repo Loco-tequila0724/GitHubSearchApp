@@ -26,8 +26,13 @@ struct GitHubAPIClient {
 }
 
 extension GitHubAPIClient {
-    func httpData(request: URLRequest) async throws -> Data {
+    func validate(request: URLRequest) async throws -> Data {
         let (data, response) = try await session.data(for: request)
+        try checkResponseStatus(response: response)
+        return data
+    }
+
+    func checkResponseStatus(response: URLResponse) throws {
         let httpResponse = response as? HTTPURLResponse
         //  短時間で検索されすぎると上限に掛かりこのエラーが返る
         if httpResponse?.statusCode == 403 {
@@ -37,17 +42,15 @@ extension GitHubAPIClient {
         guard httpResponse?.statusCode == 200 else {
             throw APIError.serverError
         }
-
-        return data
     }
 
     func response(httpData: Data) async throws -> Response {
-        let responseItem = try decoder.decode(Response.self, from: httpData)
+        let response = try decoder.decode(Response.self, from: httpData)
         // 中身が空ならエラーを返す
-        guard !(responseItem.items.isEmpty) else {
+        guard !(response.items.isEmpty) else {
             throw APIError.notFound
         }
 
-        return responseItem
+        return response
     }
 }
