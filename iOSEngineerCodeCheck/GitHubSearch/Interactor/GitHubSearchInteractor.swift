@@ -16,8 +16,9 @@ final class GitHubSearchInteractor {
     private var items: [Item] = []
     private var word: String = ""
     private var order: Order = .default
-    private var avatarImages: [Int: UIImage] = [:]
+    private var avatarImages: [ItemID: UIImage] = [:]
     private(set) var task: Task<(), Never>?
+    private(set) var taskOfImage: Task<(), Never>?
 }
 
 extension GitHubSearchInteractor {
@@ -40,7 +41,7 @@ extension GitHubSearchInteractor {
 
     func viewItem(at index: Int) -> GitHubSearchViewItem {
         let item = items[index]
-        let image = avatarImages[item.id.rawValue]
+        let image = avatarImages[item.id]
         let viewItem = GitHubSearchViewItem(item: item, image: image?.compress())
         return viewItem
     }
@@ -68,41 +69,6 @@ extension GitHubSearchInteractor {
     }
 }
 
-private extension GitHubSearchInteractor {
-    /// 画像の取得が完了したら、そのセルだけリロード。.. ここ読むの辛いな〜...
-    func fetchAvatarImages(items: [Item]?) async {
-        guard let items else { return }
-
-        await withTaskGroup(of: Void.self) { group in
-            for item in items {
-                group.addTask { [weak self] in
-                    guard let self else { return }
-                    do {
-                        try await Task { @MainActor in
-                            // 画像を生成する
-                            let image = try await self.imageLoader.load(url: item.owner.avatarUrl)
-                            self.avatarImages[item.id.rawValue] = image
-
-                            // 画像元のセルの順番(インデックス番号)を調べリロードする。
-                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                self.presenter?.viewReloadRow(at: index)
-                            }
-                        }.value
-                    } catch {
-                        // エラーだった場合は、ダミーの画像が入る
-                        DispatchQueue.main.async {
-                            self.avatarImages[item.id.rawValue] = UIImage(named: "Untitled")!
-                            if let index = items.firstIndex(where: { $0.id == item.id }) {
-                                self.presenter?.viewReloadRow(at: index)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
     func fetch(word: String, order: Order) {
@@ -110,13 +76,28 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
             let result = await cachedRepository.fetch(word: word, order: order)
             switch result {
             case .success(let items):
-                Task.detached { [weak self] in
-                    await self?.fetchAvatarImages(items: items)
-                }
                 self.items = items
                 presenter?.didFetchSuccess()
             case .failure(let error):
                 presenter?.didFetchError(error: error)
+            }
+        }
+    }
+
+    /// 画像の取得が完了したら、そのセルだけ更新。
+    func fetchAvatarImages(at index: Int) {
+        Task {
+            let item = self.items[index]
+            Task { @MainActor in
+                let image = (try? await self.imageLoader.load(url: item.owner.avatarUrl)) ?? UIImage(named: "Untitled")!
+                self.avatarImages[item.id] = image
+
+                guard let index = self.items.firstIndex(where: { $0.id == item.id }) else {
+                    return
+                }
+
+                let viewItem = GitHubSearchViewItem(item: item, image: image)
+                self.presenter?.didFetchAvatarImage(item: viewItem, at: index)
             }
         }
     }

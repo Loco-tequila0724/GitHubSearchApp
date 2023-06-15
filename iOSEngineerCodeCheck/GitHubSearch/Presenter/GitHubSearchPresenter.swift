@@ -33,8 +33,13 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     func viewDidLoad() {
-        view?.configure()
+        view?.setUp()
     }
+
+    func willDisplay(at index: Int) {
+        interactor.fetchAvatarImages(at: index)
+    }
+
     /// 検索ボタンのタップを検知。 GitHubデータと画面表示をリセット。ローディングの開始。GitHubデータの取得を通知。
     func searchButtonDidPush(word: String) {
         view?.resetDisplay()
@@ -64,10 +69,6 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
 }
 
 extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
-    func startLoading() {
-        view?.startLoading()
-    }
-
     func didFetchSuccess() {
         view?.stopLoading()
         view?.tableViewReload()
@@ -78,8 +79,12 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         setAppearError(error: error)
     }
 
-    func viewReloadRow(at index: Int) {
-        view?.reloadRow(at: index)
+    func startLoading() {
+        view?.startLoading()
+    }
+
+    func didFetchAvatarImage(item: GitHubSearchViewItem, at index: Int) {
+        view?.configure(item: item, at: index)
     }
 }
 
@@ -95,7 +100,7 @@ private extension GitHubSearchPresenter {
             default: view?.appearErrorAlert(message: apiError.errorDescription!)
             }
         } else {
-            //  標準のURLSessionのエラーを返す
+            // 標準のURLSessionのエラーを返す
             view?.appearErrorAlert(message: error.localizedDescription)
         }
     }

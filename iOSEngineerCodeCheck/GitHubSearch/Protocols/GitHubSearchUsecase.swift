@@ -20,6 +20,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
     func search(word: String)
     func fetch(word: String, order: Order)
     func changeRepositoryItem()
+    func fetchAvatarImages(at index: Int)
 }
 
 // Interactor アウトプット
@@ -27,5 +28,5 @@ protocol GitHubSearchOutputUsecase: AnyObject {
     func didFetchSuccess()
     func didFetchError(error: Error)
     func startLoading()
-    func viewReloadRow(at index: Int)
+    func didFetchAvatarImage(item: GitHubSearchViewItem, at index: Int)
 }

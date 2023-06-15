@@ -64,7 +64,7 @@ private extension GitHubSearchViewController {
 // MARK: - GitHubSearchViewプロトコルに関する -
 extension GitHubSearchViewController: GitHubSearchView {
     /// 初期画面の構成
-    func configure() {
+    func setUp() {
         searchBar.placeholder = "GitHub リポジトリを検索"
         searchBar.delegate = self
         tableView.dataSource = self
@@ -72,6 +72,12 @@ extension GitHubSearchViewController: GitHubSearchView {
         notFoundLabel.text = nil
         frontView.isHidden = true
         setupNavigationBar(title: "ホーム")
+    }
+    /// 画像の取得が完了したらこのセルだけ更新する。
+    func configure(item: GitHubSearchViewItem, at index: Int) {
+        if let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? GitHubSearchTableViewCell {
+            cell.configure(item: item)
+        }
     }
 
     /// 画面の状態をリセットする
@@ -122,15 +128,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     func tableViewReload() {
         DispatchQueue.main.async { [self] in
             tableView.reloadData()
-        }
-    }
-
-    func reloadRow(at index: Int) {
-        tableView.performBatchUpdates {
-            guard index < tableView.numberOfRows(inSection: 0) else {
-                return
-            }
-            tableView.reloadRows(at: [IndexPath(row: index, section: 0)], with: .none)
         }
     }
 
@@ -185,6 +182,11 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
         cell.configure(item: item)
         return cell
+    }
+
+    /// UITableViewのセルが表示される直前に呼び出される。
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        presenter.willDisplay(at: indexPath.row)
     }
 }
 

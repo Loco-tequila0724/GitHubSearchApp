@@ -17,6 +17,8 @@ protocol GitHubSearchPresentation: AnyObject {
     func item(at index: Int) -> GitHubSearchViewItem
 
     func viewDidLoad()
+
+    func willDisplay(at index: Int)
     /// サーチボタンのタップ通知
     func searchButtonDidPush(word: String)
     /// 検索テキストの変更を通知
