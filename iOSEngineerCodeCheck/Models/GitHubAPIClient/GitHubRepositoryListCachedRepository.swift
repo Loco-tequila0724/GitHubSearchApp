@@ -16,7 +16,7 @@ final class GitHubRepositoryListCachedRepository {
 
 extension GitHubRepositoryListCachedRepository {
     /// キャッシュがあればキャッシュを返す、なければデータを取得しにいく。
-    func fetch(word: String, order: Order) async -> Result<[Item], Error> {
+    func fetch(word: String, order: StarSortingOrder) async -> Result<[Item], Error> {
         let cache = items.toDictionary[order]!
         // キャッシュを返す
         guard cache.isEmpty else { return .success(cache) }
@@ -38,7 +38,7 @@ extension GitHubRepositoryListCachedRepository {
 }
 
 private extension GitHubRepositoryListCachedRepository {
-    func setRepositoryItem(order: Order, items: [Item]) {
+    func setRepositoryItem(order: StarSortingOrder, items: [Item]) {
         switch order {
         case .`default`:
             self.items.`default` = items
