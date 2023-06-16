@@ -19,5 +19,14 @@ protocol GitHubSearchView: AnyObject {
     func resetDisplay()
     func appearErrorAlert(message: String)
     func appearNotFound(message: String)
-    func didChangeStarOrder(order: Order)
+    func didChangeStarOrder(order: StarSortingOrder)
 }
+
+// テーブルビュー表示の構成
+// func configure(item: GitHubSearchViewItem)
+// テーブルビューセルの差し替えに使用する。画像が取得できたら更新
+// func configure(row: GitHubSearchViewItem.TableRow, at index: Int)
+// ソートボタンに関する構成
+// func configure(order: GitHubSearchViewItem.StarSortingOrder)
+// エラーアラート
+// func showErrorAlert(error: Error)

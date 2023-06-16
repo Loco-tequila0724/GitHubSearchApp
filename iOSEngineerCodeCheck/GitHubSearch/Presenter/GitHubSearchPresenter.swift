@@ -36,7 +36,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         view?.setUp()
     }
 
-    func willDisplay(at index: Int) {
+    func willDisplayRow(at index: Int) {
         interactor.fetchAvatarImages(at: index)
     }
 

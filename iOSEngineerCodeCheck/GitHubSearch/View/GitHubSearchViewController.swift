@@ -11,7 +11,7 @@ import UIKit
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var notFoundLabel: UILabel!
+    @IBOutlet private weak var emptyDescriptionLabel: UILabel!
     @IBOutlet private weak var frontView: UIView!
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet private weak var starOderButton: UIButton! {
@@ -69,7 +69,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
-        notFoundLabel.text = nil
+        emptyDescriptionLabel.text = nil
         frontView.isHidden = true
         setupNavigationBar(title: "ホーム")
     }
@@ -86,7 +86,7 @@ extension GitHubSearchViewController: GitHubSearchView {
             isLoading = false
             frontView.isHidden = true
             indicatorView.isHidden = true
-            notFoundLabel.text = nil
+            emptyDescriptionLabel.text = nil
             tableView.reloadData()
         }
     }
@@ -121,7 +121,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         DispatchQueue.main.async { [self] in
             frontView.isHidden = false
             indicatorView.isHidden = true
-            notFoundLabel.text = message
+            emptyDescriptionLabel.text = message
         }
     }
 
@@ -132,7 +132,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(order: Order) {
+    func didChangeStarOrder(order: StarSortingOrder) {
         starOderButton.setTitle(order.text, for: .normal)
         starOderButton.backgroundColor = order.backGroundColor
     }
@@ -186,7 +186,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
     /// UITableViewのセルが表示される直前に呼び出される。
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        presenter.willDisplay(at: indexPath.row)
+        presenter.willDisplayRow(at: indexPath.row)
     }
 }
 
@@ -202,7 +202,7 @@ extension GitHubSearchViewController: UITableViewDelegate {
     }
 }
 
-private extension Order {
+private extension StarSortingOrder {
     var text: String {
         switch self {
         case .`default`: return "デフォルト"
