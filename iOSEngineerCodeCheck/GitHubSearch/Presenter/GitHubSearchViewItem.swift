@@ -11,7 +11,7 @@ import class UIKit.UIImage
 
 /// テーブルビューセルへ表示するデータ構造
 struct GitHubSearchViewItem {
-    let id: Int
+    let id: ItemID
     let fullName: String
     let language: String?
     let stars: String
@@ -21,7 +21,7 @@ struct GitHubSearchViewItem {
 extension GitHubSearchViewItem {
     init(item: Item, image: UIImage?) {
         self.init(
-            id: item.id.rawValue,
+            id: item.id,
             fullName: item.fullName,
             language: "言語 \(item.language ?? "")",
             stars: "☆ \(item.stargazersCount.to1000SeparatedString())",
