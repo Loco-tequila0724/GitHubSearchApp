@@ -39,10 +39,10 @@ extension GitHubSearchInteractor {
         items[index]
     }
 
-    func viewItem(at index: Int) -> GitHubSearchViewItem {
+    func viewItem(at index: Int) -> GitHubSearchViewItem.TableRow {
         let item = items[index]
         let image = avatarImages[item.id]
-        let viewItem = GitHubSearchViewItem(item: item, image: image?.compress())
+        let viewItem = GitHubSearchViewItem.TableRow(item: item, image: image?.compress())
         return viewItem
     }
 
@@ -96,7 +96,7 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
                     return
                 }
 
-                let viewItem = GitHubSearchViewItem(item: item, image: image)
+                let viewItem = GitHubSearchViewItem.TableRow(item: item, image: image)
                 self.presenter?.didFetchAvatarImage(item: viewItem, at: index)
             }
         }

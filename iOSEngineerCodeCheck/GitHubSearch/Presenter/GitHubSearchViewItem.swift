@@ -9,23 +9,54 @@
 import Foundation
 import class UIKit.UIImage
 
-/// テーブルビューセルへ表示するデータ構造
 struct GitHubSearchViewItem {
-    let id: ItemID
-    let fullName: String
-    let language: String?
-    let stars: String
-    let avatarImageView: UIImage?
+    var loading: Loading
+    var emptyDescription: EmptyDescription
+    var table: Table
 }
 
 extension GitHubSearchViewItem {
-    init(item: Item, image: UIImage?) {
-        self.init(
-            id: item.id,
-            fullName: item.fullName,
-            language: "言語 \(item.language ?? "")",
-            stars: "☆ \(item.stargazersCount.to1000SeparatedString())",
-            avatarImageView: image
+    struct Loading {
+        var isAnimating: Bool
+    }
+
+    struct EmptyDescription {
+        var isHidden: Bool
+    }
+
+    struct Table {
+        var items: [TableRow]?
+    }
+}
+
+extension GitHubSearchViewItem {
+    static var initial: Self {
+            .init(
+            loading: .init(isAnimating: false),
+            emptyDescription: .init(isHidden: true),
+            table: .empty
         )
+    }
+
+    static var empty: Self {
+            .init(
+            loading: .init(isAnimating: false),
+            emptyDescription: .init(isHidden: false),
+            table: .empty
+        )
+    }
+
+    static var loading: Self {
+            .init(
+            loading: .init(isAnimating: true),
+            emptyDescription: .init(isHidden: false),
+            table: .empty
+        )
+    }
+}
+
+extension GitHubSearchViewItem.Table {
+    static var empty: Self {
+            .init(items: [])
     }
 }

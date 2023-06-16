@@ -14,7 +14,7 @@ protocol GitHubSearchPresentation: AnyObject {
 
     var numberOfRow: Int { get }
 
-    func item(at index: Int) -> GitHubSearchViewItem
+    func item(at index: Int) -> GitHubSearchViewItem.TableRow
 
     func viewDidLoad()
 

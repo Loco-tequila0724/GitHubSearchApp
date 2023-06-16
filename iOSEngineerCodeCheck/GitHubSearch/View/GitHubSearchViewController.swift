@@ -74,7 +74,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         setupNavigationBar(title: "ホーム")
     }
     /// 画像の取得が完了したらこのセルだけ更新する。
-    func configure(item: GitHubSearchViewItem, at index: Int) {
+    func configure(item: GitHubSearchViewItem.TableRow, at index: Int) {
         if let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? GitHubSearchTableViewCell {
             cell.configure(item: item)
         }

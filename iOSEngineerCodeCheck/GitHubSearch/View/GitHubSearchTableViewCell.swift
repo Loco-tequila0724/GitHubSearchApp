@@ -25,7 +25,7 @@ final class GitHubSearchTableViewCell: UITableViewCell {
 
 extension GitHubSearchTableViewCell {
     /// 初期画面の構成
-    func configure(item: GitHubSearchViewItem) {
+    func configure(item: GitHubSearchViewItem.TableRow) {
         avatarImageView.setImageWithAnimation(item.avatarImageView)
         fullNameLabel.text = item.fullName
         languageLabel.text = item.language

@@ -27,9 +27,7 @@ struct ItemsRepository {
         ]
     }
 
-    mutating func allReset() {
-        `default` = []
-        asc = []
-        desc = []
+    static var allReset: Self {
+            .init()
     }
 }

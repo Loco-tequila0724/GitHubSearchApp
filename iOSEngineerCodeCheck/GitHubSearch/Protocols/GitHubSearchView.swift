@@ -15,7 +15,7 @@ protocol GitHubSearchView: AnyObject {
     func startLoading()
     func stopLoading()
     func tableViewReload()
-    func configure(item: GitHubSearchViewItem, at index: Int)
+    func configure(item: GitHubSearchViewItem.TableRow, at index: Int)
     func resetDisplay()
     func appearErrorAlert(message: String)
     func appearNotFound(message: String)

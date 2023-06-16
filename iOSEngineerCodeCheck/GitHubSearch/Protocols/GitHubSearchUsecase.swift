@@ -15,7 +15,7 @@ protocol GitHubSearchInputUsecase: AnyObject {
     var nextOrder: StarSortingOrder { get }
     var task: Task<(), Never>? { get }
     func currentItem(at index: Int) -> Item
-    func viewItem(at index: Int) -> GitHubSearchViewItem
+    func viewItem(at index: Int) -> GitHubSearchViewItem.TableRow
     func cancelFetchingAndResetRepository()
     func search(word: String)
     func fetch(word: String, order: StarSortingOrder)
@@ -28,5 +28,5 @@ protocol GitHubSearchOutputUsecase: AnyObject {
     func didFetchSuccess()
     func didFetchError(error: Error)
     func startLoading()
-    func didFetchAvatarImage(item: GitHubSearchViewItem, at index: Int)
+    func didFetchAvatarImage(item: GitHubSearchViewItem.TableRow, at index: Int)
 }

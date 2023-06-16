@@ -28,7 +28,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         interactor.itemsCount
     }
 
-    func item(at index: Int) -> GitHubSearchViewItem {
+    func item(at index: Int) -> GitHubSearchViewItem.TableRow {
         interactor.viewItem(at: index)
     }
 
@@ -83,7 +83,7 @@ extension GitHubSearchPresenter: GitHubSearchOutputUsecase {
         view?.startLoading()
     }
 
-    func didFetchAvatarImage(item: GitHubSearchViewItem, at index: Int) {
+    func didFetchAvatarImage(item: GitHubSearchViewItem.TableRow, at index: Int) {
         view?.configure(item: item, at: index)
     }
 }

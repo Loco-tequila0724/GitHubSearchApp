@@ -33,7 +33,7 @@ extension GitHubRepositoryListCachedRepository {
     }
 
     func reset() {
-        items.allReset()
+        items = .allReset
     }
 }
 
