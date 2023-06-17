@@ -12,7 +12,6 @@ final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var emptyDescriptionLabel: UILabel!
-    @IBOutlet private weak var frontView: UIView!
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
     @IBOutlet private weak var starOderButton: UIButton! {
         didSet {
@@ -70,7 +69,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         tableView.dataSource = self
         tableView.delegate = self
         emptyDescriptionLabel.text = nil
-        frontView.isHidden = true
+        indicatorView.isHidden = true
         setupNavigationBar(title: "ホーム")
     }
     /// 画像の取得が完了したらこのセルだけ更新する。
@@ -84,7 +83,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     func resetDisplay() {
         DispatchQueue.main.async { [self] in
             isLoading = false
-            frontView.isHidden = true
             indicatorView.isHidden = true
             emptyDescriptionLabel.text = nil
             tableView.reloadData()
@@ -94,7 +92,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// ローディング中を表示
     func startLoading() {
         DispatchQueue.main.async { [self] in
-            frontView.isHidden = false
             indicatorView.isHidden = false
             indicatorView.startAnimating()
             tableView.reloadData()
@@ -106,7 +103,6 @@ extension GitHubSearchViewController: GitHubSearchView {
         DispatchQueue.main.async { [self] in
             isLoading = false
             indicatorView.stopAnimating()
-            frontView.isHidden = true
             indicatorView.isHidden = true
         }
     }
@@ -119,7 +115,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(message: String) {
         DispatchQueue.main.async { [self] in
-            frontView.isHidden = false
             indicatorView.isHidden = true
             emptyDescriptionLabel.text = message
         }

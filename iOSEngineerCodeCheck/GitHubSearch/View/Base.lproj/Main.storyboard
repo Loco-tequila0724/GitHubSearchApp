@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="oRs-JB-gNc">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -107,7 +108,7 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
                                 <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
@@ -130,6 +131,9 @@
                                     </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <accessibility key="accessibilityConfiguration">
+                                    <accessibilityTraits key="traits" notEnabled="YES"/>
+                                </accessibility>
                                 <constraints>
                                     <constraint firstItem="14X-ZN-avM" firstAttribute="centerX" secondItem="zS5-Kj-DSu" secondAttribute="centerX" id="8nV-bt-riz"/>
                                     <constraint firstItem="14X-ZN-avM" firstAttribute="centerY" secondItem="zS5-Kj-DSu" secondAttribute="centerY" multiplier="0.9" id="aFc-Zq-UFP"/>
@@ -227,7 +231,6 @@
                     <navigationItem key="navigationItem" id="33R-Tc-5jc"/>
                     <connections>
                         <outlet property="emptyDescriptionLabel" destination="14X-ZN-avM" id="D0V-Ox-bGZ"/>
-                        <outlet property="frontView" destination="zS5-Kj-DSu" id="yYA-Ty-Oef"/>
                         <outlet property="indicatorView" destination="51X-Gw-He7" id="Wxu-BB-IN5"/>
                         <outlet property="searchBar" destination="Nhh-bC-RlQ" id="Yf2-Ic-9fK"/>
                         <outlet property="starOderButton" destination="wJs-2B-Moe" id="gke-lN-No0"/>
