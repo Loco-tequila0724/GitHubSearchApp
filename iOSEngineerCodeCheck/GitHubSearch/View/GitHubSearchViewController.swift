@@ -195,8 +195,8 @@ private extension StarSortingOrder {
     var backGroundColor: UIColor {
         switch self {
         case .`default`: return .lightGray
-        case .desc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
-        case .asc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        case .desc: return UIColor(named: "StarSortColor")!
+        case .asc: return UIColor(named: "StarSortColor")!
         }
     }
 }
