@@ -114,8 +114,9 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// ボタンの見た目を変更する
     func didChangeStarOrder(order: StarSortingOrder) {
-        starOderButton.setTitle(order.text, for: .normal)
-        starOderButton.backgroundColor = order.backGroundColor
+    // TODO: - 後で行なう -
+//        starOderButton.setTitle(order.text, for: .normal)
+//        starOderButton.backgroundColor = order.backGroundColor
     }
 }
 
@@ -180,23 +181,5 @@ extension GitHubSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let cellHeight: CGFloat = 85
         return cellHeight
-    }
-}
-
-private extension StarSortingOrder {
-    var text: String {
-        switch self {
-        case .`default`: return "デフォルト"
-        case .desc: return "☆ Star数 ⍋"
-        case .asc: return "☆ Star数 ⍒"
-        }
-    }
-
-    var backGroundColor: UIColor {
-        switch self {
-        case .`default`: return .lightGray
-        case .desc: return UIColor(named: "StarSortColor")!
-        case .asc: return UIColor(named: "StarSortColor")!
-        }
     }
 }
