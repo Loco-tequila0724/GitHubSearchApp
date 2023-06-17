@@ -330,13 +330,6 @@
 			path = Router;
 			sourceTree = "<group>";
 		};
-		38F34E7C29F9526900120671 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Utilities;
-			sourceTree = "<group>";
-		};
 		38F34E8729FA432100120671 /* Extentions */ = {
 			isa = PBXGroup;
 			children = (
@@ -400,7 +393,6 @@
 				38F34E6429F91EE500120671 /* GitHubSearch */,
 				38F34E6F29F9200E00120671 /* GitHubDetail */,
 				38F34E8729FA432100120671 /* Extentions */,
-				38F34E7C29F9526900120671 /* Utilities */,
 				38789E3329FDADC700732BE8 /* Resource */,
 				BFD945EC244DC5EB0012785A /* Info.plist */,
 			);
