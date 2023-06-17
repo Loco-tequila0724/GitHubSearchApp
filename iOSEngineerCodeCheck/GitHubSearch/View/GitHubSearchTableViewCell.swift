@@ -16,11 +16,6 @@ final class GitHubSearchTableViewCell: UITableViewCell {
     @IBOutlet private weak var starsLabel: UILabel!
     /// テーブルビューセルのID名
     static let identifier = "GitHubSearchCell"
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        setUp()
-    }
 }
 
 extension GitHubSearchTableViewCell {
@@ -30,22 +25,6 @@ extension GitHubSearchTableViewCell {
         fullNameLabel.text = item.fullName
         languageLabel.text = item.language
         starsLabel.text = item.stars
-    }
-}
-
-private extension GitHubSearchTableViewCell {
-    func setUp() {
-        avatarImageView.accessibilityIgnoresInvertColors = true
-        avatarImageView.layer.cornerRadius = 6
-
-        fullNameLabel.adjustsFontSizeToFitWidth = true
-        fullNameLabel.minimumScaleFactor = 0.7
-
-        languageLabel.adjustsFontSizeToFitWidth = true
-        languageLabel.minimumScaleFactor = 0.7
-
-        starsLabel.adjustsFontSizeToFitWidth = true
-        starsLabel.minimumScaleFactor = 0.7
     }
 }
 
