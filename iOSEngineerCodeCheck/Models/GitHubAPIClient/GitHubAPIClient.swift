@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - ここもstructで良いのか？ classとstructの使い分けの理解が危うい-
-struct GitHubAPIClient {
+class GitHubAPIClient {
     typealias Response = RepositoryItems
 
     private var decoder: JSONDecoder {
