@@ -32,24 +32,24 @@ extension GitHubSearchViewItem {
 extension GitHubSearchViewItem {
     static var initial: Self {
             .init(
-            loading: .init(isAnimating: false),
-            emptyDescription: .init(isHidden: true),
+            loading: .stop,
+            emptyDescription: .hidden,
             table: .empty
         )
     }
 
     static var empty: Self {
             .init(
-            loading: .init(isAnimating: false),
-            emptyDescription: .init(isHidden: false),
+            loading: .stop,
+            emptyDescription: .visible,
             table: .empty
         )
     }
 
     static var loading: Self {
             .init(
-            loading: .init(isAnimating: true),
-            emptyDescription: .init(isHidden: false),
+            loading: .start,
+            emptyDescription: .visible,
             table: .empty
         )
     }
@@ -58,5 +58,25 @@ extension GitHubSearchViewItem {
 extension GitHubSearchViewItem.Table {
     static var empty: Self {
             .init(items: [])
+    }
+}
+
+extension GitHubSearchViewItem.Loading {
+    static var start: Self {
+            .init(isAnimating: true)
+    }
+
+    static var stop: Self {
+            .init(isAnimating: false)
+    }
+}
+
+extension GitHubSearchViewItem.EmptyDescription {
+    static var visible: Self {
+            .init(isHidden: false)
+    }
+
+    static var hidden: Self {
+            .init(isHidden: true)
     }
 }
