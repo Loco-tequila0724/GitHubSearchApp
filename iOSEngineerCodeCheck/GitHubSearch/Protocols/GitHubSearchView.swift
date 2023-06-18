@@ -10,23 +10,29 @@ import Foundation
 
 // View
 protocol GitHubSearchView: AnyObject {
+    typealias ViewItem = GitHubSearchViewItem
+    typealias TableRow = GitHubSearchViewItem.TableRow
+    typealias Order = GitHubSearchViewItem.StarSortingOrder
+
     var presenter: GitHubSearchPresentation! { get }
+    func configure(item: ViewItem)
+    func configure(order: Order)
+    func configure(row: TableRow, at index: Int)
+    func showErrorAlert(error: Error)
+
     func setUp()
     func startLoading()
     func stopLoading()
     func tableViewReload()
-    func configure(item: GitHubSearchViewItem.TableRow, at index: Int)
     func resetDisplay()
     func appearErrorAlert(message: String)
     func appearNotFound(message: String)
     func didChangeStarOrder(order: StarSortingOrder)
 }
 
-// テーブルビュー表示の構成
-// func configure(item: GitHubSearchViewItem)
-// テーブルビューセルの差し替えに使用する。画像が取得できたら更新
-// func configure(row: GitHubSearchViewItem.TableRow, at index: Int)
-// ソートボタンに関する構成
-// func configure(order: GitHubSearchViewItem.StarSortingOrder)
-// エラーアラート
-// func showErrorAlert(error: Error)
+extension GitHubSearchView {
+    func configure(item: ViewItem, order: Order) {
+        configure(item: item)
+        configure(order: order)
+    }
+}
