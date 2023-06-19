@@ -36,19 +36,19 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
         view?.setUp()
     }
 
-    func willDisplay(at index: Int) {
+    func willDisplayRow(at index: Int) {
         interactor.fetchAvatarImages(at: index)
     }
 
     /// 検索ボタンのタップを検知。 GitHubデータと画面表示をリセット。ローディングの開始。GitHubデータの取得を通知。
-    func searchButtonDidPush(word: String) {
+    func didTapSearchButton(word: String) {
         view?.resetDisplay()
         view?.startLoading()
         interactor.search(word: word)
     }
 
     /// テキスト変更を検知。GitHubデータと画面表示をリセット。
-    func searchTextDidChange() {
+    func didChangeSearchText() {
         view?.resetDisplay()
         interactor.cancelFetchingAndResetRepository()
     }
@@ -60,7 +60,7 @@ extension GitHubSearchPresenter: GitHubSearchPresentation {
     }
 
     /// スター数順の変更ボタンのタップを検知。(スター数で降順・昇順を切り替え)
-    func starOderButtonDidPush() {
+    func didTapStarOderButton() {
         let order = interactor.nextOrder
         interactor.changeRepositoryItem()
         view?.didChangeStarOrder(order: order)

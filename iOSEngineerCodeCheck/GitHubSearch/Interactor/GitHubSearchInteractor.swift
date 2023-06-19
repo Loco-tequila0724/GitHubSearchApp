@@ -15,7 +15,7 @@ final class GitHubSearchInteractor {
     private let imageLoader = ImageLoader()
     private var items: [Item] = []
     private var word: String = ""
-    private var order: Order = .default
+    private var order: StarSortingOrder = .default
     private var avatarImages: [ItemID: UIImage] = [:]
     private(set) var task: Task<(), Never>?
     private(set) var taskOfImage: Task<(), Never>?
@@ -26,7 +26,7 @@ extension GitHubSearchInteractor {
         items.count
     }
 
-    var nextOrder: Order {
+    var nextOrder: StarSortingOrder {
         order = order.next
         return order
     }
@@ -71,7 +71,7 @@ extension GitHubSearchInteractor {
 
 extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     /// データベースから GitHubデータを取得。
-    func fetch(word: String, order: Order) {
+    func fetch(word: String, order: StarSortingOrder) {
         task = Task {
             let result = await cachedRepository.fetch(word: word, order: order)
             switch result {
@@ -103,8 +103,8 @@ extension GitHubSearchInteractor: GitHubSearchInputUsecase {
     }
 }
 
-private extension Order {
-    var next: Order {
+private extension StarSortingOrder {
+    var next: StarSortingOrder {
         switch self {
         case .`default`: return .desc
         case .asc: return .`default`

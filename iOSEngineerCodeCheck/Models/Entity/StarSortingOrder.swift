@@ -9,7 +9,7 @@
 import Foundation
 
 // MARK: - Star数ボタンに関する -
-enum Order: Decodable, Hashable {
+enum StarSortingOrder: Decodable, Hashable {
     case `default`
     case asc
     case desc

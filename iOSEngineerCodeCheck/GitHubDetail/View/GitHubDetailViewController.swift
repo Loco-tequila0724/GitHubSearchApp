@@ -9,11 +9,7 @@
 import UIKit
 
 final class GitHubDetailViewController: UIViewController {
-    @IBOutlet private weak var imageView: UIImageView! {
-        didSet {
-            imageView.layer.cornerRadius = 7
-        }
-    }
+    @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var fullNameLabel: UILabel!
     @IBOutlet private weak var languageLabel: UILabel!
     @IBOutlet private weak var starsLabel: UILabel!

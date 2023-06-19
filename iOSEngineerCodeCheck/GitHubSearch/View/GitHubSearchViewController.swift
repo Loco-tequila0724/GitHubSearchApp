@@ -11,34 +11,25 @@ import UIKit
 final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var searchBar: UISearchBar!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var notFoundLabel: UILabel!
-    @IBOutlet private weak var frontView: UIView!
+    @IBOutlet private weak var emptyDescriptionLabel: UILabel!
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet private weak var starOderButton: UIButton! {
-        didSet {
-            if #available(iOS 15.0, *) {
-                starOderButton.configuration = nil
-            }
-            starOderButton.setTitle("☆ Star数 ", for: .normal)
-            starOderButton.titleLabel?.font = .systemFont(
-                ofSize: 16,
-                weight: .semibold
-            )
-            starOderButton.layer.cornerRadius = 8
-            starOderButton.clipsToBounds = true
-            starOderButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        }
-    }
+    @IBOutlet private weak var starOderButton: UIButton!
 
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"
 
     var presenter: GitHubSearchPresentation!
-    private var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: animated)
+        }
     }
 }
 
@@ -56,8 +47,8 @@ extension GitHubSearchViewController {
 
 private extension GitHubSearchViewController {
     @IBAction func starOrderButton(_ sender: Any) {
-        guard !isLoading else { return }
-        presenter.starOderButtonDidPush()
+        guard !indicatorView.isAnimating else { return }
+        presenter.didTapStarOderButton()
     }
 }
 
@@ -69,8 +60,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
-        notFoundLabel.text = nil
-        frontView.isHidden = true
+        emptyDescriptionLabel.isHidden = true
         setupNavigationBar(title: "ホーム")
     }
     /// 画像の取得が完了したらこのセルだけ更新する。
@@ -83,10 +73,8 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// 画面の状態をリセットする
     func resetDisplay() {
         DispatchQueue.main.async { [self] in
-            isLoading = false
-            frontView.isHidden = true
             indicatorView.isHidden = true
-            notFoundLabel.text = nil
+            emptyDescriptionLabel.isHidden = true
             tableView.reloadData()
         }
     }
@@ -94,7 +82,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// ローディング中を表示
     func startLoading() {
         DispatchQueue.main.async { [self] in
-            frontView.isHidden = false
             indicatorView.isHidden = false
             indicatorView.startAnimating()
             tableView.reloadData()
@@ -104,9 +91,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// ローディング画面を停止
     func stopLoading() {
         DispatchQueue.main.async { [self] in
-            isLoading = false
             indicatorView.stopAnimating()
-            frontView.isHidden = true
             indicatorView.isHidden = true
         }
     }
@@ -119,9 +104,9 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(message: String) {
         DispatchQueue.main.async { [self] in
-            frontView.isHidden = false
+            emptyDescriptionLabel.isHidden = false
             indicatorView.isHidden = true
-            notFoundLabel.text = message
+            emptyDescriptionLabel.text = message
         }
     }
 
@@ -132,7 +117,8 @@ extension GitHubSearchViewController: GitHubSearchView {
     }
 
     /// ボタンの見た目を変更する
-    func didChangeStarOrder(order: Order) {
+    func didChangeStarOrder(order: StarSortingOrder) {
+        emptyDescriptionLabel.isHidden = true
         starOderButton.setTitle(order.text, for: .normal)
         starOderButton.backgroundColor = order.backGroundColor
     }
@@ -144,15 +130,15 @@ extension GitHubSearchViewController: UISearchBarDelegate {
         guard let isEmptyText = searchBar.text?.isEmpty else { return }
         if isEmptyText {
             // テキストが空になった事を通知。テーブルビューをリセットするため。
-            presenter.searchTextDidChange()
+            presenter.didChangeSearchText()
         }
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // テキストが空、もしくはローディング中はタップ無効。
-        guard let text = searchBar.text, !text.isEmpty, !isLoading else { return }
+        guard let text = searchBar.text, !text.isEmpty, !indicatorView.isAnimating else { return }
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
-        presenter.searchButtonDidPush(word: text)
+        presenter.didTapSearchButton(word: text)
         searchBar.resignFirstResponder()
         searchBar.setShowsCancelButton(false, animated: true)
     }
@@ -176,7 +162,6 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
-        cell.selectionStyle = .none
 
         let item = presenter.item(at: indexPath.row)
 
@@ -186,7 +171,7 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
     /// UITableViewのセルが表示される直前に呼び出される。
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        presenter.willDisplay(at: indexPath.row)
+        presenter.willDisplayRow(at: indexPath.row)
     }
 }
 
@@ -202,7 +187,7 @@ extension GitHubSearchViewController: UITableViewDelegate {
     }
 }
 
-private extension Order {
+private extension StarSortingOrder {
     var text: String {
         switch self {
         case .`default`: return "デフォルト"
@@ -213,9 +198,17 @@ private extension Order {
 
     var backGroundColor: UIColor {
         switch self {
-        case .`default`: return .lightGray
-        case .desc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
-        case .asc: return #colorLiteral(red: 0.1634489, green: 0.1312818527, blue: 0.2882181406, alpha: 1)
+        case .`default`: return UIColor(named: "StarSortingOrder.default")!
+        case .desc: return UIColor(named: "StarSortingOrder.desc")!
+        case .asc: return UIColor(named: "StarSortingOrder.asc")!
+        }
+    }
+
+    var image: UIImage {
+        switch self {
+        case .`default`: return UIImage().image(color: self.backGroundColor)
+        case .desc: return UIImage().image(color: self.backGroundColor)
+        case .asc: return UIImage().image(color: self.backGroundColor)
         }
     }
 }
