@@ -19,7 +19,6 @@ final class GitHubSearchViewController: UIViewController {
     private static let storyboardName = "Main"
 
     var presenter: GitHubSearchPresentation!
-    private var isLoading = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,7 +40,7 @@ extension GitHubSearchViewController {
 
 private extension GitHubSearchViewController {
     @IBAction func starOrderButton(_ sender: Any) {
-        guard !isLoading else { return }
+        guard !indicatorView.isAnimating else { return }
         presenter.didTapStarOderButton()
     }
 }
@@ -54,7 +53,7 @@ extension GitHubSearchViewController: GitHubSearchView {
         searchBar.delegate = self
         tableView.dataSource = self
         tableView.delegate = self
-        emptyDescriptionLabel.text = nil
+        emptyDescriptionLabel.isHidden = true
         setupNavigationBar(title: "ホーム")
     }
     /// 画像の取得が完了したらこのセルだけ更新する。
@@ -67,9 +66,8 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// 画面の状態をリセットする
     func resetDisplay() {
         DispatchQueue.main.async { [self] in
-            isLoading = false
             indicatorView.isHidden = true
-            emptyDescriptionLabel.text = nil
+            emptyDescriptionLabel.isHidden = true
             tableView.reloadData()
         }
     }
@@ -86,7 +84,6 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// ローディング画面を停止
     func stopLoading() {
         DispatchQueue.main.async { [self] in
-            isLoading = false
             indicatorView.stopAnimating()
             indicatorView.isHidden = true
         }
@@ -100,6 +97,7 @@ extension GitHubSearchViewController: GitHubSearchView {
     /// GitHubデータの取得が0件の場合に表示
     func appearNotFound(message: String) {
         DispatchQueue.main.async { [self] in
+            emptyDescriptionLabel.isHidden = false
             indicatorView.isHidden = true
             emptyDescriptionLabel.text = message
         }
@@ -113,6 +111,7 @@ extension GitHubSearchViewController: GitHubSearchView {
 
     /// ボタンの見た目を変更する
     func didChangeStarOrder(order: StarSortingOrder) {
+        emptyDescriptionLabel.isHidden = true
         starOderButton.setTitle(order.text, for: .normal)
         starOderButton.backgroundColor = order.backGroundColor
     }
@@ -130,7 +129,7 @@ extension GitHubSearchViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         // テキストが空、もしくはローディング中はタップ無効。
-        guard let text = searchBar.text, !text.isEmpty, !isLoading else { return }
+        guard let text = searchBar.text, !text.isEmpty, !indicatorView.isAnimating else { return }
         // 検索ボタンのタップを通知。 GitHubデータを取得の指示。
         presenter.didTapSearchButton(word: text)
         searchBar.resignFirstResponder()
@@ -194,7 +193,7 @@ private extension StarSortingOrder {
     var backGroundColor: UIColor {
         switch self {
         case .`default`: return UIColor(named: "StarSortingOrder.default")!
-        case .desc: return  UIColor(named: "StarSortingOrder.desc")!
+        case .desc: return UIColor(named: "StarSortingOrder.desc")!
         case .asc: return UIColor(named: "StarSortingOrder.asc")!
         }
     }
