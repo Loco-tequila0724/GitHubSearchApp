@@ -197,4 +197,12 @@ private extension StarSortingOrder {
         case .asc: return UIColor(named: "StarSortingOrder.asc")!
         }
     }
+
+    var image: UIImage {
+        switch self {
+        case .`default`: return UIImage().image(color: self.backGroundColor)
+        case .desc: return UIImage().image(color: self.backGroundColor)
+        case .asc: return UIImage().image(color: self.backGroundColor)
+        }
+    }
 }
