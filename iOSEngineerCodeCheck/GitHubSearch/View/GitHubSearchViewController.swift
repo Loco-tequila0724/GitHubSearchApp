@@ -24,6 +24,13 @@ final class GitHubSearchViewController: UIViewController {
         super.viewDidLoad()
         presenter.viewDidLoad()
     }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: animated)
+        }
+    }
 }
 
 extension GitHubSearchViewController {
@@ -155,7 +162,6 @@ extension GitHubSearchViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: GitHubSearchTableViewCell.identifier) as? GitHubSearchTableViewCell else { return UITableViewCell() } // swiftlint:disable:this all
-        cell.selectionStyle = .none
 
         let item = presenter.item(at: indexPath.row)
 
