@@ -13,21 +13,7 @@ final class GitHubSearchViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var emptyDescriptionLabel: UILabel!
     @IBOutlet private weak var indicatorView: UIActivityIndicatorView!
-    @IBOutlet private weak var starOderButton: UIButton! {
-        didSet {
-            if #available(iOS 15.0, *) {
-                starOderButton.configuration = nil
-            }
-            starOderButton.setTitle("☆ Star数 ", for: .normal)
-            starOderButton.titleLabel?.font = .systemFont(
-                ofSize: 16,
-                weight: .semibold
-            )
-            starOderButton.layer.cornerRadius = 8
-            starOderButton.clipsToBounds = true
-            starOderButton.titleLabel?.adjustsFontSizeToFitWidth = true
-        }
-    }
+    @IBOutlet private weak var starOderButton: UIButton!
 
     private static let storyboardID = "GitHubSearchID"
     private static let storyboardName = "Main"

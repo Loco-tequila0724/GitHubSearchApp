@@ -37,7 +37,7 @@
                                                 <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bs7-Cv-xcz">
                                                     <rect key="frame" x="111" y="10" width="257.5" height="21"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RlK-vK-39u">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="RlK-vK-39u">
                                                             <rect key="frame" x="0.0" y="0.0" width="43.5" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="43.5" id="dJM-JA-Puw"/>
@@ -64,8 +64,14 @@
                                                         <constraint firstAttribute="height" constant="65" id="22F-Xn-Su8"/>
                                                         <constraint firstAttribute="width" constant="65" id="tc9-cb-fL7"/>
                                                     </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                            <integer key="value" value="6"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                        <userDefinedRuntimeAttribute type="boolean" keyPath="accessibilityIgnoresInvertColors" value="YES"/>
+                                                    </userDefinedRuntimeAttributes>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MS1-kr-SfU">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="MS1-kr-SfU">
                                                     <rect key="frame" x="115" y="51" width="172" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="vH7-fW-szh"/>
@@ -74,7 +80,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="☆ 10000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgh-Ro-zjZ">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="☆ 10000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="Vgh-Ro-zjZ">
                                                     <rect key="frame" x="302" y="51" width="68.5" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="GW0-mM-sWQ"/>
@@ -111,7 +117,7 @@
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zS5-Kj-DSu">
                                 <rect key="frame" x="0.0" y="213" width="414" height="649"/>
                                 <subviews>
-                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="51X-Gw-He7">
                                         <rect key="frame" x="188.5" y="273.5" width="37" height="37"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="37" id="F0y-PC-QiL"/>
@@ -168,7 +174,7 @@
                                         <rect key="frame" x="276" y="0.0" width="138" height="65"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJs-2B-Moe">
-                                                <rect key="frame" x="15" y="12.5" width="108" height="40"/>
+                                                <rect key="frame" x="16" y="12.5" width="106" height="40"/>
                                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="K0u-mN-hg0"/>
@@ -176,9 +182,15 @@
                                                 </constraints>
                                                 <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" title="☆ Star 数  ">
-                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="17"/>
+                                                <buttonConfiguration key="configuration" style="plain" title="デフォルト">
+                                                    <fontDescription key="titleFontDescription" type="system" weight="semibold" pointSize="16"/>
                                                 </buttonConfiguration>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                        <integer key="value" value="8"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="clipsToBounds" value="YES"/>
+                                                </userDefinedRuntimeAttributes>
                                                 <connections>
                                                     <action selector="starOrderButton:" destination="mWg-7I-heg" eventType="touchUpInside" id="6Hb-zp-Jjf"/>
                                                 </connections>
