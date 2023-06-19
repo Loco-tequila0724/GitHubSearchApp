@@ -18,13 +18,13 @@ protocol GitHubSearchPresentation: AnyObject {
 
     func viewDidLoad()
 
-    func willDisplay(at index: Int)
+    func willDisplayRow(at index: Int)
     /// サーチボタンのタップ通知
-    func searchButtonDidPush(word: String)
+    func didTapSearchButton(word: String)
     /// 検索テキストの変更を通知
-    func searchTextDidChange()
+    func didChangeSearchText()
     /// セルタップを通知
     func didSelectRow(at index: Int)
     /// お気に入り順のボタンタップを通知
-    func starOderButtonDidPush()
+    func didTapStarOderButton()
 }

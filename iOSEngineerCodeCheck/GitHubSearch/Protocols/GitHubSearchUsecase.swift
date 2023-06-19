@@ -12,13 +12,13 @@ import Foundation
 protocol GitHubSearchInputUsecase: AnyObject {
     var presenter: GitHubSearchOutputUsecase? { get }
     var itemsCount: Int { get }
-    var nextOrder: Order { get }
+    var nextOrder: StarSortingOrder { get }
     var task: Task<(), Never>? { get }
     func currentItem(at index: Int) -> Item
     func viewItem(at index: Int) -> GitHubSearchViewItem
     func cancelFetchingAndResetRepository()
     func search(word: String)
-    func fetch(word: String, order: Order)
+    func fetch(word: String, order: StarSortingOrder)
     func changeRepositoryItem()
     func fetchAvatarImages(at index: Int)
 }

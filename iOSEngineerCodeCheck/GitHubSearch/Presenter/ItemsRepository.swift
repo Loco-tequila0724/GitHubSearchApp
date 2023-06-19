@@ -19,7 +19,7 @@ struct ItemsRepository {
         self.desc = []
     }
 
-    var toDictionary: [Order: [Item]] {
+    var toDictionary: [StarSortingOrder: [Item]] {
         return [
                 .default: `default`,
                 .asc: asc,

@@ -11,7 +11,7 @@ import Foundation
 // MARK: - データをプロトコルに全部書かないといけないのか謎 -
 protocol APIRequest {
     var word: String { get }
-    var order: Order { get }
+    var order: StarSortingOrder { get }
     var method: HTTPMethod { get }
 
     var scheme: String { get }
@@ -25,7 +25,7 @@ protocol APIRequest {
 struct GitHubAPIRequest: APIRequest {
     var word: String
 
-    var order: Order
+    var order: StarSortingOrder
 
     var method: HTTPMethod {
             .get
@@ -72,7 +72,7 @@ struct GitHubAPIRequest: APIRequest {
     }
 }
 
-private extension Order {
+private extension StarSortingOrder {
     var queryItems: [URLQueryItem] {
         switch self {
         case .asc:
